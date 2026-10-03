@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light only">
+<title>Ride Bangla IT Team | Apps, Web, Design & Digital Marketing</title>
+<meta name="description" content="Ride Bangla IT Team — Ride Bangla Limited-এর আইটি টিম। ওয়েব, মোবাইল অ্যাপ, UI/UX, গ্রাফিক ডিজাইন, হোস্টিং ও ডিজিটাল মার্কেটিং সার্ভিস।">
+<link rel="canonical" href="https://it.ridebangla.bd/">
+<link rel="icon" href="assets/favicon.png">
+<meta property="og:title" content="Ride Bangla IT Team">
+<meta property="og:description" content="Apps | Web | Design | Digital Marketing — Ride Bangla Limited IT Team">
+<meta property="og:image" content="https://it.ridebangla.bd/assets/services-it.jpg">
+<meta property="og:url" content="https://it.ridebangla.bd/">
+<meta name="theme-color" content="#08783F">
+<style>
+:root{color-scheme:light only;--g:#08783F;--gd:#055a2e;--gx:#0b1f15;--r:#E10613;--ink:#10231a;--mut:#58675f;--bg:#f4faf6;--line:#dcebe2;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*:before,*:after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:76px;background:var(--bg)}
+body{margin:0;font-family:"Hind Siliguri","Noto Sans Bengali",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65;overflow-x:hidden}
+img,video{max-width:100%;display:block}a{color:inherit;text-decoration:none}
+.wrap{width:100%;max-width:1140px;margin:0 auto;padding:0 18px}
+/* header */
+header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:66px;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px;white-space:nowrap}
+.brand img{width:46px;height:44px;object-fit:contain}
+.brand b{color:var(--r)}.brand span{color:var(--g)}
+nav{display:flex;gap:20px;font-weight:600;font-size:14px;color:var(--mut)}
+nav a{position:relative;padding:4px 0}nav a:after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--r);transition:.25s}nav a:hover{color:var(--g)}nav a:hover:after{width:100%}
+.tools{display:flex;gap:8px;align-items:center}
+.lang{border:1.5px solid var(--g);background:#fff;color:var(--g);border-radius:999px;padding:6px 13px;cursor:pointer;font:inherit;font-size:13px;font-weight:800}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:14px;padding:13px 22px;font:inherit;font-weight:800;cursor:pointer;background:linear-gradient(135deg,#0a9150,var(--gd));color:#fff;box-shadow:0 8px 20px rgba(8,120,63,.25);transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(8,120,63,.32)}
+.btn.red{background:linear-gradient(135deg,#f01a28,#b80410);box-shadow:0 8px 20px rgba(225,6,19,.25)}
+.btn.out{background:#fff;color:var(--g);border:2px solid var(--g);box-shadow:none}
+.btn.sm{padding:9px 16px;border-radius:12px;font-size:14px}
+/* hero */
+.hero{position:relative;overflow:hidden;padding:56px 0 50px;background:radial-gradient(900px 420px at 85% 10%,rgba(8,120,63,.13),transparent 60%),radial-gradient(700px 380px at 5% 90%,rgba(225,6,19,.09),transparent 60%),linear-gradient(180deg,#f9fdfa,#eef8f2)}
+.hero:before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(8,120,63,.12) 1.2px,transparent 1.2px);background-size:26px 26px;mask-image:linear-gradient(90deg,transparent,#000 60%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 60%,transparent);opacity:.6}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:30px;align-items:center}
+.tag{display:inline-flex;gap:8px;align-items:center;background:#fff;border:1px solid #cfe5d8;color:var(--g);font-weight:800;font-size:13px;padding:6px 14px;border-radius:999px;box-shadow:0 4px 12px rgba(8,120,63,.08)}
+.tag:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--r);box-shadow:0 0 0 4px rgba(225,6,19,.15)}
+h1{font-size:clamp(30px,5.4vw,52px);line-height:1.18;margin:16px 0 14px;letter-spacing:-.5px}
+h1 em{font-style:normal;color:var(--r)}h1 i{font-style:normal;color:var(--g)}
+h1 .sub2{display:block;font-size:.62em;color:var(--ink);font-weight:700;margin-top:6px}
+.hero p{color:var(--mut);font-size:17px;margin:0 0 24px;max-width:520px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.stats{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+.stat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px 16px;box-shadow:0 6px 18px rgba(16,35,26,.05)}
+.stat b{display:block;font-size:20px;color:var(--gd);line-height:1.2}.stat span{font-size:12.5px;color:var(--mut)}
+.logoBox{position:relative;display:grid;place-items:center}
+.logoBox:before{content:"";position:absolute;width:82%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.95),rgba(255,255,255,0) 68%)}
+.logoBox img{position:relative;width:min(430px,92%);filter:drop-shadow(0 18px 24px rgba(8,120,63,.18));animation:float 5s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-10px)}}
+/* sections */
+section{padding:62px 0}
+.head{text-align:center;max-width:720px;margin:0 auto 30px}
+.kick{display:inline-block;font-weight:800;font-size:13px;letter-spacing:.6px;text-transform:uppercase;color:var(--r);background:#fde8ea;border-radius:999px;padding:4px 14px;margin-bottom:10px}
+h2{font-size:clamp(25px,4.2vw,38px);line-height:1.25;margin:0 0 10px;color:var(--gd)}
+h2 small{color:var(--r);font-size:inherit}
+.head p{color:var(--mut);margin:0}
+.shot{position:relative;border-radius:26px;overflow:hidden;background:#fff;border:1px solid var(--line);box-shadow:0 22px 50px rgba(16,35,26,.12);max-width:1020px;margin:0 auto}
+.shot img{width:100%;height:auto}
+.shotCta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:22px}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:22px}
+.chip{background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-weight:700;font-size:14px;color:var(--gd);box-shadow:0 4px 12px rgba(16,35,26,.04)}
+.chip:nth-child(even){color:var(--r)}
+.tint{background:linear-gradient(180deg,#eaf6ee,#f4faf6)}
+/* team band with photo background */
+.band{position:relative;color:#fff;background:linear-gradient(rgba(5,60,31,.90),rgba(8,40,24,.94)),url(assets/workspace.jpg) center/cover fixed}
+.band h2{color:#fff}.band .head p{color:#cfe8d9}.band .kick{background:rgba(255,255,255,.14);color:#fff}
+.ph{width:100%;border-radius:22px;border:1px solid rgba(255,255,255,.2);box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.roles{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:22px}
+.role{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:18px;padding:18px 14px;text-align:center;transition:transform .25s,background .25s}
+.role:hover{transform:translateY(-5px);background:rgba(255,255,255,.18)}
+.role .ic{font-size:26px;width:52px;height:52px;margin:0 auto 8px;border-radius:15px;display:grid;place-items:center;background:rgba(255,255,255,.16)}
+.role h3{margin:0 0 4px;font-size:15.5px}.role p{margin:0;font-size:13px;color:#cfe8d9}
+.dir{display:grid;grid-template-columns:230px 1fr;gap:28px;align-items:center;margin-top:28px;background:#fff;color:var(--ink);border-radius:24px;padding:22px;box-shadow:0 20px 50px rgba(0,0,0,.28)}
+.dir img{border-radius:18px;width:100%;max-height:340px;object-fit:cover;object-position:top}
+.dir h3{margin:0;font-size:28px;color:var(--gd)}.dir .rl{display:inline-block;margin:6px 0 10px;background:linear-gradient(135deg,#f01a28,#b80410);color:#fff;font-weight:800;border-radius:999px;padding:3px 14px;font-size:14px}
+.dir p{margin:0;color:var(--mut)}
+.ck{list-style:none;padding:0;margin:14px 0 0}.ck li{padding:4px 0 4px 28px;position:relative}.ck li:before{content:"✓";position:absolute;left:0;top:4px;width:20px;height:20px;border-radius:50%;background:var(--g);color:#fff;font-size:12px;display:grid;place-items:center;font-weight:900}
+/* socials */
+.soc{display:flex;gap:10px;flex-wrap:wrap}
+.sb{display:inline-flex;align-items:center;gap:9px;padding:10px 16px;border-radius:14px;color:#fff;font-weight:800;font-size:14.5px;box-shadow:0 8px 18px rgba(16,35,26,.18);transition:transform .2s,box-shadow .2s}
+.sb:hover{transform:translateY(-3px);box-shadow:0 14px 26px rgba(16,35,26,.26)}
+.sb svg{width:20px;height:20px;flex:none}
+.sb.fb{background:#1877F2}.sb.wapp{background:#25D366}.sb.ig{background:linear-gradient(45deg,#f9a825,#e1306c 50%,#6a3fd1)}.sb.x{background:#0f1419}
+.soc.ico .sb{padding:0;width:42px;height:42px;justify-content:center;border-radius:12px}.soc.ico .sb span{display:none}
+.hero .soc{margin-top:22px}
+.sochd{font-weight:800;color:var(--gd);margin:0 0 10px;font-size:15px}
+/* work sliders */
+#work{background:linear-gradient(180deg,#f4faf6,#fff 40%,#f4faf6)}
+.sl{position:relative;margin-top:8px}
+.sl h3.t{font-size:21px;margin:0 0 12px;color:var(--gd);display:flex;align-items:center;gap:10px}
+.sl h3.t:before{content:"";width:6px;height:24px;border-radius:4px;background:linear-gradient(var(--r),var(--g))}
+.track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:8px 4px 22px;-ms-overflow-style:none;scrollbar-width:none}
+.track::-webkit-scrollbar{display:none}
+.it{flex:0 0 auto;scroll-snap-align:start;background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 14px 34px rgba(16,35,26,.1);transition:transform .35s,box-shadow .35s;position:relative}
+.it:hover{transform:translateY(-8px) rotate(-.4deg);box-shadow:0 24px 44px rgba(8,120,63,.2)}
+.dz .it{width:min(300px,76vw);cursor:zoom-in}
+.dz .im{height:330px;background:#eef5f0;display:grid;place-items:center;overflow:hidden}
+.dz .im img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .6s}
+.dz .it:hover .im img{transform:scale(1.06)}
+.vz .it{width:min(240px,64vw)}
+.vz .im{aspect-ratio:9/16;background:#0b1f15;position:relative}
+.vz video,.vz iframe{width:100%;height:100%;object-fit:cover;border:0;display:block}
+.cap{padding:12px 14px;font-weight:700;font-size:14.5px;line-height:1.35}
+.tg{position:absolute;top:10px;left:10px;z-index:2;background:rgba(5,60,31,.88);color:#fff;font-size:11.5px;font-weight:800;padding:3px 10px;border-radius:999px}
+.vz .tg{background:rgba(225,6,19,.9)}
+.nb{position:absolute;top:42%;z-index:5;width:44px;height:44px;border-radius:50%;border:0;background:#fff;color:var(--gd);font-size:22px;font-weight:900;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.2)}
+.nb:hover{background:var(--g);color:#fff}.nb.pv{left:-8px}.nb.nx{right:-8px}
+.dots{display:flex;justify-content:center;gap:7px;margin-top:-6px}
+.dots i{width:8px;height:8px;border-radius:99px;background:#c9ddd1;transition:.3s}.dots i.on{width:24px;background:var(--r)}
+.empty{display:none}
+.lb{position:fixed;inset:0;z-index:100;background:rgba(5,15,10,.92);display:none;align-items:center;justify-content:center;padding:20px}
+.lb.on{display:flex}.lb img{max-height:88vh;max-width:94vw;border-radius:14px}
+.lb button{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:16px;width:44px;height:44px;border-radius:50%;border:0;background:#fff;font-size:22px;cursor:pointer}
+/* about & cert */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:center}
+.two img{border-radius:22px;box-shadow:0 18px 44px rgba(16,35,26,.14)}
+.two p{color:var(--mut)}
+/* contact */
+.contact{display:grid;grid-template-columns:1fr 1.1fr;gap:22px}
+.card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 12px 32px rgba(16,35,26,.07)}
+.ci{display:flex;gap:14px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line)}.ci:last-child{border:0}
+.ci .i{flex:none;width:44px;height:44px;border-radius:13px;display:grid;place-items:center;background:#e6f4ec;font-size:20px}
+.ci:nth-child(even) .i{background:#fde8ea}
+.ci b{display:block;line-height:1.3}.ci span,.ci a{color:var(--mut);font-size:14.5px}.ci a:hover{color:var(--g)}
+label{font-weight:700;font-size:14px;display:block;margin:10px 0 4px}
+input,select,textarea{width:100%;border:1.5px solid #cfe0d6;border-radius:12px;padding:12px 14px;font:inherit;background:#fff;color:var(--ink)}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--g);border-color:var(--g)}
+textarea{min-height:100px;resize:vertical}
+footer{background:var(--gx);color:#bcd2c4;padding:30px 0;font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center}footer a:hover{color:#fff}
+.wa{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:60;background:#25D366;color:#fff;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;font-size:28px;box-shadow:0 10px 24px rgba(0,0,0,.28)}
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s,transform .7s}.rv.in{opacity:1;transform:none}
+@media(max-width:900px){nav{display:none}.hero .wrap,.two,.contact,.dir{grid-template-columns:1fr}.roles{grid-template-columns:repeat(2,1fr)}.dir img{max-width:230px;margin:0 auto}.logoBox{order:-1}.logoBox img{width:min(300px,80%)}.band{background-attachment:scroll}.hero p{max-width:none}}
+@media(max-width:520px){.brand{font-size:15px}.btn{padding:12px 16px}.roles{grid-template-columns:1fr 1fr}section{padding:46px 0}.tools .btn{display:none}}
+@media(prefers-reduced-motion:reduce){.logoBox img{animation:none}.rv{opacity:1;transform:none;transition:none}}
+
+/* company-first + budget form */
+.hero.co{background:radial-gradient(900px 420px at 15% 10%,rgba(225,6,19,.09),transparent 60%),radial-gradient(800px 420px at 90% 90%,rgba(8,120,63,.14),transparent 60%),linear-gradient(180deg,#fff,#eef8f2)}
+.co .logoBox img{width:min(540px,96%)}
+.co .chips{justify-content:flex-start;margin-top:20px}
+.r2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hint{font-size:12.5px;color:var(--mut);margin:6px 0 0}
+#cw{display:none;margin-top:8px}
+.btn.out.full{width:100%;margin-top:10px}
+@media(max-width:520px){.r2{grid-template-columns:1fr}}
+
+/* director cutout + team banner */
+.dirph{position:relative;align-self:end;border-radius:20px;overflow:hidden;background:radial-gradient(120% 90% at 50% 8%,#13a15a,#055a2e 62%,#0b1f15);aspect-ratio:4/5;display:flex;align-items:flex-end;justify-content:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+.dirph:before{content:"";position:absolute;right:-18%;top:-12%;width:70%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(225,6,19,.55),transparent 66%)}
+.dir .dirph img{position:relative;width:auto;height:100%;max-height:none;max-width:100%;object-fit:contain;object-position:bottom;border-radius:0}
+.ph{background:#fff}
+@media(max-width:900px){.dirph{max-width:260px;margin:0 auto;width:100%}}
+</style>
+</head>
+<body>
+<header><div class="wrap nav">
+  <a class="brand" href="#top"><img src="assets/ridebangla-logo.png" alt="Ride Bangla Limited logo"><div><b>Ride</b> <span>Bangla</span> Limited</div></a>
+  <nav>
+    <a href="#company" data-bn="Ride Bangla" data-en="Ride Bangla">Ride Bangla</a>
+    <a href="#it-team" data-bn="আইটি টিম" data-en="IT Team">আইটি টিম</a>
+    <a href="#services" data-bn="আইটি সার্ভিস" data-en="IT Services">আইটি সার্ভিস</a>
+    <a href="#team" data-bn="আমাদের টিম" data-en="Our Team">আমাদের টিম</a>
+    <a href="#work" data-bn="আমাদের কাজ" data-en="Our Work">আমাদের কাজ</a>
+    <a href="#about" data-bn="পরিচিতি" data-en="About">পরিচিতি</a>
+    <a href="#contact" data-bn="যোগাযোগ" data-en="Contact">যোগাযোগ</a>
+  </nav>
+  <div class="tools"><button class="lang" id="lang" type="button" aria-label="Language">EN</button><a class="btn sm" href="https://wa.me/8801825234644" target="_blank" rel="noopener">WhatsApp</a></div>
+</div></header>
+
+<main id="top">
+<div class="hero co" id="company"><div class="wrap">
+  <div class="rv">
+    <span class="tag" data-bn="অফিসিয়াল কোম্পানি" data-en="Official Company">অফিসিয়াল কোম্পানি</span>
+    <h1><em>Ride</em> <i>Bangla</i> Limited<span class="sub2">Ride. Food. Delivery. Courier.</span></h1>
+    <p data-bn="রাইড শেয়ার, ফুড ও পার্সেল ডেলিভারি, কুরিয়ার, মার্কেটপ্লেস, মেডিসিন, আইটি সার্ভিস ও Ride Bangla Pay — এক প্ল্যাটফর্মে সব সেবা।" data-en="Ride share, food and parcel delivery, courier, marketplace, medicine, IT services and Ride Bangla Pay — all services on one platform.">রাইড শেয়ার, ফুড ও পার্সেল ডেলিভারি, কুরিয়ার, মার্কেটপ্লেস, মেডিসিন, আইটি সার্ভিস ও Ride Bangla Pay — এক প্ল্যাটফর্মে সব সেবা।</p>
+    <div class="cta"><a class="btn red" href="https://ridebangla.bd" target="_blank" rel="noopener">ridebangla.bd ↗</a><a class="btn out" href="#it-team" data-bn="আইটি টিম দেখুন" data-en="Meet the IT Team">আইটি টিম দেখুন</a></div>
+    <div class="chips"><span class="chip">Ride Share</span><span class="chip">Food Delivery</span><span class="chip">Parcel</span><span class="chip">Courier</span><span class="chip">Marketplace</span><span class="chip">Medicine</span><span class="chip">IT Services</span><span class="chip">Ride Bangla Pay</span></div>
+  </div>
+  <div class="logoBox rv"><img src="assets/company-logo.png" alt="Ride Bangla Limited — Ride. Food. Delivery. Courier."></div>
+</div></div>
+
+<section id="company-services"><div class="wrap">
+  <div class="head rv"><span class="kick">Ride Bangla Limited</span>
+    <h2 data-bn="Ride Bangla Limited-এর সার্ভিস সমূহ" data-en="Services of Ride Bangla Limited">Ride Bangla Limited-এর সার্ভিস সমূহ</h2>
+    <p data-bn="Ride. Food. Delivery. Courier. — এই ওয়েবসাইট শুধু আইটি টিমের জন্য, মূল কোম্পানির সব সার্ভিস দেখুন মূল ওয়েবসাইটে।" data-en="Ride. Food. Delivery. Courier. — This site is for the IT Team; see all company services on the main website.">Ride. Food. Delivery. Courier. — এই ওয়েবসাইট শুধু আইটি টিমের জন্য, মূল কোম্পানির সব সার্ভিস দেখুন মূল ওয়েবসাইটে।</p></div>
+  <div class="shot rv"><img src="assets/services-main.jpg" alt="Ride Bangla Limited services: Ride Share, Food Delivery, Parcel Delivery, Courier, Marketplace, Medicine, IT Services, Ride Bangla Pay" loading="lazy"></div>
+  <div class="shotCta rv"><a class="btn red" href="https://ridebangla.bd" target="_blank" rel="noopener">ridebangla.bd ↗</a></div>
+</div></section>
+
+<div class="hero" id="it-team"><div class="wrap">
+  <div class="rv">
+    <span class="tag" data-bn="Ride Bangla Limited-এর আইটি টিম" data-en="The IT Team of Ride Bangla Limited">Ride Bangla Limited-এর আইটি টিম</span>
+    <h1><em>Ride Bangla</em> <i>IT Team</i><span class="sub2" data-bn="আপনার স্বপ্নের ডিজিটাল সমাধান" data-en="Your Dream Digital Solution">আপনার স্বপ্নের ডিজিটাল সমাধান</span></h1>
+    <p data-bn="অ্যাপ, ওয়েব, ডিজাইন ও ডিজিটাল মার্কেটিং — প্রফেশনাল টিমের হাতে আপনার সব ডিজিটাল প্রয়োজন।" data-en="Apps, Web, Design and Digital Marketing — all your digital needs in the hands of a professional team.">অ্যাপ, ওয়েব, ডিজাইন ও ডিজিটাল মার্কেটিং — প্রফেশনাল টিমের হাতে আপনার সব ডিজিটাল প্রয়োজন।</p>
+    <div class="cta"><a class="btn red" href="#contact" data-bn="প্রজেক্ট শুরু করুন" data-en="Start a Project">প্রজেক্ট শুরু করুন</a><a class="btn out" href="#services" data-bn="আইটি সার্ভিস দেখুন" data-en="View IT Services">আইটি সার্ভিস দেখুন</a></div>
+    <div class="stats">
+      <div class="stat"><b>6</b><span data-bn="সদস্যের টিম" data-en="Team members">সদস্যের টিম</span></div>
+      <div class="stat"><b>8</b><span data-bn="আইটি সার্ভিস" data-en="IT services">আইটি সার্ভিস</span></div>
+      <div class="stat"><b>Ride Bangla</b><span data-bn="Limited-এর অংশ" data-en="Limited family">Limited-এর অংশ</span></div>
+    </div>
+    <div class="soc "><a class="sb fb" href="https://facebook.com/ridebanglait0" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.88v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg><span>Facebook</span></a><a class="sb wapp" href="https://wa.me/8801825234644" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.6-4.8A9 9 0 1 1 8 19.6L3 21z"/><path d="M9 8.5c.3 2.5 2.7 5 5.5 6l1.2-1.2-1.8-1-.9.6c-.9-.4-1.700-1.200-2.100-2.100l.6-.9-1-1.800z" fill="currentColor" stroke-width="1"/></svg><span>WhatsApp</span></a><a class="sb ig" href="https://www.instagram.com/tabassum_nisha2?stkn=MXd0bTRnb3AwMG51aA==" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg><span>Instagram</span></a><a class="sb x" href="https://x.com/Tabassum_Nisha2" target="_blank" rel="noopener" aria-label="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg><span>X (Twitter)</span></a></div>
+  </div>
+  <div class="logoBox rv"><img src="assets/logo.png" alt="Ride Bangla IT Team — Apps | Web | Design | Digital Marketing"></div>
+</div></div>
+
+
+<section id="services" class="tint"><div class="wrap">
+  <div class="head rv"><span class="kick">IT Team</span>
+    <h2><span data-bn="আমাদের" data-en="Our">আমাদের</span> <small>IT Services</small></h2>
+    <p data-bn="Driving Innovation, Delivering Solutions — নির্ভরযোগ্য আইটি সার্ভিস, সময়মতো ডেলিভারি।" data-en="Driving Innovation, Delivering Solutions — reliable IT services, delivered on time.">Driving Innovation, Delivering Solutions — নির্ভরযোগ্য আইটি সার্ভিস, সময়মতো ডেলিভারি।</p></div>
+  <div class="shot rv"><img src="assets/services-it.jpg" alt="Ride Bangla IT Team services — UI/UX, Website Development, Digital Marketing, Logo Design, Background Removal, IT Support" loading="lazy"></div>
+  <div class="chips rv">
+    <span class="chip">Web Application</span><span class="chip">Mobile App</span><span class="chip">UI/UX Design</span><span class="chip">Graphic Design</span>
+    <span class="chip">Digital Marketing</span><span class="chip">Hosting &amp; Domain</span><span class="chip">Email Solution</span><span class="chip">IT Support</span>
+  </div>
+  <div class="shotCta rv"><a class="btn" href="#contact" data-bn="কাজের জন্য যোগাযোগ করুন" data-en="Contact us for work">কাজের জন্য যোগাযোগ করুন</a></div>
+</div></section>
+
+<section id="team" class="band"><div class="wrap">
+  <div class="head rv"><span class="kick">Our Team</span>
+    <h2 data-bn="আমাদের আইটি টিম" data-en="Our IT Team">আমাদের আইটি টিম</h2>
+    <p data-bn="ভিশন নিয়ে নেতৃত্ব, ফলাফল নিয়ে কাজ।" data-en="Leading with vision, delivering results.">ভিশন নিয়ে নেতৃত্ব, ফলাফল নিয়ে কাজ।</p></div>
+  <img class="ph rv" src="assets/team.jpg" alt="Ride Bangla IT Team members" loading="lazy">
+  <div class="dir rv">
+    <div class="dirph"><img src="assets/director.png" alt="Tabassum Nisha — IT Team Director" loading="lazy"></div>
+    <div>
+      <h3>Tabassum Nisha</h3><span class="rl">IT Team Director</span>
+      <p data-bn="টিমের প্রতিটি প্রজেক্ট পরিকল্পনা, ডিজাইন, ডেভেলপমেন্ট ও ডেলিভারি পর্যন্ত তার নেতৃত্বে পরিচালিত হয়।" data-en="Every project is guided under her direction — from planning and design through development and delivery.">টিমের প্রতিটি প্রজেক্ট পরিকল্পনা, ডিজাইন, ডেভেলপমেন্ট ও ডেলিভারি পর্যন্ত তার নেতৃত্বে পরিচালিত হয়।</p>
+      <ul class="ck"><li data-bn="Web, App, UI/UX, Logo ও Brand Design" data-en="Web, App, UI/UX, Logo & Brand Design">Web, App, UI/UX, Logo ও Brand Design</li><li data-bn="Digital Marketing ও Graphics Design" data-en="Digital Marketing & Graphics Design">Digital Marketing ও Graphics Design</li></ul>
+    </div>
+  </div>
+  <div class="roles">
+    <div class="role rv"><div class="ic">🎧</div><h3>IT Support Engineer</h3><p data-bn="স্মুথ টেক সাপোর্ট" data-en="Smooth tech support">স্মুথ টেক সাপোর্ট</p></div>
+    <div class="role rv"><div class="ic">🖌️</div><h3>UI/UX Designer</h3><p data-bn="ইউজার-ফ্রেন্ডলি ডিজাইন" data-en="User-friendly design">ইউজার-ফ্রেন্ডলি ডিজাইন</p></div>
+    <div class="role rv"><div class="ic">&lt;/&gt;</div><h3>Full Stack Developer</h3><p data-bn="শক্তিশালী ওয়েব সলিউশন" data-en="Robust web solutions">শক্তিশালী ওয়েব সলিউশন</p></div>
+    <div class="role rv"><div class="ic">🌐</div><h3>Web Developer</h3><p data-bn="রেসপন্সিভ ওয়েব" data-en="Responsive web">রেসপন্সিভ ওয়েব</p></div>
+    <div class="role rv"><div class="ic">🗄️</div><h3>Database Administrator</h3><p data-bn="ডেটা সুরক্ষা ও ব্যবস্থাপনা" data-en="Secure data systems">ডেটা সুরক্ষা ও ব্যবস্থাপনা</p></div>
+  </div>
+</div></section>
+
+<section id="work"><div class="wrap">
+  <div class="head rv"><span class="kick">Our Work</span>
+    <h2 data-bn="আমাদের কাজ" data-en="Our Work">আমাদের কাজ</h2>
+    <p data-bn="আমাদের করা ডিজাইন ও অ্যাপ ডেভেলপমেন্টের কিছু নমুনা — নিজে নিজেই স্লাইড হচ্ছে।" data-en="Samples of our design and app development work — sliding automatically.">আমাদের করা ডিজাইন ও অ্যাপ ডেভেলপমেন্টের কিছু নমুনা — নিজে নিজেই স্লাইড হচ্ছে।</p></div>
+  <div class="sl dz rv" id="sl-designs"><h3 class="t" data-bn="ডিজাইন কাজ" data-en="Design Work">ডিজাইন কাজ</h3>
+    <button class="nb pv" aria-label="Previous">‹</button><button class="nb nx" aria-label="Next">›</button>
+    <div class="track"></div><div class="dots"></div></div>
+  <div class="sl vz rv" id="sl-videos" style="margin-top:34px"><h3 class="t" data-bn="কাজের ভিডিও" data-en="Work Videos">কাজের ভিডিও</h3>
+    <button class="nb pv" aria-label="Previous">‹</button><button class="nb nx" aria-label="Next">›</button>
+    <div class="track"></div><div class="dots"></div></div>
+</div></section>
+
+<section id="about"><div class="wrap two">
+  <div class="rv">
+    <span class="kick">About</span>
+    <h2 data-bn="আমরা কারা" data-en="Who We Are">আমরা কারা</h2>
+    <p data-bn="Ride Bangla IT Team হলো Ride Bangla Limited-এর নিজস্ব আইটি টিম। আমরা কোম্পানির অ্যাপ, ওয়েবসাইট, ডিজাইন ও ডিজিটাল মার্কেটিংয়ের কাজ পরিচালনা করি এবং একই মানের সার্ভিস বাইরের ক্লায়েন্টদেরও দিই।" data-en="Ride Bangla IT Team is the in-house technology team of Ride Bangla Limited. We handle the company's apps, websites, design and digital marketing, and offer the same quality of service to outside clients.">Ride Bangla IT Team হলো Ride Bangla Limited-এর নিজস্ব আইটি টিম। আমরা কোম্পানির অ্যাপ, ওয়েবসাইট, ডিজাইন ও ডিজিটাল মার্কেটিংয়ের কাজ পরিচালনা করি এবং একই মানের সার্ভিস বাইরের ক্লায়েন্টদেরও দিই।</p>
+    <ul class="ck"><li>Innovation • Creativity • Success</li><li data-bn="Small Steps, Big Dreams — ছোট ধাপে বড় স্বপ্ন" data-en="Small Steps, Big Dreams">Small Steps, Big Dreams — ছোট ধাপে বড় স্বপ্ন</li><li data-bn="পরিকল্পনা, ডিজাইন, ডেভেলপমেন্ট ও সাপোর্ট এক জায়গায়" data-en="Planning, design, development and support in one place">পরিকল্পনা, ডিজাইন, ডেভেলপমেন্ট ও সাপোর্ট এক জায়গায়</li></ul>
+  </div>
+  <img class="rv" src="assets/certificate.jpg" alt="Certificate of Achievement — Tabassum Nisha, 360DigiTMG" loading="lazy">
+</div></section>
+
+<section id="contact" class="tint"><div class="wrap">
+  <div class="head rv"><span class="kick">Contact</span>
+    <h2 data-bn="যোগাযোগ করুন" data-en="Contact Us">যোগাযোগ করুন</h2>
+    <p data-bn="প্রজেক্টের কথা জানান — ফর্ম পাঠালে সরাসরি আমাদের WhatsApp-এ মেসেজ খুলবে।" data-en="Tell us about your project — the form opens WhatsApp with your message.">প্রজেক্টের কথা জানান — ফর্ম পাঠালে সরাসরি আমাদের WhatsApp-এ মেসেজ খুলবে।</p></div>
+  <div class="contact">
+    <div class="card rv">
+      <div class="ci"><div class="i">📞</div><div><b>WhatsApp</b><a href="https://wa.me/8801825234644" target="_blank" rel="noopener">+880 1825-234644</a></div></div>
+      <div class="ci"><div class="i">✉️</div><div><b>Email</b><a href="mailto:info@ridebangla.bd">info@ridebangla.bd</a></div></div>
+      <div class="ci"><div class="i">🌐</div><div><b>Website</b><span><a href="https://it.ridebangla.bd">it.ridebangla.bd</a> · <a href="https://ridebangla.bd" target="_blank" rel="noopener">ridebangla.bd</a></span></div></div>
+      <div class="ci"><div class="i">📍</div><div><b data-bn="ঠিকানা" data-en="Location">ঠিকানা</b><span data-bn="ফরিদপুর, বাংলাদেশ" data-en="Faridpur, Bangladesh">ফরিদপুর, বাংলাদেশ</span></div></div>
+      <div class="ci"><div class="i"><svg viewBox="0 0 24 24" width="24" height="24" fill="#1877F2" aria-hidden="true"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.88v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg></div><div><b>Facebook</b><a href="https://facebook.com/ridebanglait0" target="_blank" rel="noopener">facebook.com/ridebanglait0</a></div></div>
+      <div style="padding-top:14px"><p class="sochd" data-bn="সোশ্যাল মিডিয়ায় আমরা" data-en="Find us on social media">সোশ্যাল মিডিয়ায় আমরা</p><div class="soc "><a class="sb fb" href="https://facebook.com/ridebanglait0" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.88v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg><span>Facebook</span></a><a class="sb wapp" href="https://wa.me/8801825234644" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.6-4.8A9 9 0 1 1 8 19.6L3 21z"/><path d="M9 8.5c.3 2.5 2.7 5 5.5 6l1.2-1.2-1.8-1-.9.6c-.9-.4-1.700-1.200-2.100-2.100l.6-.9-1-1.800z" fill="currentColor" stroke-width="1"/></svg><span>WhatsApp</span></a><a class="sb ig" href="https://www.instagram.com/tabassum_nisha2?stkn=MXd0bTRnb3AwMG51aA==" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg><span>Instagram</span></a><a class="sb x" href="https://x.com/Tabassum_Nisha2" target="_blank" rel="noopener" aria-label="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg><span>X (Twitter)</span></a></div></div>
+    </div>
+    <form class="card rv" id="f">
+      <label for="n" data-bn="আপনার নাম" data-en="Your name">আপনার নাম</label><input id="n" required autocomplete="name">
+      <div class="r2"><div><label for="p" data-bn="মোবাইল / WhatsApp নম্বর" data-en="Mobile / WhatsApp number">মোবাইল / WhatsApp নম্বর</label><input id="p" type="tel" required inputmode="tel" autocomplete="tel" pattern="[+0-9\s\-()]{7,20}" placeholder="+880 1XXX-XXXXXX"></div>
+      <div><label for="e" data-bn="ইমেইল" data-en="Email">ইমেইল</label><input id="e" type="email" autocomplete="email" placeholder="you@example.com"></div></div>
+      <label for="t" data-bn="কী ধরনের কাজ?" data-en="Type of work">কী ধরনের কাজ?</label>
+      <select id="t"><option>Web Application</option><option>Mobile App</option><option>UI/UX Design</option><option>Graphic Design</option><option>Logo Design</option><option>Background Removal</option><option>Digital Marketing</option><option>Hosting &amp; Domain</option><option>Email Solution</option><option>IT Support</option></select>
+      <label for="b" data-bn="আপনার বাজেট" data-en="Your budget">আপনার বাজেট</label><select id="b" required></select>
+      <div id="cw"><div class="r2"><input id="ca" type="number" min="1" step="any" inputmode="decimal"><select id="cc" aria-label="Currency"><option value="USD">USD ($)</option><option value="BDT">BDT (৳)</option></select></div></div>
+      <p class="hint" data-bn="বাজেট রেঞ্জগুলো বর্তমান গ্লোবাল মার্কেট রেট অনুযায়ী আনুমানিক; ইচ্ছা হলে নিজের অফার লিখতে পারেন।" data-en="Ranges follow approximate current global market rates; you can also enter your own offer.">বাজেট রেঞ্জগুলো বর্তমান গ্লোবাল মার্কেট রেট অনুযায়ী আনুমানিক; ইচ্ছা হলে নিজের অফার লিখতে পারেন।</p>
+      <label for="d" data-bn="প্রজেক্টের বিবরণ" data-en="Project details">প্রজেক্টের বিবরণ</label><textarea id="d" required></textarea>
+      <button class="btn" style="width:100%;margin-top:14px" type="submit" data-bn="WhatsApp-এ পাঠান" data-en="Send on WhatsApp">WhatsApp-এ পাঠান</button>
+      <button class="btn out full" type="button" id="fe" data-bn="ইমেইলে পাঠান" data-en="Send by Email">ইমেইলে পাঠান</button>
+    </form>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <div>© <span id="y">2026</span> Ride Bangla IT Team — <span data-bn="Ride Bangla Limited-এর একটি উদ্যোগ" data-en="A Ride Bangla Limited initiative">Ride Bangla Limited-এর একটি উদ্যোগ</span></div>
+  <div class="soc ico"><a class="sb fb" href="https://facebook.com/ridebanglait0" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.88v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg><span>Facebook</span></a><a class="sb wapp" href="https://wa.me/8801825234644" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.6-4.8A9 9 0 1 1 8 19.6L3 21z"/><path d="M9 8.5c.3 2.5 2.7 5 5.5 6l1.2-1.2-1.8-1-.9.6c-.9-.4-1.700-1.200-2.100-2.100l.6-.9-1-1.800z" fill="currentColor" stroke-width="1"/></svg><span>WhatsApp</span></a><a class="sb ig" href="https://www.instagram.com/tabassum_nisha2?stkn=MXd0bTRnb3AwMG51aA==" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg><span>Instagram</span></a><a class="sb x" href="https://x.com/Tabassum_Nisha2" target="_blank" rel="noopener" aria-label="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg><span>X (Twitter)</span></a></div>
+</div></footer>
+<div class="lb" id="lb"><button aria-label="Close">✕</button><img alt=""></div>
+<a class="wa" href="https://wa.me/8801825234644" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
+
+<script>
+/* ===== পোর্টফোলিও (ছবি ও ভিডিও) =====
+   ডিফল্ট ডেটা নিচে আছে এবং data/portfolio.json ফাইলেও একই আছে।
+   ভবিষ্যতে অ্যাডমিন প্যানেল থেকে আপডেট করতে PORTFOLIO_API-তে অ্যাডমিন প্যানেলের JSON লিংক বসান।
+   JSON ফরম্যাট: {"designs":[{src,title:{bn,en},tag}], "videos":[{src,poster,title:{bn,en}} বা {type:"youtube",id,title}]}
+   অগ্রাধিকার: PORTFOLIO_API -> data/portfolio.json -> নিচের ডিফল্ট */
+var PORTFOLIO_API="";
+var PORTFOLIO_URL="data/portfolio.json";
+var DEFAULT_PORTFOLIO={"designs": [{"src": "assets/portfolio/mastul-poster.jpg", "title": {"bn": "Mastul Perfumes — পোস্টার ডিজাইন", "en": "Mastul Perfumes — Poster Design"}, "tag": "Poster"}, {"src": "assets/portfolio/mastul-banner.jpg", "title": {"bn": "Mastul Perfumes — ব্যানার", "en": "Mastul Perfumes — Banner"}, "tag": "Banner"}, {"src": "assets/portfolio/mastul-logo.jpg", "title": {"bn": "Mastul Perfumes — লোগো ও ব্র্যান্ড আইডেন্টিটি", "en": "Mastul Perfumes — Logo & Brand Identity"}, "tag": "Logo"}, {"src": "assets/portfolio/bunora-brand.jpg", "title": {"bn": "Bunora Burgers — ব্র্যান্ড আইডেন্টিটি", "en": "Bunora Burgers — Brand Identity"}, "tag": "Branding"}, {"src": "assets/portfolio/structon-brand.jpg", "title": {"bn": "Structon — ব্র্যান্ড আইডেন্টিটি", "en": "Structon — Brand Identity"}, "tag": "Branding"}, {"src": "assets/portfolio/cream-crumb-brand.jpg", "title": {"bn": "Cream & Crumb — ব্র্যান্ড আইডেন্টিটি", "en": "Cream & Crumb — Brand Identity"}, "tag": "Branding"}, {"src": "assets/portfolio/bakery-web.jpg", "title": {"bn": "বেকারি ওয়েবসাইট ডিজাইন", "en": "Bakery Website Design"}, "tag": "Web Design"}], "videos": [{"src": "assets/videos/work-1.mp4", "poster": "assets/videos/work-1.jpg", "title": {"bn": "লাইভ কোডিং ও অ্যাপ প্রিভিউ", "en": "Live Coding & App Preview"}}, {"src": "assets/videos/work-2.mp4", "poster": "assets/videos/work-2.jpg", "title": {"bn": "অ্যাপ লগইন UI ডেভেলপমেন্ট", "en": "App Login UI Development"}}, {"src": "assets/videos/work-3.mp4", "poster": "assets/videos/work-3.jpg", "title": {"bn": "Pizza Mood — ফুড অ্যাপ UI", "en": "Pizza Mood — Food App UI"}}, {"src": "assets/videos/work-4.mp4", "poster": "assets/videos/work-4.jpg", "title": {"bn": "Face ID লগইন UI", "en": "Face ID Login UI"}}, {"src": "assets/videos/work-5.mp4", "poster": "assets/videos/work-5.jpg", "title": {"bn": "Mastul Perfumes — প্রোমো ভিডিও", "en": "Mastul Perfumes — Promo Video"}}]};
+
+(function(){
+var L="en",btn=document.getElementById("lang");
+try{L=localStorage.getItem("rbit-lang")||"en"}catch(e){}
+function apply(){document.documentElement.lang=L;document.querySelectorAll("[data-bn]").forEach(function(el){el.textContent=el.getAttribute("data-"+L)});btn.textContent=L==="bn"?"EN":"বাংলা"}
+btn.onclick=function(){L=L==="bn"?"en":"bn";try{localStorage.setItem("rbit-lang",L)}catch(e){}apply()};
+apply();
+document.getElementById("y").textContent=new Date().getFullYear();
+var f=document.getElementById("f"),RATE=122,$=function(i){return document.getElementById(i)};
+var BP={"Web Application":[500,1500,5000,15000],"Mobile App":[1000,3000,10000,30000],"UI/UX Design":[300,1000,3000,8000],"Graphic Design":[50,150,500,1500],"Logo Design":[50,200,600,2000],"Background Removal":[20,50,150,500],"Digital Marketing":[200,500,1500,5000],"Hosting & Domain":[50,150,400,1000],"Email Solution":[50,200,600,2000],"IT Support":[100,300,800,2500]};
+var UN={"Digital Marketing":{bn:"/মাস",en:"/mo"},"IT Support":{bn:"/মাস",en:"/mo"},"Hosting & Domain":{bn:"/বছর",en:"/yr"}};
+function usd(n){return "$"+n.toLocaleString("en-US")}
+function bdt(n){return "৳"+(Math.round(n*RATE/1000)*1000).toLocaleString("en-IN")}
+function lab(i,bp,u,lg){var a=bp[i-1],b=bp[i],s,t;
+  if(i===0){s=lg==="bn"?usd(b)+"-এর কম":"Under "+usd(b);t=lg==="bn"?bdt(b)+"-এর কম":"Under "+bdt(b)}
+  else if(i===bp.length){s=usd(a)+"+";t=bdt(a)+"+"}
+  else{s=usd(a)+" – "+usd(b);t=bdt(a)+" – "+bdt(b)}
+  return s+u+" (≈ "+t+")"}
+function cw(){var c=$("b").value==="custom";$("cw").style.display=c?"block":"none";$("ca").required=c}
+function buildBudget(reset){var sel=$("b"),bp=BP[$("t").value]||BP["Web Application"],u=(UN[$("t").value]||{})[L]||"",keep=reset?"":sel.value,h='<option value="">'+(L==="bn"?"বাজেট বেছে নিন":"Select a budget")+'</option>';
+  for(var i=0;i<=bp.length;i++)h+='<option value="'+i+'">'+lab(i,bp,u,L)+'</option>';
+  h+='<option value="quote">'+(L==="bn"?"নিশ্চিত নই — কোটেশন চাই":"Not sure — send me a quote")+'</option><option value="custom">'+(L==="bn"?"নিজের অফার লিখব":"Enter my own offer")+'</option>';
+  sel.innerHTML=h;sel.value=keep;if(sel.value!==keep)sel.value="";cw();
+  $("ca").placeholder=L==="bn"?"আপনার অফার, যেমন: 800":"Your offer, e.g. 800"}
+function msg(){var bp=BP[$("t").value]||BP["Web Application"],u=(UN[$("t").value]||{}).en||"",v=$("b").value,bt;
+  if(v==="custom")bt=$("ca").value+" "+$("cc").value+" (own offer)";else if(v==="quote")bt="Not sure — please send a quote";else bt=lab(+v,bp,u,"en");
+  return ["Ride Bangla IT Team — Project Inquiry","Name: "+$("n").value.trim(),"Phone: "+$("p").value.trim(),"Email: "+($("e").value.trim()||"-"),"Service: "+$("t").value,"Budget: "+bt,"Details: "+$("d").value.trim()].join("\n")}
+$("t").onchange=function(){buildBudget(true)};$("b").onchange=cw;
+btn.addEventListener("click",function(){buildBudget(false)});buildBudget(true);
+f.addEventListener("submit",function(e){e.preventDefault();var u="https://wa.me/8801825234644?text="+encodeURIComponent(msg());if(!window.open(u,"_blank"))location.href=u});
+$("fe").onclick=function(){if(!f.reportValidity())return;location.href="mailto:info@ridebangla.bd?subject="+encodeURIComponent("Project Inquiry — "+$("t").value)+"&body="+encodeURIComponent(msg())};
+var lb=document.getElementById("lb");
+lb.onclick=function(){lb.classList.remove("on")};
+function tx(o){return typeof o==="string"?o:(o&&(o[L]||o.bn||o.en))||""}
+function build(id,items,kind){
+  var box=document.getElementById(id);if(!box)return;
+  var tr=box.querySelector(".track"),dots=box.querySelector(".dots");tr.innerHTML="";dots.innerHTML="";
+  if(!items||!items.length){box.style.display="none";return}
+  box.style.display="";
+  items.forEach(function(d,i){
+    var c=document.createElement("div");c.className="it";var im=document.createElement("div");im.className="im";
+    if(kind==="d"){var g=document.createElement("img");g.src=d.src;g.alt=tx(d.title);g.loading="lazy";im.appendChild(g);
+      c.onclick=function(){lb.querySelector("img").src=d.src;lb.classList.add("on")};
+      if(d.tag){var t=document.createElement("span");t.className="tg";t.textContent=d.tag;c.appendChild(t)}}
+    else if(d.type==="youtube"){im.innerHTML='<iframe src="https://www.youtube.com/embed/'+encodeURIComponent(d.id)+'" allowfullscreen loading="lazy"></iframe>'}
+    else{var v=document.createElement("video");v.muted=true;v.loop=true;v.playsInline=true;v.setAttribute("playsinline","");v.setAttribute("webkit-playsinline","");v.preload="metadata";if(d.poster)v.poster=d.poster;
+      var sr=document.createElement("source");sr.src=d.src;sr.type="video/mp4";v.appendChild(sr);
+      var er=document.createElement("div");er.style.cssText="position:absolute;inset:0;display:none;align-items:center;justify-content:center;text-align:center;padding:14px;background:rgba(0,0,0,.6);color:#fff;font-size:13px;font-weight:700;z-index:1";er.textContent="Video unavailable";
+      sr.addEventListener("error",function(){er.style.display="flex"});
+      v.addEventListener("click",function(){if(v.dataset.u)return;v.dataset.u="1";v.muted=false;v.loop=false;v.controls=true;v.currentTime=0;var p=v.play();if(p&&p.catch)p.catch(function(){v.muted=true;v.play().catch(function(){})})});
+      v.addEventListener("play",function(){if(!v.muted)document.querySelectorAll(".vz video").forEach(function(o){if(o!==v&&!o.muted)o.pause()})});
+      im.appendChild(v);im.appendChild(er);
+      var t2=document.createElement("span");t2.className="tg";t2.textContent="▶ Video";c.appendChild(t2)}
+    c.appendChild(im);var cp=document.createElement("div");cp.className="cap";cp.setAttribute("data-t",JSON.stringify(d.title||""));cp.textContent=tx(d.title);c.appendChild(cp);
+    tr.appendChild(c);var dt=document.createElement("i");dots.appendChild(dt);
+  });
+  var cards=[].slice.call(tr.children),dts=[].slice.call(dots.children),paused=false,idx=0;
+  function step(){var w=cards[0].offsetWidth+16;return w}
+  function go(n){idx=(n+cards.length)%cards.length;tr.scrollTo({left:idx*step(),behavior:"smooth"})}
+  function sync(){var i=Math.round(tr.scrollLeft/step());idx=Math.max(0,Math.min(cards.length-1,i));dts.forEach(function(x,k){x.className=k===idx?"on":""})}
+  tr.addEventListener("scroll",sync,{passive:true});sync();
+  box.querySelector(".pv").onclick=function(){go(idx-1)};box.querySelector(".nx").onclick=function(){go(idx+1)};
+  ["mouseenter","touchstart","focusin"].forEach(function(e){box.addEventListener(e,function(){paused=true},{passive:true})});
+  ["mouseleave","touchend","focusout"].forEach(function(e){box.addEventListener(e,function(){setTimeout(function(){paused=false},2500)},{passive:true})});
+  var maxLeft=function(){return tr.scrollWidth-tr.clientWidth-4};
+  function busy(){return kind==="v"&&cards.some(function(c){var v=c.querySelector("video");return v&&v.dataset.u&&!v.paused&&!v.ended})}
+  setInterval(function(){if(paused||document.hidden||busy())return;if(tr.scrollLeft>=maxLeft())go(0);else go(idx+1)},kind==="d"?3200:4200);
+  if(kind==="v"&&"IntersectionObserver" in window){var vo=new IntersectionObserver(function(en){en.forEach(function(x){var v=x.target.querySelector("video");if(!v)return;if(x.isIntersecting){if(v.dataset.u)return;var p=v.play();if(p&&p.catch)p.catch(function(){})}else v.pause()})},{root:tr,threshold:.6});cards.forEach(function(c){vo.observe(c)})}
+  else if(kind==="v"){cards.forEach(function(c){var v=c.querySelector("video");if(v)v.play().catch(function(){})})}
+}
+var PF=DEFAULT_PORTFOLIO;
+function render(){build("sl-designs",PF.designs,"d");build("sl-videos",PF.videos,"v")}
+function relabel(){document.querySelectorAll(".cap[data-t]").forEach(function(c){try{c.textContent=tx(JSON.parse(c.getAttribute("data-t")))}catch(e){}})}
+btn.addEventListener("click",relabel);
+function load(u,ok){fetch(u,{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){if(j&&(j.designs||j.videos))PF=j;render()}).catch(function(){ok?ok():render()})}
+if(PORTFOLIO_API)load(PORTFOLIO_API,function(){load(PORTFOLIO_URL)});else load(PORTFOLIO_URL);
+var els=document.querySelectorAll(".rv");
+if("IntersectionObserver" in window){var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add("in");io.unobserve(x.target)}})},{threshold:.12});els.forEach(function(e){io.observe(e)})}
+else els.forEach(function(e){e.classList.add("in")});
+})();
+</script>
+</body>
+</html>
