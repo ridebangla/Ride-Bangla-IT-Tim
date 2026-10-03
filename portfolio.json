@@ -1,0 +1,150 @@
+{
+  "designs": [
+    {
+      "src": "assets/portfolio/mastul-poster.jpg",
+      "title": {
+        "bn": "Mastul Perfumes — পোস্টার ডিজাইন",
+        "en": "Mastul Perfumes — Poster Design"
+      },
+      "tag": "Poster"
+    },
+    {
+      "src": "assets/portfolio/mastul-banner.jpg",
+      "title": {
+        "bn": "Mastul Perfumes — ব্যানার",
+        "en": "Mastul Perfumes — Banner"
+      },
+      "tag": "Banner"
+    },
+    {
+      "src": "assets/portfolio/mastul-logo.jpg",
+      "title": {
+        "bn": "Mastul Perfumes — লোগো",
+        "en": "Mastul Perfumes — Logo"
+      },
+      "tag": "Logo"
+    },
+    {
+      "src": "assets/portfolio/bunora-brand.jpg",
+      "title": {
+        "bn": "Bunora Burgers — ব্র্যান্ড আইডেন্টিটি",
+        "en": "Bunora Burgers — Brand Identity"
+      },
+      "tag": "Branding"
+    },
+    {
+      "src": "assets/portfolio/structon-brand.jpg",
+      "title": {
+        "bn": "Structon — ব্র্যান্ড আইডেন্টিটি",
+        "en": "Structon — Brand Identity"
+      },
+      "tag": "Branding"
+    },
+    {
+      "src": "assets/portfolio/bakery-web.jpg",
+      "title": {
+        "bn": "বেকারি ওয়েবসাইট ডিজাইন",
+        "en": "Bakery Website Design"
+      },
+      "tag": "Web Design"
+    },
+    {
+      "src": "assets/portfolio/antixor-web.jpg",
+      "title": {
+        "bn": "Antixor Baked — ওয়েবসাইট ডিজাইন",
+        "en": "Antixor Baked — Website Design"
+      },
+      "tag": "Web Design"
+    },
+    {
+      "src": "assets/portfolio/app-ui-tracking.jpg",
+      "title": {
+        "bn": "ই-কমার্স অ্যাপ UI",
+        "en": "E-commerce App UI"
+      },
+      "tag": "App UI"
+    },
+    {
+      "src": "assets/portfolio/ecommerce-structure.jpg",
+      "title": {
+        "bn": "মোবাইল ই-কমার্স হোমপেজ স্ট্রাকচার",
+        "en": "Mobile E-commerce Homepage Structure"
+      },
+      "tag": "App UI"
+    },
+    {
+      "src": "assets/portfolio/omarko-app.jpg",
+      "title": {
+        "bn": "Omarko — ফ্যাশন অ্যাপ UI",
+        "en": "Omarko — Fashion App UI"
+      },
+      "tag": "App UI"
+    },
+    {
+      "src": "assets/portfolio/fashly-app.jpg",
+      "title": {
+        "bn": "Fashly — ফ্যাশন অ্যাপ UI",
+        "en": "Fashly — Fashion App UI"
+      },
+      "tag": "App UI"
+    }
+  ],
+  "videos": [
+    {
+      "src": "assets/videos/work-1.mp4",
+      "poster": "assets/videos/work-1.jpg",
+      "title": {
+        "bn": "মোবাইল অ্যাপ ডেভেলপমেন্ট (Flutter)",
+        "en": "Mobile App Development (Flutter)"
+      }
+    },
+    {
+      "src": "assets/videos/work-2.mp4",
+      "poster": "assets/videos/work-2.jpg",
+      "title": {
+        "bn": "অ্যাপ স্প্ল্যাশ ও অ্যানিমেশন",
+        "en": "App Splash & Animation"
+      }
+    },
+    {
+      "src": "assets/videos/work-3.mp4",
+      "poster": "assets/videos/work-3.jpg",
+      "title": {
+        "bn": "লাইভ কোডিং ও অ্যাপ প্রিভিউ",
+        "en": "Live Coding & App Preview"
+      }
+    },
+    {
+      "src": "assets/videos/work-4.mp4",
+      "poster": "assets/videos/work-4.jpg",
+      "title": {
+        "bn": "Pizza Mood — ফুড অ্যাপ UI",
+        "en": "Pizza Mood — Food App UI"
+      }
+    },
+    {
+      "src": "assets/videos/work-5.mp4",
+      "poster": "assets/videos/work-5.jpg",
+      "title": {
+        "bn": "Settings স্ক্রিন UI",
+        "en": "Settings Screen UI"
+      }
+    },
+    {
+      "src": "assets/videos/work-6.mp4",
+      "poster": "assets/videos/work-6.jpg",
+      "title": {
+        "bn": "Face ID লগইন UI",
+        "en": "Face ID Login UI"
+      }
+    },
+    {
+      "src": "assets/videos/work-7.mp4",
+      "poster": "assets/videos/work-7.jpg",
+      "title": {
+        "bn": "Mastul Perfumes — প্রোমো ভিডিও",
+        "en": "Mastul Perfumes — Promo Video"
+      }
+    }
+  ]
+}
