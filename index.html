@@ -208,6 +208,18 @@ nav a.on{color:var(--g)}nav a.on:after{width:100%}
 .lead .soc{margin-top:16px}
 @media(max-width:760px){.lead{grid-template-columns:1fr;max-width:460px}.lead .ph2{min-height:380px}.lead .in{padding:22px}}
 
+
+/* === Premium luxury refinements === */
+:root{--gold:#C9A227;--gold-soft:rgba(201,162,39,.12)}
+::selection{background:var(--gold);color:#fff}
+main h2{position:relative;padding-bottom:12px}
+main h2::after{content:"";display:block;width:54px;height:3px;margin-top:10px;border-radius:2px;background:linear-gradient(90deg,var(--gold),rgba(201,162,39,0))}
+.page-hero h2::after{margin-left:auto;margin-right:auto;background:linear-gradient(90deg,rgba(201,162,39,0),var(--gold),rgba(201,162,39,0))}
+.chip,.stat,.dir{transition:transform .25s ease,box-shadow .25s ease}
+.chip:hover,.stat:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(11,31,21,.12)}
+.btn{position:relative;overflow:hidden}
+.btn::before{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-20deg);transition:left .55s ease;pointer-events:none}
+.btn:hover::before{left:130%}
 </style>
 </head>
 <body>
