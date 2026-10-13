@@ -220,6 +220,8 @@ main h2::after{content:"";display:block;width:54px;height:3px;margin-top:10px;bo
 .btn{position:relative;overflow:hidden}
 .btn::before{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-20deg);transition:left .55s ease;pointer-events:none}
 .btn:hover::before{left:130%}
+/* ===== IT Team Latest Updates (new section only; no existing styles changed) ===== */
+#it-updates-list{display:grid;gap:18px}
 </style>
 </head>
 <body>
@@ -316,6 +318,14 @@ main h2::after{content:"";display:block;width:54px;height:3px;margin-top:10px;bo
 
 
 
+
+<section id="it-updates" class="tint"><div class="wrap">
+  <div class="head rv"><span class="kick" data-bn="আইটি টিম" data-en="IT Team">IT Team</span>
+    <h2 data-bn="সর্বশেষ আপডেট" data-en="Latest Updates">Latest Updates</h2>
+    <p data-bn="আইটি টিমের সর্বশেষ খবর ও ঘোষণা — অ্যাডমিন প্যানেল থেকে সরাসরি প্রকাশিত।" data-en="Latest news and announcements from the IT Team — published directly from the admin panel.">Latest news and announcements from the IT Team — published directly from the admin panel.</p></div>
+  <p id="it-updates-status" data-bn="আপডেট লোড হচ্ছে…" data-en="Loading updates…">Loading updates…</p>
+  <div id="it-updates-list"></div>
+</div></section>
 
 <!-- Parent company showcase (moved to end) -->
 <div class="hero co" id="company"><div class="wrap">
@@ -415,5 +425,6 @@ if(!mb||!mp)return;
 mb.onclick=function(e){e.stopPropagation();var o=mp.classList.toggle("open");mb.textContent=o?"\u2715":"\u2630";};
 document.addEventListener("click",function(e){if(mp.classList.contains("open")&&!mp.contains(e.target)){mp.classList.remove("open");mb.textContent="\u2630";}});})();
 </script>
+<script src="assets/js/it-updates.js"></script>
 </body>
 </html>
