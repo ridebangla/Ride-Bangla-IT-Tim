@@ -213,7 +213,7 @@ nav a.on{color:var(--g)}nav a.on:after{width:100%}
 </head>
 <body>
 <header><div class="wrap nav">
-  <a class="brand" href="#top"><img src="assets/ridebangla-logo.png" alt="Ride Bangla Limited logo"><div><b>Ride</b> <span>Bangla</span> Limited</div></a>
+  <a class="brand" href="#top"><img data-photo-slot="logo" src="assets/ridebangla-logo.png" alt="Ride Bangla Limited logo"><div><b>Ride</b> <span>Bangla</span> Limited</div></a>
   <nav>
     <a href="#top" class="on" data-bn="হোম" data-en="Home">হোম</a>
     <a href="leadership.html" data-bn="লিডারশিপ" data-en="Leadership">লিডারশিপ</a>
@@ -295,5 +295,6 @@ if('IntersectionObserver' in window){var io=new IntersectionObserver(function(en
 else els.forEach(function(e){e.classList.add('in')});
 })();
 </script>
+<script src="assets/js/site-photos.js"></script>
 </body>
 </html>

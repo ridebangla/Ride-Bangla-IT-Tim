@@ -212,7 +212,7 @@ nav a.on{color:var(--g)}nav a.on:after{width:100%}
 </head>
 <body>
 <header><div class="wrap nav">
-  <a class="brand" href="index.html"><img src="assets/ridebangla-logo.png" alt="Ride Bangla Limited logo"><div><b>Ride</b> <span>Bangla</span> Limited</div></a>
+  <a class="brand" href="index.html"><img data-photo-slot="logo" src="assets/ridebangla-logo.png" alt="Ride Bangla Limited logo"><div><b>Ride</b> <span>Bangla</span> Limited</div></a>
   <nav>
     <a href="index.html" data-bn="হোম" data-en="Home">হোম</a>
     <a href="leadership.html" data-bn="লিডারশিপ" data-en="Leadership">লিডারশিপ</a>
@@ -243,7 +243,7 @@ nav a.on{color:var(--g)}nav a.on:after{width:100%}
     <p data-bn="Ride Bangla IT Team হলো Ride Bangla Limited-এর নিজস্ব আইটি টিম। আমরা কোম্পানির অ্যাপ, ওয়েবসাইট, ডিজাইন ও ডিজিটাল মার্কেটিংয়ের কাজ পরিচালনা করি এবং একই মানের সার্ভিস বাইরের ক্লায়েন্টদেরও দিই।" data-en="Ride Bangla IT Team is the in-house technology team of Ride Bangla Limited. We handle the company's apps, websites, design and digital marketing, and offer the same quality of service to outside clients.">Ride Bangla IT Team হলো Ride Bangla Limited-এর নিজস্ব আইটি টিম। আমরা কোম্পানির অ্যাপ, ওয়েবসাইট, ডিজাইন ও ডিজিটাল মার্কেটিংয়ের কাজ পরিচালনা করি এবং একই মানের সার্ভিস বাইরের ক্লায়েন্টদেরও দিই।</p>
     <ul class="ck"><li>Innovation • Creativity • Success</li><li data-bn="Small Steps, Big Dreams — ছোট ধাপে বড় স্বপ্ন" data-en="Small Steps, Big Dreams">Small Steps, Big Dreams — ছোট ধাপে বড় স্বপ্ন</li><li data-bn="পরিকল্পনা, ডিজাইন, ডেভেলপমেন্ট ও সাপোর্ট এক জায়গায়" data-en="Planning, design, development and support in one place">পরিকল্পনা, ডিজাইন, ডেভেলপমেন্ট ও সাপোর্ট এক জায়গায়</li></ul>
   </div>
-  <img class="rv" src="assets/certificate.jpg" alt="Certificate of Achievement — Tabassum Nisha, 360DigiTMG" loading="lazy">
+  <img class="rv" data-photo-slot="about-certificate" src="assets/certificate.jpg" alt="Certificate of Achievement — Tabassum Nisha, 360DigiTMG" loading="lazy">
 </div></section>
 </main>
 <footer><div class="wrap">
@@ -272,5 +272,6 @@ if(!mb||!mp)return;
 mb.onclick=function(e){e.stopPropagation();var o=mp.classList.toggle("open");mb.textContent=o?"\u2715":"\u2630";};
 document.addEventListener("click",function(e){if(mp.classList.contains("open")&&!mp.contains(e.target)){mp.classList.remove("open");mb.textContent="\u2630";}});})();
 </script>
+<script src="assets/js/site-photos.js"></script>
 </body>
 </html>

@@ -212,7 +212,7 @@ nav a.on{color:var(--g)}nav a.on:after{width:100%}
 </head>
 <body>
 <header><div class="wrap nav">
-  <a class="brand" href="index.html"><img src="assets/ridebangla-logo.png" alt="Ride Bangla Limited logo"><div><b>Ride</b> <span>Bangla</span> Limited</div></a>
+  <a class="brand" href="index.html"><img data-photo-slot="logo" src="assets/ridebangla-logo.png" alt="Ride Bangla Limited logo"><div><b>Ride</b> <span>Bangla</span> Limited</div></a>
   <nav>
     <a href="index.html" data-bn="হোম" data-en="Home">হোম</a>
     <a href="leadership.html" data-bn="লিডারশিপ" data-en="Leadership">লিডারশিপ</a>
@@ -559,5 +559,6 @@ if(!mb||!mp)return;
 mb.onclick=function(e){e.stopPropagation();var o=mp.classList.toggle("open");mb.textContent=o?"\u2715":"\u2630";};
 document.addEventListener("click",function(e){if(mp.classList.contains("open")&&!mp.contains(e.target)){mp.classList.remove("open");mb.textContent="\u2630";}});})();
 </script>
+<script src="assets/js/site-photos.js"></script>
 </body>
 </html>

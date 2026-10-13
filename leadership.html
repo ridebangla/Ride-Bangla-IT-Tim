@@ -224,7 +224,7 @@ nav a.on{color:var(--g)}nav a.on:after{width:100%}
 </head>
 <body>
 <header><div class="wrap nav">
-  <a class="brand" href="index.html"><img src="assets/ridebangla-logo.png" alt="Ride Bangla Limited logo"><div><b>Ride</b> <span>Bangla</span> Limited</div></a>
+  <a class="brand" href="index.html"><img data-photo-slot="logo" src="assets/ridebangla-logo.png" alt="Ride Bangla Limited logo"><div><b>Ride</b> <span>Bangla</span> Limited</div></a>
   <nav>
     <a href="index.html" data-bn="হোম" data-en="Home">হোম</a>
     <a href="leadership.html" class="on" data-bn="লিডারশিপ" data-en="Leadership">লিডারশিপ</a>
@@ -254,7 +254,7 @@ nav a.on{color:var(--g)}nav a.on:after{width:100%}
 <section style="padding-top:10px"><div class="wrap">
 
   <article class="lead rv">
-    <div class="ph2"><img src="assets/tabassum-nisha.jpg" alt="Tabassum Nisha — IT Team Director, Ride Bangla Limited" loading="lazy"></div>
+    <div class="ph2"><img data-photo-slot="leadership-tabassum" src="assets/tabassum-nisha.jpg" alt="Tabassum Nisha — IT Team Director, Ride Bangla Limited" loading="lazy"></div>
           <span class="lpill" data-bn="নেতৃত্ব" data-en="Leadership">Leadership</span>
       <h3>Tabassum Nisha</h3>
       <p class="co">Ride Bangla IT Team</p>
@@ -270,7 +270,7 @@ nav a.on{color:var(--g)}nav a.on:after{width:100%}
   </article>
 
 <article class="lead rv">
-    <div class="ph2"><img src="assets/enamul-seddik.jpg" alt="Enamul Seddik — Co-Founder &amp; CEO, Ride Bangla Limited" loading="lazy"></div>
+    <div class="ph2"><img data-photo-slot="leadership-enamul" src="assets/enamul-seddik.jpg" alt="Enamul Seddik — Co-Founder &amp; CEO, Ride Bangla Limited" loading="lazy"></div>
           <span class="lpill" data-bn="নেতৃত্ব" data-en="Leadership">Leadership</span>
       <h3>Enamul Seddik</h3>
       <p class="co">Ride Bangla Limited</p>
@@ -286,7 +286,7 @@ nav a.on{color:var(--g)}nav a.on:after{width:100%}
   </article>
 
 <article class="lead rv">
-    <div class="ph2"><img src="assets/emon-seddik.jpg" alt="Emon Seddik — Co-Founder &amp; Director, Ride Bangla Limited" loading="lazy"></div>
+    <div class="ph2"><img data-photo-slot="leadership-emon" src="assets/emon-seddik.jpg" alt="Emon Seddik — Co-Founder &amp; Director, Ride Bangla Limited" loading="lazy"></div>
           <span class="lpill" data-bn="নেতৃত্ব" data-en="Leadership">Leadership</span>
       <h3>Emon Seddik</h3>
       <p class="co">Ride Bangla Limited</p>
@@ -299,7 +299,7 @@ nav a.on{color:var(--g)}nav a.on:after{width:100%}
   </article>
 
 <article class="lead rv">
-    <div class="ph2"><img src="assets/obayedur-rahman-shaikh.jpg" alt="Obayedur Rahman Shaikh — Co-Founder &amp; Marketing Director, Ride Bangla Limited" loading="lazy"></div>
+    <div class="ph2"><img data-photo-slot="leadership-obayedur" src="assets/obayedur-rahman-shaikh.jpg" alt="Obayedur Rahman Shaikh — Co-Founder &amp; Marketing Director, Ride Bangla Limited" loading="lazy"></div>
           <span class="lpill" data-bn="নেতৃত্ব" data-en="Leadership">Leadership</span>
       <h3>Obayedur Rahman Shaikh</h3>
       <p class="co">Ride Bangla Limited</p>
@@ -340,5 +340,6 @@ if(!mb||!mp)return;
 mb.onclick=function(e){e.stopPropagation();var o=mp.classList.toggle("open");mb.textContent=o?"✕":"☰";};
 document.addEventListener("click",function(e){if(mp.classList.contains("open")&&!mp.contains(e.target)){mp.classList.remove("open");mb.textContent="☰";}});})();
 </script>
+<script src="assets/js/site-photos.js"></script>
 </body>
 </html>
