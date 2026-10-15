@@ -545,7 +545,7 @@ var CC=[
 ["ZW","Zimbabwe","263","🇿🇼"]
 ];
 var ccSel=$("cc");
-CC.forEach(function(c){var o=document.createElement("option");o.value=c[2];o.textContent=c[3]+" "+c[1]+" (+"+c[2]+")";if(c[0]==="BD")o.selected=true;ccSel.appendChild(o);});
+CC.forEach(function(c){var o=document.createElement("option");o.value=c[2];o.textContent=c[1]+" (+"+c[2]+")";if(c[0]==="BD")o.selected=true;ccSel.appendChild(o);});
 var dta=$("d");function grow(){dta.style.height="auto";dta.style.height=(dta.scrollHeight+2)+"px";}
 dta.addEventListener("input",grow);grow();
 var els=document.querySelectorAll(".rv");
