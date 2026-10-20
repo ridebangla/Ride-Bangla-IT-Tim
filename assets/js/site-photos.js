@@ -90,8 +90,12 @@
       }
       var bg = el.getAttribute("data-photo-bg");
       if (bg && overrides[bg]) {
+        /* Security (2026-10-20 pass): quote the url() — the value is
+           already a URL-parser-serialized https URL (quotes are %22),
+           and quoting keeps any ')' in the path inside the string
+           instead of terminating url() early. */
         el.style.backgroundImage =
-          BAND_OVERLAY + ", url(" + overrides[bg] + ")";
+          BAND_OVERLAY + ', url("' + overrides[bg] + '")';
       }
     } catch (e) {
       /* Never throw: one bad element must not break the rest. */
