@@ -1,412 +1,222 @@
-# 🚀 Ride Bangla IT Team
-
 <p align="center">
-  <img src="assets/logo.png" alt="Ride Bangla IT Team Logo" width="180">
+  <img src="assets/logo.png" alt="Ride Bangla IT Team" width="300"/>
 </p>
 
-<h2 align="center">Ride Bangla IT Team — Apps, Web, Design & Digital Marketing</h2>
+<h1 align="center">Ride Bangla IT Team</h1>
+
+<h3 align="center">
+  Apps • Web • Design & Digital Marketing
+</h3>
 
 <p align="center">
-  <strong>Ride Bangla Limited-এর IT Team-এর অফিসিয়াল স্ট্যাটিক ওয়েবসাইট</strong><br>
-  বাংলা ও English bilingual presentation • Responsive • Vercel-ready
+  <strong>The official website of the IT Team of Ride Bangla Limited</strong><br/>
+  Production • Static Website • Bilingual EN | বাংলা • Vercel
 </p>
 
 <p align="center">
-  <a href="https://it.ridebangla.bd/">Live Website</a>
+  <a href="https://it.ridebangla.bd/"><strong>🌐 Live Website — it.ridebangla.bd</strong></a>
+</p>
+
+<p align="center">
+  <img alt="Website" src="https://img.shields.io/badge/Website-Live-08783F?style=for-the-badge"/>
+  <img alt="HTML5" src="https://img.shields.io/badge/HTML5-Static-E34F26?style=for-the-badge&logo=html5&logoColor=white"/>
+  <img alt="CSS3" src="https://img.shields.io/badge/CSS3-Responsive-1572B6?style=for-the-badge&logo=css3&logoColor=white"/>
+  <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-Vanilla-F7DF1E?style=for-the-badge&logo=javascript&logoColor=000000"/>
+  <img alt="Hosting" src="https://img.shields.io/badge/Hosting-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white"/>
+  <img alt="License" src="https://img.shields.io/badge/License-Proprietary-red?style=for-the-badge"/>
 </p>
 
 ---
 
-## 📌 Project Overview
+## 📖 About
 
-**Ride Bangla IT Team** ওয়েবসাইটটি Ride Bangla Limited-এর IT Team-এর services, team, portfolio, company information এবং contact information সুন্দরভাবে উপস্থাপনের জন্য তৈরি।
+**Ride Bangla IT Team** is the technology team of **Ride Bangla Limited**. This repository holds the team's official public website — a fast, fully static site (no build step) that presents the team's services, leadership, portfolio and contact channels to clients in Bangladesh and around the world.
 
-বর্তমান project একটি **single-page static website** এবং এর প্রধান application file হলো:
+The site is bilingual: it opens in **English by default** and switches to **বাংলা** from the on-page language toggle. Ride Bangla's own **AI Agent help widget** is present on every page, so a visitor can ask a question anywhere on the site and reach the company.
+
+<p align="center">
+  <img src="assets/team.jpg" alt="Ride Bangla IT Team" width="640"/>
+</p>
+
+---
+
+## 📌 Status at a Glance
+
+| Area | Status |
+|---|---|
+| Website | ✅ Live — all 13 pages |
+| AI Agent help widget | ✅ On every page |
+| Language | ✅ English default + বাংলা toggle |
+| Portfolio | ✅ 7 design works + 5 work videos |
+| International SEO | ✅ Done (2026-10-22) |
+| Security headers | ✅ Live via `vercel.json` |
+| Latest Updates / photo overrides (Firebase) | 🔧 Code ready — waiting for the site's Firebase web config |
+| `www` subdomain | 🔧 To be attached in Vercel |
+
+Full detail is in [Project Status](#-project-status) below.
+
+---
+
+## 🌐 Pages
+
+| Page | What it covers |
+|---|---|
+| [Home](https://it.ridebangla.bd/) | Company + IT Team introduction, services, portfolio, director, contact |
+| [About](https://it.ridebangla.bd/about.html) | The team, the company, the certificate |
+| [Leadership](https://it.ridebangla.bd/leadership.html) | The four leaders of Ride Bangla |
+| [Services](https://it.ridebangla.bd/services.html) | All IT services in one place |
+| [Contact](https://it.ridebangla.bd/contact.html) | WhatsApp-first contact form, email fallback, AI help box |
+| 8 service pages | One page per service (below) |
+
+---
+
+## 🛠️ Services
+
+| Service | Page |
+|---|---|
+| Web Application | [service-web-application.html](https://it.ridebangla.bd/service-web-application.html) |
+| Mobile App | [service-mobile-app.html](https://it.ridebangla.bd/service-mobile-app.html) |
+| UI/UX Design | [service-ui-ux-design.html](https://it.ridebangla.bd/service-ui-ux-design.html) |
+| Graphic Design | [service-graphic-design.html](https://it.ridebangla.bd/service-graphic-design.html) |
+| Digital Marketing | [service-digital-marketing.html](https://it.ridebangla.bd/service-digital-marketing.html) |
+| Hosting & Domain | [service-hosting-domain.html](https://it.ridebangla.bd/service-hosting-domain.html) |
+| Email Solution | [service-email-solution.html](https://it.ridebangla.bd/service-email-solution.html) |
+| IT Support | [service-it-support.html](https://it.ridebangla.bd/service-it-support.html) |
+
+---
+
+## 👥 Leadership
+
+<table>
+  <tr>
+    <td align="center" width="25%">
+      <img src="assets/tabassum-nisha.jpg" alt="Tabassum Nisha" width="150"/><br/>
+      <strong>Tabassum Nisha</strong><br/>
+      IT Team Director
+    </td>
+    <td align="center" width="25%">
+      <img src="assets/enamul-seddik.jpg" alt="Enamul Seddik" width="150"/><br/>
+      <strong>Enamul Seddik</strong><br/>
+      Co-Founder & CEO
+    </td>
+    <td align="center" width="25%">
+      <img src="assets/emon-seddik.jpg" alt="Emon Seddik" width="150"/><br/>
+      <strong>Emon Seddik</strong><br/>
+      Co-Founder & Director
+    </td>
+    <td align="center" width="25%">
+      <img src="assets/obayedur-rahman-shaikh.jpg" alt="Obayedur Rahman Shaikh" width="150"/><br/>
+      <strong>Obayedur Rahman Shaikh</strong><br/>
+      Co-Founder & Marketing Director
+    </td>
+  </tr>
+</table>
+
+---
+
+## 🎨 Our Work
+
+The homepage portfolio is rendered from [`data/portfolio.json`](data/portfolio.json) — **7 design works** and **5 work videos** (MP4 + poster), with bilingual titles.
+
+<p align="center">
+  <img src="assets/portfolio/mastul-poster.jpg" alt="Mastul Perfumes — Poster Design" width="270"/>
+  <img src="assets/portfolio/structon-brand.jpg" alt="Structon — Brand Identity" width="270"/>
+  <img src="assets/portfolio/bakery-web.jpg" alt="Bakery — Web Design" width="270"/>
+</p>
+
+---
+
+## ✨ Features
+
+- **Bilingual EN | বাংলা** — English by default; the toggle rewrites the page in place and remembers the choice (`localStorage`).
+- **AI Agent on every page** — Ride Bangla's own help agent (floating widget sitewide; an inline help box on the Contact page).
+- **Data-driven portfolio** — designs and videos load from `data/portfolio.json`, with in-page fallback data.
+- **WhatsApp-first contact** — the form composes a WhatsApp message to the IT Team, with an email fallback to `info@ridebangla.bd`.
+- **Firebase-ready layers** — a "Latest Updates" feed (`assets/js/it-updates.js`) and admin photo overrides (`assets/js/site-photos.js`) are built in; both stay cleanly hidden until the site's own Firebase web config is pasted in.
+- **Full icon set** — favicon, apple-touch icon and maskable PWA icons; `site.webmanifest` included.
+- **Responsive** — navigation, hero, cards and portfolio adapt to phone, tablet and desktop.
+
+---
+
+## 💻 Technology
+
+| Layer | Technology |
+|---|---|
+| Markup | HTML5 (13 static pages) |
+| Styling | CSS3 (inline per page, responsive) |
+| Behaviour | Vanilla JavaScript (language system, portfolio, forms) |
+| Data | JSON (`data/portfolio.json`) |
+| Dynamic layers | Firebase Firestore via CDN SDK (config pending — see Status) |
+| Help system | Ride Bangla AI Agent widget |
+| Hosting | Vercel (static, `vercel.json` headers) |
+| Repository | GitHub |
+
+No framework, no `npm install`, no build command — the repo deploys as-is.
+
+---
+
+## 📂 Project Structure
 
 ```text
-index.html
-```
-
-কোনো Node.js/React/Next.js build process বর্তমানে প্রয়োজন নেই। তাই Vercel-এ এটি static site হিসেবে সরাসরি deploy করা যায়।
-
----
-
-## 🛠️ Technology
-
-- **HTML5** — complete page structure
-- **CSS3** — responsive layout, animations, cards, gradients এবং visual styling
-- **Vanilla JavaScript** — language switching, interactions, portfolio rendering, form handling ও UI behaviour
-- **PNG/JPEG assets** — logo, team, service, director এবং certificate visuals
-- **JSON** — portfolio data source
-- **Vercel** — static hosting/deployment target
-- **GitHub** — source-code repository target
-
-কোনো framework dependency বা `npm install`/`npm run build` requirement বর্তমানে নেই।
-
----
-
-## 🗂️ Project Structure
-
-```text
-Ride-Bangla-It-Tim--main/
-│
-├── index.html
-├── README.md
-├── vercel.json
-├── .gitignore
-│
+Ride-Bangla-IT-Tim/
+├── index.html                 # Home
+├── about.html
+├── leadership.html
+├── services.html
+├── contact.html
+├── service-web-application.html
+├── service-mobile-app.html
+├── service-ui-ux-design.html
+├── service-graphic-design.html
+├── service-digital-marketing.html
+├── service-hosting-domain.html
+├── service-email-solution.html
+├── service-it-support.html
 ├── data/
-│   └── portfolio.json
-│
-└── assets/
-    ├── certificate.jpg
-    ├── company-logo.png
-    ├── director.png
-    ├── favicon.png
-    ├── logo.png
-    ├── ridebangla-logo.png
-    ├── services-it.jpg
-    ├── services-main.jpg
-    ├── team.jpg
-    ├── workspace.jpg              # Required by current design
-    ├── portfolio/                 # 7 design images
-    └── videos/                    # work-1..5 (.mp4 + .jpg)
-```
-
-> `portfolio/` এবং `videos/` asset directories-এর reference বর্তমান `index.html`-এ আছে, কিন্তু supplied project archive-এ সেগুলোর actual media files বর্তমানে নেই। নিচে বিস্তারিত দেওয়া আছে।
-
----
-
-## 🎨 Logo & Image Mapping
-
-| File | Exact Path | Usage |
-|---|---|---|
-| `logo.png` | `assets/logo.png` | Ride Bangla IT Team-এর প্রধান IT Team logo |
-| `company-logo.png` | `assets/company-logo.png` | Main Ride Bangla Limited branding/hero logo |
-| `ridebangla-logo.png` | `assets/ridebangla-logo.png` | Header-এর Ride Bangla logo |
-| `favicon.png` | `assets/favicon.png` | Browser favicon |
-| `services-main.jpg` | `assets/services-main.jpg` | Ride Bangla Limited-এর main services visual |
-| `services-it.jpg` | `assets/services-it.jpg` | IT Services section visual |
-| `team.jpg` | `assets/team.jpg` | IT Team photo |
-| `director.png` | `assets/director.png` | Director profile image |
-| `certificate.jpg` | `assets/certificate.jpg` | Certificate/achievement visual |
-| `workspace.jpg` | `assets/workspace.jpg` | IT Team dark banner/background |
-
-### Important
-
-`index.html`-এর CSS বর্তমানে এই file-টি ব্যবহার করছে:
-
-```text
-assets/workspace.jpg
-```
-
-তাই final visual design সম্পূর্ণ করতে **`workspace.jpg` অবশ্যই একই path-এ থাকতে হবে**।
-
----
-
-## 🧩 Website Sections
-
-### 1. Ride Bangla Limited
-- Company introduction
-- Ride Share
-- Food Delivery
-- Parcel Delivery
-- Courier
-- Marketplace
-- Medicine Delivery
-- IT Services
-- Ride Bangla Pay
-
-### 2. IT Team Hero
-- Ride Bangla IT Team branding
-- Apps
-- Web
-- Design
-- Digital Marketing
-
-### 3. IT Services
-- Web Application
-- Mobile Application
-- UI/UX Design
-- Graphic Design
-- Logo Design
-- Background Removal
-- Digital Marketing
-- Hosting & Domain
-- Email Solution
-- IT Support
-
-### 4. IT Team
-বর্তমান HTML-এ নিম্নোক্ত role presentation আছে:
-
-- IT Support Engineer
-- UI/UX Designer
-- Full Stack Developer
-- Web Developer
-- Database Administrator
-
-### 5. Our Work
-দুটি portfolio category রাখা হয়েছে:
-
-- Design Works
-- Work Videos
-
-### 6. About
-- Ride Bangla IT Team পরিচিতি
-- Director profile
-- Certificate/achievement
-
-### 7. Contact
-- Contact information
-- WhatsApp
-- Email
-- Social links
-- Contact form
-
----
-
-## 🌐 Language Support
-
-Website-এর UI-তে বাংলা এবং English language switching-এর ব্যবস্থা আছে।
-
-Default language:
-
-```text
-বাংলা
-```
-
-Language switch করলে:
-
-```text
-বাংলা ↔ English
-```
-
-interface text পরিবর্তন হয়।
-
----
-
-## 📱 Responsive Design
-
-Websiteটি desktop, tablet এবং mobile viewport-এর জন্য responsive CSS ব্যবহার করে তৈরি।
-
-মূল responsive areas:
-
-- Navigation
-- Hero sections
-- Service cards
-- Team cards
-- Director section
-- Portfolio cards
-- Contact section
-
----
-
-## 🖼️ Portfolio System
-
-`index.html` বর্তমানে এই data source ব্যবহার করে:
-
-```text
-data/portfolio.json
-```
-
-এবং fallback হিসেবে HTML-এর ভিতরে default portfolio data রাখা আছে।
-
-Portfolio JSON structure:
-
-```json
-{
-  "designs": [],
-  "videos": []
-}
-```
-
-Design item:
-
-```json
-{
-  "src": "assets/portfolio/example.jpg",
-  "title": {
-    "bn": "বাংলা শিরোনাম",
-    "en": "English Title"
-  },
-  "tag": "Web Design"
-}
-```
-
-Video item:
-
-```json
-{
-  "src": "assets/videos/work-1.mp4",
-  "poster": "assets/videos/work-1.jpg",
-  "title": {
-    "bn": "বাংলা শিরোনাম",
-    "en": "English Title"
-  }
-}
+│   └── portfolio.json         # 7 designs + 5 videos
+├── assets/
+│   ├── it-logo-transparent.png  # Logo used across the website
+│   ├── logo.png                 # Full IT Team logo (this README)
+│   ├── enamul-seddik.jpg / emon-seddik.jpg
+│   ├── tabassum-nisha.jpg / obayedur-rahman-shaikh.jpg
+│   ├── team.jpg / workspace.jpg / certificate.jpg
+│   ├── director.png / services-main.jpg / services-it.jpg
+│   ├── portfolio/               # 7 design images
+│   ├── videos/                  # work-1 … work-5 (.mp4 + .jpg posters)
+│   ├── favicon.ico / favicon.png
+│   ├── apple-touch-icon.png / icon-192.png / icon-512.png
+│   ├── icon-maskable-192.png / icon-maskable-512.png
+│   └── js/
+│       ├── it-updates.js        # Latest Updates (Firebase, config pending)
+│       └── site-photos.js       # Admin photo overrides (Firebase, config pending)
+├── site.webmanifest
+├── sitemap.xml
+├── robots.txt
+├── .well-known/security.txt
+├── vercel.json                  # Security headers
+├── LICENSE / CLIENT-LICENSE-TEMPLATE.txt
+├── SECURITY.md / CODE_OF_CONDUCT.md / CONTRIBUTING.md
+└── README.md
 ```
 
 ---
 
-## ⚠️ Current Asset Audit
+## 🔒 Security
 
-ZIP integrity পরীক্ষা করে দেখা হয়েছে এবং archive corruption পাওয়া যায়নি।
+- `vercel.json` serves HSTS (preload), a Content-Security-Policy, `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy` and `Permissions-Policy` on every route.
+- `.well-known/security.txt` is published for vulnerability reports; see also [SECURITY.md](SECURITY.md).
+- No secrets or API keys are stored in this repository. The Firebase values in the two loader scripts are placeholders by design until the owner pastes the site's own public web config.
 
-বর্তমান archive-এ থাকা প্রধান files:
+## 🔍 SEO
 
-```text
-index.html
-assets/certificate.jpg
-assets/company-logo.png
-assets/director.png
-assets/favicon.png
-assets/logo.png
-assets/ridebangla-logo.png
-assets/services-it.jpg
-assets/services-main.jpg
-assets/team.jpg
-```
-
-### Missing files referenced by the current code
-
-#### Required by CSS
-
-```text
-assets/workspace.jpg
-```
-
-#### Referenced portfolio data
-
-```text
-assets/portfolio/
-```
-
-এর মধ্যে বর্তমানে HTML-এর default data অনুযায়ী 11টি design image reference আছে।
-
-#### Referenced video media
-
-```text
-assets/videos/
-```
-
-এর মধ্যে 7টি MP4 এবং তাদের poster image reference আছে।
-
-### Important conclusion
-
-Website-এর মূল HTML/CSS/JS structure static deployment-এর জন্য প্রস্তুত হলেও **portfolio media এবং `workspace.jpg` না দিলে সব visual reference সম্পূর্ণ হবে না**।
+- International-facing English metadata on all 13 pages.
+- Service structured data (JSON-LD) declares `areaServed: "Worldwide"`.
+- `og:locale` `en_US` with `bn_BD` alternate on every page; sitemap refreshed 2026-10-22.
+- Language switching is a same-URL toggle, so no hreflang is used (the WebSite schema declares `inLanguage: ["en", "bn"]`).
 
 ---
 
-## 🚀 Vercel Deployment
+## 📌 Project Status
 
-এই project-এর জন্য কোনো framework build command প্রয়োজন নেই।
-
-### Vercel settings
-
-```text
-Framework Preset: Other
-Build Command: None
-Output Directory: .
-Install Command: None
-```
-
-Root directory:
-
-```text
-/
-```
-
-Entry point:
-
-```text
-index.html
-```
-
-`vercel.json` রাখা হয়েছে deployment behaviour স্পষ্ট রাখার জন্য।
-
----
-
-## 🔧 Local Test
-
-যেকোনো static HTTP server দিয়ে চালানো যায়।
-
-উদাহরণ:
-
-```bash
-python3 -m http.server 8000
-```
-
-তারপর:
-
-```text
-http://localhost:8000/
-```
-
-> `file://` দিয়ে সরাসরি `index.html` খোলার পরিবর্তে HTTP server ব্যবহার করা ভালো, কারণ portfolio JSON `fetch()` করে load করা হয়।
-
----
-
-## 📦 GitHub Upload
-
-Repository root-এ এগুলো রাখতে হবে:
-
-```text
-index.html
-README.md
-vercel.json
-.gitignore
-data/portfolio.json
-assets/
-```
-
-GitHub-এ repository open করলে README-তে উপরের IT Team logo automatically দেখা যাবে:
-
-```text
-assets/logo.png
-```
-
----
-
-## 🔐 Security / Configuration
-
-বর্তমান static project-এ কোনো server-side secret বা API key রাখা হয়নি।
-
-যদি ভবিষ্যতে admin portfolio API যুক্ত করা হয়, তাহলে secret/API key কখনো `index.html`-এর client-side JavaScript-এ রাখা উচিত নয়।
-
----
-
-## 📍 Production Checklist
-
-Before final production deployment:
-
-- [x] ZIP integrity verified
-- [x] `index.html` present
-- [x] Main logos present
-- [x] Team image present
-- [x] Director image present
-- [x] Certificate image present
-- [x] IT services image present
-- [x] Main services image present
-- [x] Favicon present
-- [x] Static Vercel configuration prepared
-- [x] GitHub README prepared
-- [x] Portfolio JSON prepared
-- [x] `assets/workspace.jpg` added (temporary placeholder — replace with real office photo)
-- [x] `assets/portfolio/*` media added (7 designs)
-- [x] `assets/videos/*` media added (work-1 … work-5)
-- [ ] Final production visual QA
-
----
-
-## 📄 License / Ownership
-
-© Ride Bangla Limited. All rights reserved.
-
-This project is intended for Ride Bangla Limited / Ride Bangla IT Team use unless otherwise authorized.
-
----
-
-<p align="center">
-  <strong>Ride Bangla IT Team</strong><br>
-  Apps • Web • Design • Digital Marketing • IT Solutions
-</p>
+_V
+...[truncated 3388 chars]
