@@ -218,5 +218,18 @@ Ride-Bangla-IT-Tim/
 
 ## 📌 Project Status
 
-_V
-...[truncated 3388 chars]
+_Last updated: 2026-10-22._
+
+**Done**
+
+- The website is live at [it.ridebangla.bd](https://it.ridebangla.bd/) — 13 static pages on Vercel, English by default with a বাংলা toggle.
+- Re-audit round 2 (2026-10-22): the AI Agent help widget was added to all 13 pages (it previously appeared only on the contact page), the homepage meta description is English, and international SEO is in place.
+- Owner directive (2026-10-22): the floating WhatsApp button was removed from all 13 pages — it sat next to the AI Agent widget at the bottom-right corner. The AI Agent widget is now the site's only floating button. The header WhatsApp pill, the footer social icons and the in-content/contact WhatsApp links are unchanged.
+- Project cleanup (2026-10-22): no file was proven unreferenced, so nothing was deleted.
+
+**What remains**
+
+- Latest Updates and the admin photo-override layer are code-ready but inert until the site's own Firebase web config is pasted into the two loader scripts (owner/console step).
+- `assets/ridebangla-logo.png` and `assets/favicon.png` are not referenced by any page; they can be removed on the owner's word.
+- The `www` subdomain still needs to be attached in the Vercel project.
+- Footer and structured-data social links currently mix the team Facebook page with the Director's personal Instagram/X accounts — an identity decision for the owner.
