@@ -50,6 +50,7 @@ The site is bilingual: it opens in **English by default** and switches to **ব�
 | Portfolio | ✅ 7 design works + 5 work videos |
 | International SEO | ✅ Done (2026-10-22) |
 | Security headers | ✅ Live via `vercel.json` |
+| Help Center voice messages | ✅ Microphone allowed for this site's own origin (`microphone=(self)`) — the embedded AI Agent's voice recording is unblocked; camera/geolocation unchanged |
 | Latest Updates / photo overrides (Firebase) | 🔧 Code ready — waiting for the site's Firebase web config |
 | `www` subdomain | 🔧 To be attached in Vercel |
 
