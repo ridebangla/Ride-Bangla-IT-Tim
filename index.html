@@ -334,6 +334,79 @@ main h2::after{content:"";display:block;width:54px;height:3px;margin-top:10px;bo
 
 
 
+<!-- Reviews (shared website_reviews pool — same system as the main website) -->
+<style>
+#rb-reviews .rb-reviews-summary{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:-8px 0 6px}
+#rb-reviews .rb-stars{display:inline-flex;gap:2px;line-height:0}
+#rb-reviews .rb-star-wrap{position:relative;display:inline-block;width:20px;height:20px}
+#rb-reviews .rb-star{width:20px;height:20px;fill:#d8e2da;display:block}
+#rb-reviews .rb-star-fill{position:absolute;top:0;left:0;overflow:hidden;display:block}
+#rb-reviews .rb-star-fill .rb-star{fill:#e3a008}
+#rb-reviews .rb-reviews-avg{font-size:22px;color:var(--gd)}
+#rb-reviews .rb-reviews-count{color:var(--mut);font-size:15px}
+#rb-reviews .rb-breakdown{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:8px 0 20px}
+#rb-reviews .rb-breakdown-label{font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--mut)}
+#rb-reviews .rb-breakdown-chip{display:inline-flex;align-items:center;gap:4px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:11px;font-weight:800;color:var(--gd)}
+#rb-reviews .rb-breakdown-chip .rb-star-sm{width:11px;height:11px;fill:#e3a008}
+#rb-reviews .rb-carousel{position:relative}
+#rb-reviews .rb-carousel-viewport{overflow:hidden}
+#rb-reviews .rb-carousel-track{display:flex;transition:transform .7s cubic-bezier(.22,1,.36,1)}
+#rb-reviews .rb-carousel-slide{flex:0 0 auto;box-sizing:border-box;padding:0 6px}
+#rb-reviews .rb-review-card{height:100%;box-sizing:border-box;background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 14px 34px rgba(16,35,26,.08)}
+#rb-reviews .rb-review-head{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+#rb-reviews .rb-review-id{display:flex;flex-direction:column;gap:3px;min-width:0}
+#rb-reviews .rb-review-avatar{width:44px;height:44px;border-radius:50%;object-fit:cover;flex:none}
+#rb-reviews .rb-review-initials{width:44px;height:44px;border-radius:50%;background:#eaf5ee;color:var(--gd);font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center;flex:none}
+#rb-reviews .rb-review-name{color:var(--ink);font-size:15px}
+#rb-reviews .rb-review-head .rb-star{width:14px;height:14px}
+#rb-reviews .rb-review-head .rb-star-wrap{width:14px;height:14px}
+#rb-reviews .rb-review-text{color:var(--mut);font-size:14.5px;line-height:1.65;margin:0}
+#rb-reviews .rb-see-more{background:none;border:0;padding:0;margin-top:4px;font:inherit;font-size:12px;font-weight:800;color:var(--g);cursor:pointer}
+#rb-reviews .rb-review-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px}
+#rb-reviews .rb-review-verified{display:inline-flex;align-items:center;gap:5px;background:#eaf5ee;color:#0c6b34;border-radius:999px;padding:3px 9px;font-size:11px;font-weight:700}
+#rb-reviews .rb-review-verified svg{width:12px;height:12px;flex:none}
+#rb-reviews .rb-review-date{color:#93a397;font-size:12.5px}
+#rb-reviews .rb-review-note{color:var(--mut);font-size:15px;border:1.5px dashed var(--line);border-radius:18px;padding:26px 18px;text-align:center;background:#fff}
+#rb-reviews .rb-review-note-error{color:#9a6a12;border-color:#ecd9a8;background:#fffaf0}
+#rb-reviews .rb-carousel-btn{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:#fff;box-shadow:0 2px 8px rgba(8,120,63,.16);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--mut);padding:0}
+#rb-reviews .rb-carousel-btn:hover{background:#eaf5ee}
+#rb-reviews .rb-carousel-btn svg{width:16px;height:16px}
+#rb-reviews .rb-carousel-prev{left:-8px}
+#rb-reviews .rb-carousel-next{right:-8px}
+#rb-reviews .rb-carousel-dots{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:16px}
+#rb-reviews .rb-dot{width:6px;height:6px;border-radius:999px;border:0;background:#86c7aa;cursor:pointer;padding:0;transition:all .3s}
+#rb-reviews .rb-dot.on{width:24px;background:#c00511}
+#rb-reviews .rb-write-row{margin-top:24px}
+#rb-reviews .rb-review-form-zone{margin-top:18px}
+#rb-reviews .rb-review-signin,#rb-reviews .rb-review-form{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;max-width:560px}
+#rb-reviews .rb-review-signin p{margin:0 0 14px;color:var(--mut);font-size:14.5px}
+#rb-reviews .rb-form-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+#rb-reviews .rb-form-id{display:flex;flex-direction:column}
+#rb-reviews .rb-form-id strong{color:var(--ink);font-size:14px}
+#rb-reviews .rb-form-sub{color:var(--mut);font-size:11px}
+#rb-reviews .rb-signout{background:none;border:0;font:inherit;font-size:12px;font-weight:800;color:var(--mut);cursor:pointer;text-decoration:underline}
+#rb-reviews .rb-form-note{color:var(--mut);font-size:12.5px;margin:4px 0 10px}
+#rb-reviews .rb-form-label{color:var(--ink);font-size:13px;font-weight:800;margin:6px 0 4px}
+#rb-reviews .rb-review-pick{display:flex;gap:6px;margin-bottom:12px}
+#rb-reviews .rb-pick-star{background:none;border:0;padding:2px;cursor:pointer;line-height:0}
+#rb-reviews .rb-pick-star .rb-star{width:28px;height:28px}
+#rb-reviews .rb-pick-star.on .rb-star{fill:#e3a008}
+#rb-reviews .rb-review-input{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:12px;padding:11px 13px;font:inherit;font-size:14.5px;margin-bottom:12px;background:#fcfffd;color:var(--ink)}
+#rb-reviews .rb-review-textarea{resize:vertical;min-height:88px}
+#rb-reviews .rb-review-status{color:var(--gd);font-size:14px;margin-top:12px;min-height:20px;font-weight:700}
+</style>
+<section id="rb-reviews"><div class="wrap">
+  <div class="head rv"><span class="kick" data-bn="রিভিউ" data-en="Reviews">Reviews</span>
+    <h2 data-bn="আমাদের গ্রাহকরা যা বলেন" data-en="What Our Customers Say">What Our Customers Say</h2>
+    <p data-bn="বাস্তব মানুষ। বাস্তব অভিজ্ঞতা।" data-en="Real people. Real experiences.">Real people. Real experiences.</p></div>
+  <div class="rb-reviews-summary" data-rb="summary"></div>
+  <div class="rb-breakdown" data-rb="breakdown" style="display:none"></div>
+  <div data-rb="list"></div>
+  <div class="rb-write-row"><button type="button" class="btn sm" data-rb="write" data-bn="রিভিউ লিখুন" data-en="Write a Review">Write a Review</button></div>
+  <div data-rb="form-zone" class="rb-review-form-zone"></div>
+  <p data-rb="status" class="rb-review-status" role="status"></p>
+</div></section>
+
 <section id="it-updates" class="tint"><div class="wrap">
   <div class="head rv"><span class="kick" data-bn="আইটি টিম" data-en="IT Team">IT Team</span>
     <h2 data-bn="সর্বশেষ আপডেট" data-en="Latest Updates">Latest Updates</h2>
@@ -409,10 +482,10 @@ function build(id,items,kind){
     c.appendChild(im);var cp=document.createElement("div");cp.className="cap";cp.setAttribute("data-t",JSON.stringify(d.title||""));cp.textContent=tx(d.title);c.appendChild(cp);
     tr.appendChild(c);var dt=document.createElement("i");dots.appendChild(dt);
   });
-  var cards=[].slice.call(tr.children),dts=[].slice.call(dots.children),paused=false,idx=0;
+  var cards=[].slice.call(tr.children),dts=[].slice.call(dots.children),paused=false,idx=0,animT=null;
   function step(){var w=cards[0].offsetWidth+16;return w}
-  function go(n){idx=(n+cards.length)%cards.length;tr.scrollTo({left:idx*step(),behavior:"smooth"})}
-  function sync(){var i=Math.round(tr.scrollLeft/step());idx=Math.max(0,Math.min(cards.length-1,i));dts.forEach(function(x,k){x.className=k===idx?"on":""})}
+  function go(n){idx=(n+cards.length)%cards.length;tr.scrollTo({left:idx*step(),behavior:"smooth"});clearTimeout(animT);animT=setTimeout(function(){animT=null;sync()},700)}
+  function sync(){var i=Math.round(tr.scrollLeft/step());var ci=Math.max(0,Math.min(cards.length-1,i));if(!animT)idx=ci;dts.forEach(function(x,k){x.className=k===ci?"on":""})}
   tr.addEventListener("scroll",sync,{passive:true});sync();
   box.querySelector(".pv").onclick=function(){go(idx-1)};box.querySelector(".nx").onclick=function(){go(idx+1)};
   ["mouseenter","touchstart","focusin"].forEach(function(e){box.addEventListener(e,function(){paused=true},{passive:true})});
@@ -442,6 +515,7 @@ document.addEventListener("click",function(e){if(mp.classList.contains("open")&&
 </script>
 <script src="assets/js/it-updates.js"></script>
 <script src="assets/js/site-photos.js"></script>
+<script src="assets/js/reviews.js"></script>
 
 <script src="https://ai.ridebangla.bd/widget/ride-bangla-chat.js" data-server="https://ai.ridebangla.bd" data-site-key="rbsite-00f37b79c72f4e678febbd82d43bb46c" async></script>
 </body>
