@@ -14,6 +14,12 @@
 </div>
 
 <div align="center">
+  <img src="docs/demo/demo.gif" alt="Live demo — recorded from it.ridebangla.bd, 24 October 2026" width="400"/>
+  <br/>
+  <sub>Live demo — the homepage hero, services, portfolio and team, recorded from <a href="https://it.ridebangla.bd">it.ridebangla.bd</a> on 24 October 2026 (phone viewport).</sub>
+</div>
+
+<div align="center">
   <img src="docs/screenshots/live-home-desktop.png" alt="Ride Bangla IT Team — live homepage hero, desktop" width="820"/>
   <br/>
   <sub>The live homepage hero — captured 2026-10-23 from <a href="https://it.ridebangla.bd">it.ridebangla.bd</a> (desktop, 1280×800).</sub>
@@ -26,12 +32,6 @@
 **Ride Bangla IT Team** is the in-house technology team of **Ride Bangla Limited**. The team builds the company's own apps, websites, design and digital marketing — and offers the same quality of service to outside clients.
 
 This repository contains the team's official public website: a fast, fully static site (no build step) presenting its services, leadership, portfolio and contact channels. The site opens in **English by default** and switches to **বাংলা** from the on-page language toggle. Ride Bangla's own **AI Agent help widget** is present on every page, so a visitor can ask a question anywhere on the site.
-
-<div align="center">
-  <img src="docs/screenshots/home-services-visual.jpg" alt="Ride Bangla IT Team services — UI/UX, Website Development, Digital Marketing, Logo Design, Background Removal, IT Support" width="820"/>
-  <br/>
-  <sub>The services visual shown on the live homepage — UI/UX, website development, digital marketing, logo design, background removal and IT support.</sub>
-</div>
 
 | At a glance | |
 |---|---|
@@ -175,10 +175,6 @@ Work videos: *Live Coding & App Preview · App Login UI Development · Pizza Moo
 ---
 
 ## The Team
-
-<div align="center">
-  <img src="docs/screenshots/team-photo.jpg" alt="Ride Bangla IT Team members" width="820"/>
-</div>
 
 Alongside the Director, the homepage presents the team's specialist roles: **IT Support Engineer** (smooth tech support), **UI/UX Designer** (user-friendly design), **Full Stack Developer** (robust web solutions), **Web Developer** (responsive web) and **Database Administrator** (secure data systems).
 
