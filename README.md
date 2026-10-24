@@ -19,12 +19,6 @@
   <sub>Live demo — the homepage hero, services, portfolio and team, recorded from <a href="https://it.ridebangla.bd">it.ridebangla.bd</a> on 24 October 2026 (phone viewport).</sub>
 </div>
 
-<div align="center">
-  <img src="docs/screenshots/live-home-desktop.png" alt="Ride Bangla IT Team — live homepage hero, desktop" width="820"/>
-  <br/>
-  <sub>The live homepage hero — captured 2026-10-23 from <a href="https://it.ridebangla.bd">it.ridebangla.bd</a> (desktop, 1280×800).</sub>
-</div>
-
 ---
 
 ## About
