@@ -315,13 +315,44 @@ function buildBudget(reset){var sel=$("b"),bp=BP[$("t").value]||BP["Web Applicat
   h+='<option value="quote">'+(L==="bn"?"নিশ্চিত নই — কোটেশন চাই":"Not sure — send me a quote")+'</option><option value="custom">'+(L==="bn"?"নিজের অফার লিখব":"Enter my own offer")+'</option>';
   sel.innerHTML=h;sel.value=keep;if(sel.value!==keep)sel.value="";cw();
   $("ca").placeholder=L==="bn"?"আপনার অফার, যেমন: 800":"Your offer, e.g. 800"}
-function msg(){var bp=BP[$("t").value]||BP["Web Application"],u=(UN[$("t").value]||{}).en||"",v=$("b").value,bt;
-  if(v==="custom")bt=$("ca").value+" "+$("cur").value+" (own offer)";else if(v==="quote")bt="Not sure — please send a quote";else bt=lab(+v,bp,u,"en");
+function budgetText(){var bp=BP[$("t").value]||BP["Web Application"],u=(UN[$("t").value]||{}).en||"",v=$("b").value;
+  if(v==="custom")return $("ca").value+" "+$("cur").value+" (own offer)";if(v==="quote")return "Not sure — please send a quote";return lab(+v,bp,u,"en")}
+function msg(){var bt=budgetText();
   return ["Ride Bangla IT Team — Project Inquiry","Name: "+$("n").value.trim(),"Phone: +"+$("cc").value+" "+$("p").value.trim(),"Email: "+($("e").value.trim()||"-"),"Service: "+$("t").value,"Budget: "+bt,"Details: "+$("d").value.trim()].join("\n")}
+/* Lead persistence (R3-it-1): mirror assets/js/reviews.js in this repo —
+   the SAME public Firebase web config (project ride-bangla-app) and the
+   SAME Firestore REST mechanism its reads use (POST to
+   firestore.googleapis.com/v1/.../documents/<collection>?key=<apiKey>).
+   Collection `it_team_leads` follows this repo's own naming convention
+   (`it_team_updates`). The write is attempted first/in parallel and is
+   failure-honest and non-destructive: any failure (offline, HTTP error,
+   Firestore rules denial) is only logged to the console, the visitor's
+   WhatsApp / email flow below proceeds exactly as before, and no on-page
+   copy claims the enquiry was saved. keepalive lets the request survive
+   the mailto navigation. */
+var LEAD_CFG={apiKey:"AIzaSyAZvlJJcJUvM7RJt771De5PyLNT_SjEGfQ",projectId:"ride-bangla-app"};
+var LEAD_COLLECTION="it_team_leads";
+function saveLead(channel){
+  try{
+    var fields={
+      name:{stringValue:$("n").value.trim()},
+      phone:{stringValue:"+"+$("cc").value+" "+$("p").value.trim()},
+      email:{stringValue:$("e").value.trim()},
+      service:{stringValue:$("t").value},
+      budget:{stringValue:budgetText()},
+      details:{stringValue:$("d").value.trim()},
+      source:{stringValue:"it-website-contact-form"},
+      channel:{stringValue:channel},
+      page:{stringValue:location.href},
+      createdAt:{timestampValue:new Date().toISOString()}
+    };
+    fetch("https://firestore.googleapis.com/v1/projects/"+LEAD_CFG.projectId+"/databases/(default)/documents/"+LEAD_COLLECTION+"?key="+encodeURIComponent(LEAD_CFG.apiKey),{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({fields:fields}),keepalive:true}).then(function(res){if(!res.ok)throw new Error("http-"+res.status)}).catch(function(err){try{console.warn("[rb-lead] save failed (WhatsApp/email flow continues):",err&&err.message?err.message:err)}catch(e){}});
+  }catch(e){try{console.warn("[rb-lead] save failed (WhatsApp/email flow continues):",e)}catch(_){}}
+}
 $("t").onchange=function(){buildBudget(true)};$("b").onchange=cw;
 btn.addEventListener("click",function(){buildBudget(false)});buildBudget(true);
-f.addEventListener("submit",function(e){e.preventDefault();var u="https://wa.me/8801825234644?text="+encodeURIComponent(msg());if(!window.open(u,"_blank"))location.href=u});
-$("fe").onclick=function(){if(!f.reportValidity())return;location.href="mailto:info@ridebangla.bd?subject="+encodeURIComponent("Project Inquiry — "+$("t").value)+"&body="+encodeURIComponent(msg())};
+f.addEventListener("submit",function(e){e.preventDefault();saveLead("whatsapp");var u="https://wa.me/8801825234644?text="+encodeURIComponent(msg());if(!window.open(u,"_blank"))location.href=u});
+$("fe").onclick=function(){if(!f.reportValidity())return;saveLead("email");location.href="mailto:info@ridebangla.bd?subject="+encodeURIComponent("Project Inquiry — "+$("t").value)+"&body="+encodeURIComponent(msg())};
 var CC=[
 ["BD","Bangladesh","880","🇧🇩"],
 ["AF","Afghanistan","93","🇦🇫"],
