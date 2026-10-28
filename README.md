@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/logo.png" alt="Ride Bangla IT Team — Apps | Web | Design | Digital Marketing" width="340"/>
+<img src="assets/it-logo-transparent.png" alt="Ride Bangla IT Team — standalone mark (laptop and gear emblem, no wordmark)" width="220"/>
 
 # Ride Bangla IT Team
 
@@ -11,12 +11,19 @@
 [![Live Website](https://img.shields.io/badge/Live%20Website-it.ridebangla.bd-08783F?style=for-the-badge&logo=google-chrome&logoColor=white)](https://it.ridebangla.bd)
 [![License: Proprietary](https://img.shields.io/badge/License-Proprietary-C00511?style=for-the-badge)](LICENSE)
 
+[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://it.ridebangla.bd)
+[![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://it.ridebangla.bd)
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://it.ridebangla.bd)
+[![JSON](https://img.shields.io/badge/JSON-000000?style=for-the-badge&logo=json&logoColor=white)](data/portfolio.json)
+[![Firebase 10.14.1](https://img.shields.io/badge/Firebase-10.14.1-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)](assets/js/reviews.js)
+[![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://it.ridebangla.bd)
+
 </div>
 
 <div align="center">
-  <img src="docs/demo/demo.gif" alt="Live demo — recorded from it.ridebangla.bd, 24 October 2026" width="400"/>
+  <img src="docs/screenshots/live-home-desktop.png" alt="Ride Bangla IT Team — live homepage, desktop (laptop viewport)" width="720"/>
   <br/>
-  <sub>Live demo — the homepage hero, services, portfolio and team, recorded from <a href="https://it.ridebangla.bd">it.ridebangla.bd</a> on 24 October 2026 (phone viewport).</sub>
+  <sub>The live homepage — desktop screenshot (laptop viewport, 1280×800), captured 2026-10-23 from <a href="https://it.ridebangla.bd">it.ridebangla.bd</a>.</sub>
 </div>
 
 ---
@@ -231,6 +238,8 @@ The homepage carries a **"What Our Customers Say"** section. It reads approved r
 | Repository | GitHub |
 
 No framework, no `npm install`, no build command — the repo deploys as-is.
+
+> **Version note:** Firebase **10.14.1** is the only pinned library version in this repo — the `SDK_VERSION` constant in [`assets/js/reviews.js`](assets/js/reviews.js), [`assets/js/it-updates.js`](assets/js/it-updates.js) and [`assets/js/site-photos.js`](assets/js/site-photos.js) (lazy-loaded Firebase compat SDK). This repo has no `package.json` or lockfile and pins no other versions, so HTML5, CSS3, JavaScript, JSON and Vercel carry no version number above rather than an invented one.
 
 ### Pages
 

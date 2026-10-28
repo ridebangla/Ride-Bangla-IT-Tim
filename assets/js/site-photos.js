@@ -9,11 +9,11 @@
  * The slot may also be given as the doc ID when the `slot` field is
  * absent. Only overrides with a valid https:// imageUrl are applied.
  *
- * Firebase config: same PUBLIC web-app values pattern as
- * assets/js/it-updates.js (safe to ship in client-side code by design).
- * Fill in the four PASTE_FROM_FIREBASE_CONSOLE placeholders before
- * publishing; until then the loader silently does nothing and the
- * hardcoded photos stay exactly as they are.
+ * Firebase config: the same PUBLIC web-app values as
+ * assets/js/reviews.js (safe to ship in client-side code by design).
+ * With the config filled, the loader applies Admin photo overrides;
+ * until then it silently did nothing and the hardcoded photos stayed
+ * exactly as they are.
  *
  * One-time read only (getDocs, no onSnapshot): photos change rarely,
  * so no permanent listener is kept open. Elements rendered after the
@@ -28,12 +28,12 @@
   "use strict";
 
   var FIREBASE_CONFIG = {
-    apiKey: "PASTE_FROM_FIREBASE_CONSOLE",
+    apiKey: "AIzaSyAZvlJJcJUvM7RJt771De5PyLNT_SjEGfQ",
     authDomain: "ride-bangla-app.firebaseapp.com",
     projectId: "ride-bangla-app",
-    storageBucket: "PASTE_FROM_FIREBASE_CONSOLE",
-    messagingSenderId: "PASTE_FROM_FIREBASE_CONSOLE",
-    appId: "PASTE_FROM_FIREBASE_CONSOLE"
+    storageBucket: "ride-bangla-app.firebasestorage.app",
+    messagingSenderId: "363230284581",
+    appId: "1:363230284581:web:a42e57a134410a4eae68cc"
   };
 
   var SDK_VERSION = "10.14.1";

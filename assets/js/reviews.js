@@ -1,40 +1,80 @@
 /* Ride Bangla IT Team — public Reviews section (assets/js/reviews.js)
  *
- * The SAME reviews system as the main website
- * (Ride_Bangla_Official_Website: src/lib/reviews.ts + ReviewsSection.tsx):
- * one shared pool — Firestore collection `website_reviews` — serves both
- * sites. This file only adapts that system to this site's static stack
- * and theme; the data contract is identical:
+ * UNIFIED REVIEWS SPEC (programme 2026-10-24, ~/workspace/fullwidth-reviews/
+ * ARCHITECTURE.md §B1–B6): one shared pool — Firestore collection
+ * `website_reviews`, project `ride-bangla-app` — serves all five public
+ * sites (Studio, Tools, AI, Main, IT). This file adapts that system to
+ * this site's static stack and theme; the data contract is the spec's:
  *
- *   READ (public): approved reviews only —
- *     where("status","==","approved") orderBy("created_at","desc"),
- *     limit 24, read here via the Firestore REST API (the rules allow
- *     public reads: `allow read: if true`). No fake/seeded data: an
- *     empty pool renders the honest empty state, and a failed fetch
- *     renders a DISTINCT "temporarily unavailable" state.
+ *   READ (public): approved reviews only, NO sourceSite filter (every
+ *     site shows ALL sources) — where("status","==","approved")
+ *     orderBy("created_at","desc"), 24 per page + Load more, read here
+ *     via the Firestore REST API (the rules allow public reads:
+ *     `allow read: if true`). The ordered query needs a composite
+ *     index (status + created_at); while it is missing it returns
+ *     HTTP 400, so the unordered fallback (client-side sort, growing
+ *     limit) IS the plan, not a bug. No fake/seeded data: an empty
+ *     pool renders the honest empty state, and a failed fetch
+ *     (BOTH attempts non-2xx — e.g. 429 quota exhaustion, 403, or
+ *     network failure) renders a DISTINCT "temporarily unavailable"
+ *     state with a Try again button.
  *   SUMMARY: average (1 decimal) + count + per-star percentages,
- *     computed from the same approved list the slider displays.
+ *     computed from the same approved list the slider displays. When
+ *     more pages exist the summary says so honestly ("Based on the
+ *     latest N reviews shown") — never a 24-review sample presented
+ *     as a lifetime total, and never a fake average/count on empty.
+ *   PER-SITE RATINGS (2026-10-24 completion): a separate "Ratings
+ *     across Ride Bangla websites" block inside #rb-reviews. It is
+ *     NOT computed from the loaded page: a dedicated aggregate read
+ *     (fetchAggregatePool) re-reads the FULL approved pool from
+ *     website_reviews with the same approved-only filter as the
+ *     cards, then groups by sourceSite. Rows in fixed order: IT
+ *     first (marked "This website"), then Main, AI, Studio, Tools,
+ *     then the legacy row (docs with no/invalid sourceSite — NEVER
+ *     split by site), then the "All websites" total. A site with
+ *     zero attributable reviews shows "No reviews yet" — no fake
+ *     average, no stars presented as a rating. AGGREGATE CAP: the
+ *     aggregate read covers at most AGGREGATE_CAP (500) approved
+ *     docs; if that cap is hit and more docs may exist, the block
+ *     shows an honest capped note (see fetchAggregatePool). The
+ *     live pool is far below this cap, so today the block is the
+ *     full pool, not a sample.
  *   CARD: avatar (Google photo, https-only, initials fallback), name,
  *     star row, comment truncated at 80 chars with See more/less,
  *     "Verified Google Account" chip ONLY when the stored record's
- *     source == "google", date.
+ *     source == "google", the MANDATORY source badge (§B2: "Reviewed
+ *     on <site>" for studio|tools|ai|main|it; legacy docs without
+ *     sourceSite get ONLY "Reviewed on Ride Bangla — source site not
+ *     recorded"), date.
  *   SLIDER: one row, one-card-at-a-time smooth slide (translateX),
  *     auto-advance every 4s with wrap-around, pause on hover/touch,
  *     arrows + dots when there is more than one page. Visible cards:
  *     1 on phones, 2 on tablets, 4 on desktop.
- *   WRITE: Google sign-in (Firebase Auth, lazy-loaded compat SDK);
- *     the document id IS the user's uid (one account = one review),
- *     saved with status "pending" for admin moderation, source
- *     "google" — exactly the shape the deployed Firestore rules
- *     require (keys uid/name/photo_url/rating/comment/status/source/
- *     created_at/updated_at; rating int 1–5; comment 2–600 chars;
- *     name/photo must match the Google token). A signed-in user can
- *     edit their own review only while it is still pending.
+ *   WRITE: Google sign-in ONLY (Firebase Auth, lazy-loaded compat
+ *     SDK; popup first, signInWithRedirect fallback on popup-blocked /
+ *     popup-closed-by-user; google.com provider check before any
+ *     submit); the document id IS the user's uid (one account = one
+ *     review across ALL five sites), saved with status "pending" for
+ *     admin moderation, source "google", sourceSite "it" (this site's
+ *     constant — never user input, never a URL param), exactly the
+ *     shape the spec's rules diff requires (keys uid/name/photo_url/
+ *     rating/comment/status/source/sourceSite/created_at/updated_at;
+ *     rating int 1–5; comment 2–600 chars; name/photo must match the
+ *     Google token). sourceSite is set at CREATE and immutable after:
+ *     an edit preserves the stored value and a legacy doc without one
+ *     NEVER gains one through this client path (Admin-SDK backfill
+ *     only, spec §B8). A signed-in user can edit their own review
+ *     only while it is still pending.
+ *     RULES GAP (spec §B7, OWNER ACTION): until the owner deploys the
+ *     spec's rules diff (sourceSite in hasOnly + enum check), writes
+ *     carrying sourceSite are REJECTED by the current deployed rules
+ *     — a pre-deploy submit failure is that gap, not a code bug.
  *
  * Firebase config: the PUBLIC web-app values of the shared project
- * (ride-bangla-app) — the same config the main website ships in its
- * public bundle. Public web config is safe to ship client-side by
- * design; access control lives in the Firestore rules, not here.
+ * (ride-bangla-app) — embedded directly (spec §B5: never depend on
+ * another site's runtime config endpoint for the read path). Public
+ * web config is safe to ship client-side by design; access control
+ * lives in the Firestore rules, not here.
  */
 (function () {
   "use strict";
@@ -50,8 +90,38 @@
 
   var SDK_VERSION = "10.14.1";
   var COLLECTION = "website_reviews";
-  var MAX_ITEMS = 24;
+  var PAGE_SIZE = 24;
   var TRUNCATE_LENGTH = 80;
+  /* Spec §B2: this site's constant — the ONLY sourceSite value IT writes. */
+  var SITE = "it";
+  var SOURCE_BADGES = {
+    studio: "Reviewed on Ride Bangla Studio",
+    tools: "Reviewed on Ride Bangla Tools",
+    ai: "Reviewed on Ride Bangla AI",
+    main: "Reviewed on Ride Bangla Main Website",
+    it: "Reviewed on Ride Bangla IT Team"
+  };
+  var LEGACY_BADGE = "Reviewed on Ride Bangla — source site not recorded";
+  /* Per-site ratings block: fixed row order (this site first), short
+     labels matching the §B2 badge site names. */
+  var SITE_ORDER = ["it", "main", "ai", "studio", "tools"];
+  var SITE_SHORT_NAMES = {
+    it: "IT Team",
+    main: "Main Website",
+    ai: "AI",
+    studio: "Studio",
+    tools: "Tools"
+  };
+  /* Aggregate-read cap (see fetchAggregatePool): the dedicated
+     aggregate read never fetches more than this many approved docs.
+     If the cap is hit and more docs may exist, the UI says so. */
+  var AGGREGATE_CAP = 500;
+  function sourceBadgeFor(value) {
+    return Object.prototype.hasOwnProperty.call(SOURCE_BADGES, value) ? SOURCE_BADGES[value] : LEGACY_BADGE;
+  }
+  function validSourceSite(value) {
+    return Object.prototype.hasOwnProperty.call(SOURCE_BADGES, value);
+  }
 
   var root = document.getElementById("rb-reviews");
   if (!root) return;
@@ -62,7 +132,19 @@
       reviewsCount: function (n) { return n === 1 ? "1 review" : n + " reviews"; },
       loading: "Loading reviews…",
       empty: "No customer reviews are published yet.",
+      emptySub: "Be the first to share your experience.",
       unavailable: "Reviews are temporarily unavailable — please check back later.",
+      tryAgain: "Try again",
+      loadMore: "Load more",
+      basedOnLatest: function (n) { return "Based on the latest " + n + " reviews shown."; },
+      siteRatingsHeading: "Ratings across Ride Bangla websites",
+      thisWebsite: "This website",
+      noReviewsYet: "No reviews yet",
+      legacyReviews: "Reviews with source not recorded",
+      allWebsites: "All websites",
+      ratingsLoading: "Loading ratings…",
+      ratingsUnavailable: "Ratings are temporarily unavailable — please check back later.",
+      aggregateCapped: "Ratings cover the first 500 approved reviews.",
       seeMore: "See more",
       seeLess: "See less",
       writeReview: "Write a Review",
@@ -93,7 +175,19 @@
       reviewsCount: function (n) { return n + "টি রিভিউ"; },
       loading: "রিভিউ লোড হচ্ছে…",
       empty: "এখনো কোনো গ্রাহক রিভিউ প্রকাশিত হয়নি।",
+      emptySub: "",
       unavailable: "রিভিউ এখন সাময়িকভাবে পাওয়া যাচ্ছে না — পরে আবার দেখুন।",
+      tryAgain: "আবার চেষ্টা করুন",
+      loadMore: "আরও লোড করুন",
+      basedOnLatest: function (n) { return "দেখানো সর্বশেষ " + n + "টি রিভিউর ভিত্তিতে।"; },
+      siteRatingsHeading: "Ride Bangla ওয়েবসাইটগুলোর রেটিং",
+      thisWebsite: "এই ওয়েবসাইট",
+      noReviewsYet: "এখনো কোনো রিভিউ নেই",
+      legacyReviews: "উৎস রেকর্ড করা হয়নি এমন রিভিউ",
+      allWebsites: "সব ওয়েবসাইট",
+      ratingsLoading: "রেটিং লোড হচ্ছে…",
+      ratingsUnavailable: "রেটিং এখন সাময়িকভাবে পাওয়া যাচ্ছে না — পরে আবার দেখুন।",
+      aggregateCapped: "রেটিং প্রথম ৫০০টি অনুমোদিত রিভিউর ভিত্তিতে।",
       seeMore: "আরো দেখুন",
       seeLess: "কম দেখুন",
       writeReview: "রিভিউ লিখুন",
@@ -221,11 +315,14 @@
       rating: fieldRating(fields),
       comment: comment,
       source: fieldStr(fields, "source") || null,
+      /* Spec §B2: only a valid enum value counts; anything else (incl.
+         a missing field on legacy docs) renders the legacy badge. */
+      sourceSite: validSourceSite(fieldStr(fields, "sourceSite")) ? fieldStr(fields, "sourceSite") : null,
       created_ms: fieldTime(fields, "created_at")
     };
   }
 
-  function runQuery(ordered) {
+  function runQuery(ordered, limit, offset) {
     var q = {
       from: [{ collectionId: COLLECTION }],
       where: {
@@ -235,10 +332,11 @@
           value: { stringValue: "approved" }
         }
       },
-      limit: ordered ? MAX_ITEMS : 50
+      limit: limit
     };
     if (ordered) {
       q.orderBy = [{ field: { fieldPath: "created_at" }, direction: "DESCENDING" }];
+      if (offset) q.offset = offset;
     }
     return fetch(
       "https://firestore.googleapis.com/v1/projects/" +
@@ -256,20 +354,105 @@
     });
   }
 
-  function fetchReviews() {
-    return runQuery(true)
-      .then(parseRows)
+  /* First page: ordered query, falling back to unordered + client-side
+     sort when the ordered query errors (e.g. the composite index is
+     still missing — observed live as HTTP 400 — or quota/permission
+     failure on the ordered attempt only). A page is PAGE_SIZE docs.
+     hasMore is tentative when a page comes back exactly full: the next
+     fetch returning fewer docs (or none) is what clears it — there is
+     no silent cap and no invented total. */
+  function fetchFirstPage() {
+    return runQuery(true, PAGE_SIZE, 0)
+      .then(function (rows) {
+        var items = parseRows(rows);
+        return { items: items, mode: "ordered", hasMore: items.length === PAGE_SIZE };
+      })
       .catch(function () {
         // Mirror the main site: if the composite query fails (e.g. the
         // index is still building), retry unordered and sort client-side.
-        return runQuery(false).then(function (rows) {
+        return runQuery(false, PAGE_SIZE, 0).then(function (rows) {
           var items = parseRows(rows);
           items.sort(function (a, b) {
             return b.created_ms - a.created_ms;
           });
-          return items.slice(0, MAX_ITEMS);
+          return { items: items.slice(0, PAGE_SIZE), mode: "fallback", hasMore: items.length === PAGE_SIZE };
         });
       });
+  }
+
+  /* Later pages. Ordered mode pages with offset (no re-fetch). Fallback
+     mode re-runs the unordered query with a growing limit and re-sorts,
+     so paging never silently caps below the pool size. */
+  function fetchNextPage() {
+    if (state.mode === "fallback") {
+      var want = state.reviews.length + PAGE_SIZE;
+      return runQuery(false, want, 0).then(function (rows) {
+        var items = parseRows(rows);
+        items.sort(function (a, b) {
+          return b.created_ms - a.created_ms;
+        });
+        var page = items.slice(state.reviews.length, want);
+        return { items: page, hasMore: items.length === want && page.length > 0 };
+      });
+    }
+    return runQuery(true, PAGE_SIZE, state.reviews.length).then(function (rows) {
+      var items = parseRows(rows);
+      return { items: items, hasMore: items.length === PAGE_SIZE };
+    });
+  }
+
+  /* Dedicated aggregate read — the per-site ratings block must cover
+     the FULL approved pool, never just the loaded card page (24).
+     Ordered path: page through the ordered query with offset until
+     a short page proves the pool is exhausted, up to AGGREGATE_CAP.
+     If exactly AGGREGATE_CAP docs are collected, one extra 1-doc
+     probe at that offset decides whether more docs exist (probe hit
+     => capped; probe empty => the pool is exactly the cap, not
+     capped). Any ordered failure => unordered fallback: a single
+     limit-AGGREGATE_CAP query, client-sorted; reaching the cap there
+     is reported as capped (conservative — an unordered query cannot
+     probe beyond its limit). Same approved-only filter and same
+     normalizeDoc validity gate as the cards, so the aggregates
+     describe exactly the pool the cards draw from (invalid docs are
+     excluded from both). Never invents attribution: docs with a
+     missing/invalid sourceSite land only in the legacy bucket. */
+  function fetchAggregatePool() {
+    function loop(offset, acc) {
+      if (acc.length >= AGGREGATE_CAP) {
+        return runQuery(true, 1, AGGREGATE_CAP).then(function (rows) {
+          return { items: acc.slice(0, AGGREGATE_CAP), capped: parseRows(rows).length > 0 };
+        });
+      }
+      var want = Math.min(PAGE_SIZE, AGGREGATE_CAP - acc.length);
+      return runQuery(true, want, offset).then(function (rows) {
+        var items = parseRows(rows);
+        var next = acc.concat(items);
+        if (items.length < want) return { items: next, capped: false };
+        return loop(offset + items.length, next);
+      });
+    }
+    return loop(0, []).catch(function () {
+      return runQuery(false, AGGREGATE_CAP, 0).then(function (rows) {
+        var items = parseRows(rows);
+        items.sort(function (a, b) {
+          return b.created_ms - a.created_ms;
+        });
+        return { items: items, capped: items.length >= AGGREGATE_CAP };
+      });
+    });
+  }
+
+  function computeAggregates(items) {
+    var perSite = {};
+    SITE_ORDER.forEach(function (site) {
+      perSite[site] = [];
+    });
+    var legacy = [];
+    (items || []).forEach(function (r) {
+      if (r.sourceSite && perSite[r.sourceSite]) perSite[r.sourceSite].push(r);
+      else legacy.push(r);
+    });
+    return { perSite: perSite, legacy: legacy, total: items || [] };
   }
 
   function parseRows(rows) {
@@ -324,13 +507,22 @@
     var count = reviews.length;
     var avg = count > 0 ? reviews.reduce(function (s, r) { return s + r.rating; }, 0) / count : 0;
     summaryEl.innerHTML = "";
-    if (count > 0) {
-      var stars = el("span");
-      stars.innerHTML = starsRowHtml(avg, "rb-star");
-      summaryEl.appendChild(stars);
-      summaryEl.appendChild(el("strong", "rb-reviews-avg", (Math.round(avg * 10) / 10).toFixed(1)));
+    if (count === 0) {
+      /* Spec §B6: empty pool — no fake average and no "0 reviews"
+         presented as a rating. The summary area stays in the DOM;
+         the empty copy lives in the list area. */
+      if (breakdownEl) breakdownEl.style.display = "none";
+      return;
     }
+    var stars = el("span");
+    stars.innerHTML = starsRowHtml(avg, "rb-star");
+    summaryEl.appendChild(stars);
+    summaryEl.appendChild(el("strong", "rb-reviews-avg", (Math.round(avg * 10) / 10).toFixed(1)));
     summaryEl.appendChild(el("span", "rb-reviews-count", t().reviewsCount(count)));
+    if (state.hasMore) {
+      /* Spec §B3: a partial page must never read as a lifetime total. */
+      summaryEl.appendChild(el("span", "rb-reviews-more-note", t().basedOnLatest(count)));
+    }
 
     if (!breakdownEl) return;
     breakdownEl.innerHTML = "";
@@ -410,6 +602,11 @@
       pill.appendChild(document.createTextNode(t().verified));
       meta.appendChild(pill);
     }
+    /* Spec §B2: source badge on EVERY card, in the meta row next to
+       the verified chip and the date — never truncated, never hidden
+       behind See more, never hover-only. Legacy docs (no sourceSite)
+       get ONLY the truthful "not recorded" badge, never a guessed site. */
+    meta.appendChild(el("span", "rb-review-source", sourceBadgeFor(r.sourceSite)));
     var date = fmtDate(r.created_ms);
     if (date) meta.appendChild(el("span", "rb-review-date", date));
     if (meta.childNodes.length) card.appendChild(meta);
@@ -469,7 +666,93 @@
     }, 4000);
   }
 
-  var state = { kind: "loading", reviews: [] };
+  var state = { kind: "loading", reviews: [], mode: "ordered", hasMore: false, loadingMore: false };
+
+  /* Per-site ratings block state. Independent of the card pager:
+     a failed aggregate fetch never wipes the cards, and a failed
+     card load never fakes the ratings block. */
+  var aggregates = { kind: "loading", data: null, capped: false };
+  var aggregatesInFlight = false;
+
+  function avgOf(list) {
+    if (!list || !list.length) return 0;
+    return list.reduce(function (s, r) { return s + r.rating; }, 0) / list.length;
+  }
+
+  function siteRatingRow(key, label, list, isThisSite, extraClass) {
+    var row = el("div", "rb-site-rating-row" + (extraClass ? " " + extraClass : ""));
+    row.setAttribute("data-site", key);
+    row.appendChild(el("span", "rb-site-rating-name", label));
+    if (isThisSite) row.appendChild(el("span", "rb-site-rating-this", t().thisWebsite));
+    var val = el("span", "rb-site-rating-value");
+    if (!list || !list.length) {
+      /* Honest empty state: no average, no stars presented as a
+         rating — the words alone. */
+      val.appendChild(el("span", "rb-site-rating-empty", t().noReviewsYet));
+      row.setAttribute("data-count", "0");
+    } else {
+      var avg = avgOf(list);
+      var stars = el("span", "rb-site-rating-stars");
+      stars.innerHTML = starsRowHtml(avg, "rb-star");
+      val.appendChild(stars);
+      val.appendChild(el("strong", "rb-site-rating-avg", avg.toFixed(1)));
+      val.appendChild(el("span", "rb-site-rating-count", "(" + t().reviewsCount(list.length) + ")"));
+      row.setAttribute("data-count", String(list.length));
+      row.setAttribute("data-avg", avg.toFixed(1));
+    }
+    row.appendChild(val);
+    return row;
+  }
+
+  function renderAggregates() {
+    var block = root.querySelector('[data-rb="site-ratings"]');
+    if (!block) return;
+    block.innerHTML = "";
+    block.appendChild(el("h3", "rb-site-ratings-title", t().siteRatingsHeading));
+    if (aggregates.kind === "loading") {
+      block.appendChild(el("p", "rb-site-ratings-note", t().ratingsLoading));
+      return;
+    }
+    if (aggregates.kind === "error" || !aggregates.data) {
+      /* Count is UNKNOWN on failure — never a fake zero row set. */
+      block.appendChild(el("p", "rb-site-ratings-note", t().ratingsUnavailable));
+      return;
+    }
+    var data = aggregates.data;
+    SITE_ORDER.forEach(function (site) {
+      block.appendChild(
+        siteRatingRow(site, SITE_SHORT_NAMES[site], data.perSite[site], site === SITE, "")
+      );
+    });
+    block.appendChild(siteRatingRow("legacy", t().legacyReviews, data.legacy, false, "rb-site-rating-legacy"));
+    block.appendChild(siteRatingRow("all", t().allWebsites, data.total, false, "rb-site-rating-all"));
+    if (aggregates.capped) {
+      block.appendChild(el("p", "rb-site-ratings-note", t().aggregateCapped));
+    }
+  }
+
+  function loadAggregates() {
+    if (aggregatesInFlight || aggregates.kind === "ready") return;
+    aggregatesInFlight = true;
+    aggregates.kind = "loading";
+    renderAggregates();
+    fetchAggregatePool()
+      .then(function (pool) {
+        aggregates.data = computeAggregates(pool.items);
+        aggregates.capped = !!pool.capped;
+        aggregates.kind = "ready";
+        aggregatesInFlight = false;
+        renderAggregates();
+      })
+      .catch(function (err) {
+        try {
+          console.error("[rb-reviews] ratings load failed:", err && err.message ? err.message : err);
+        } catch (e) {}
+        aggregates.kind = "error";
+        aggregatesInFlight = false;
+        renderAggregates();
+      });
+  }
 
   function renderList() {
     if (!listEl) return;
@@ -488,11 +771,22 @@
     if (state.kind === "error") {
       listEl.setAttribute("data-reviews-state", "error");
       listEl.appendChild(el("p", "rb-review-note rb-review-note-error", t().unavailable));
+      /* Spec §B6: error state carries a Try again button that re-runs
+         the load — never a silent blank section. */
+      var retry = el("button", "btn sm", t().tryAgain);
+      retry.type = "button";
+      retry.addEventListener("click", function () {
+        loadReviews();
+      });
+      var retryWrap = el("div", "rb-load-more");
+      retryWrap.appendChild(retry);
+      listEl.appendChild(retryWrap);
       return;
     }
     if (!state.reviews.length) {
       listEl.setAttribute("data-reviews-state", "empty");
       listEl.appendChild(el("p", "rb-review-note", t().empty));
+      if (t().emptySub) listEl.appendChild(el("p", "rb-review-sub", t().emptySub));
       return;
     }
     listEl.setAttribute("data-reviews-state", "ready");
@@ -550,6 +844,21 @@
       listEl.appendChild(dots);
     }
 
+    /* Spec §B3 pagination: Load more appends the next 24; it is
+       removed (not disabled-forever) once a fetch proves there are
+       no more. While a page loads the button is disabled. */
+    if (state.hasMore) {
+      var moreWrap = el("div", "rb-load-more");
+      var moreBtn = el("button", "btn sm", state.loadingMore ? t().loading : t().loadMore);
+      moreBtn.type = "button";
+      moreBtn.disabled = state.loadingMore;
+      moreBtn.addEventListener("click", function () {
+        loadMore();
+      });
+      moreWrap.appendChild(moreBtn);
+      listEl.appendChild(moreWrap);
+    }
+
     wrap.addEventListener("mouseenter", function () {
       carousel.paused = true;
     });
@@ -577,15 +886,25 @@
 
   function renderAll() {
     renderSummary(state.reviews);
+    renderAggregates();
     renderList();
   }
 
   function loadReviews() {
     state.kind = "loading";
+    state.reviews = [];
+    state.hasMore = false;
+    state.loadingMore = false;
+    state.mode = "ordered";
+    /* Ratings block loads (or reloads after a failure) alongside
+       the cards; a ready block is not re-fetched on Try again. */
+    loadAggregates();
     renderAll();
-    fetchReviews()
-      .then(function (items) {
-        state.reviews = items;
+    fetchFirstPage()
+      .then(function (page) {
+        state.reviews = page.items;
+        state.mode = page.mode;
+        state.hasMore = page.hasMore;
         state.kind = "ready";
         renderAll();
       })
@@ -594,8 +913,37 @@
           console.error("[rb-reviews] load failed:", err && err.message ? err.message : err);
         } catch (e) {}
         state.reviews = [];
+        state.hasMore = false;
         state.kind = "error";
         renderAll();
+      });
+  }
+
+  /* Append the next page without losing the reviews already shown. A
+     page-load failure keeps the current list and reports the failure
+     in the status line, with the Load more button left enabled to
+     retry — it never wipes the list into the error state. */
+  function loadMore() {
+    if (state.loadingMore || !state.hasMore) return;
+    state.loadingMore = true;
+    var keepIndex = carousel.index;
+    renderList();
+    fetchNextPage()
+      .then(function (page) {
+        state.reviews = state.reviews.concat(page.items);
+        state.hasMore = page.hasMore;
+        state.loadingMore = false;
+        state.kind = "ready";
+        renderAll();
+        if (keepIndex) goToSlide(keepIndex);
+      })
+      .catch(function (err) {
+        try {
+          console.error("[rb-reviews] load-more failed:", err && err.message ? err.message : err);
+        } catch (e) {}
+        state.loadingMore = false;
+        setStatus(t().unavailable);
+        renderList();
       });
   }
 
@@ -606,8 +954,10 @@
   /* ------------------------- write-a-review ------------------------- */
   /* Firebase Auth + Firestore load lazily, only when a visitor actually
      opens the review form (same approach as the Tools site) — readers
-     never pay the SDK cost. The write itself is byte-for-byte the main
-     website's submitReview() shape, which the deployed rules require. */
+     never pay the SDK cost. The write is the main website's
+     submitReview() shape PLUS the spec's sourceSite field (§B1); until
+     the owner's final rules deploy (§B7) that extra key is rejected
+     by the current hasOnly list — see the header comment. */
 
   var sdkPromise = null;
   function loadScript(src) {
@@ -664,6 +1014,17 @@
     return t().submitFail;
   }
 
+  /* Spec §B4: a review identity is Google ONLY. The sign-in UI offers
+     Google alone, but the check is enforced anyway — a non-Google
+     provider (or a missing provider list) never reaches a submit. */
+  function isGoogleUser(user) {
+    if (!user || !user.providerData) return false;
+    for (var i = 0; i < user.providerData.length; i++) {
+      if (user.providerData[i] && user.providerData[i].providerId === "google.com") return true;
+    }
+    return false;
+  }
+
   function renderSignIn() {
     formZone.innerHTML = "";
     var box = el("div", "rb-review-signin");
@@ -677,14 +1038,30 @@
         .then(function (fb) {
           var provider = new fb.auth.GoogleAuthProvider();
           provider.setCustomParameters({ prompt: "select_account" });
-          return fb.auth().signInWithPopup(provider);
+          /* Spec §B4 (static sites): popup first; on popup-blocked /
+             popup-closed-by-user (incl. mobile browsers where the
+             popup cannot open) fall back to redirect. The redirect
+             needs the OAuth client's redirect URI
+             https://it.ridebangla.bd/__/auth/handler (spec §B9 #4). */
+          return fb
+            .auth()
+            .signInWithPopup(provider)
+            .catch(function (err) {
+              if (err && (err.code === "auth/popup-blocked" || err.code === "auth/popup-closed-by-user")) {
+                return fb.auth().signInWithRedirect(provider);
+              }
+              throw err;
+            });
         })
         .then(function () {
           /* onAuthStateChanged re-renders the form */
         })
         .catch(function (err) {
           btn.disabled = false;
-          setStatus(friendlyError(err) === t().submitFail ? t().signInFail : friendlyError(err));
+          setStatus(t().signInFail);
+          try {
+            console.error("[rb-reviews] sign-in failed:", (err && err.code) || err);
+          } catch (e) {}
         });
     });
     box.appendChild(btn);
@@ -780,6 +1157,11 @@
         setStatus(t().submitFail);
         return;
       }
+      /* Spec §B4: never submit without a proven Google identity. */
+      if (!isGoogleUser(user)) {
+        setStatus(t().signInFail);
+        return;
+      }
       submit.disabled = true;
       setStatus("");
       ensureFirebase()
@@ -791,20 +1173,29 @@
               throw new Error("already-approved");
             }
             var FieldValue = fb.firestore.FieldValue;
-            return ref.set(
-              {
-                uid: user.uid,
-                name: (user.displayName || "").trim(),
-                photo_url: user.photoURL || null,
-                rating: Math.round(rating),
-                comment: comment,
-                status: "pending",
-                source: "google",
-                created_at: existing.exists ? existing.data().created_at : FieldValue.serverTimestamp(),
-                updated_at: FieldValue.serverTimestamp()
-              },
-              { merge: false }
-            );
+            var payload = {
+              uid: user.uid,
+              name: (user.displayName || "").trim(),
+              photo_url: user.photoURL || null,
+              rating: Math.round(rating),
+              comment: comment,
+              status: "pending",
+              source: "google",
+              created_at: existing.exists ? existing.data().created_at : FieldValue.serverTimestamp(),
+              updated_at: FieldValue.serverTimestamp()
+            };
+            /* Spec §B2/§B7 — sourceSite, set at CREATE, immutable after:
+               a brand-new review gets this site's constant ("it"); an
+               edit preserves the stored value verbatim; a legacy doc
+               without sourceSite NEVER gains one through this client
+               path (Admin-SDK backfill only, §B8) — so it is omitted
+               here, not guessed. */
+            if (!existing.exists) {
+              payload.sourceSite = SITE;
+            } else if (existing.data() && validSourceSite(existing.data().sourceSite)) {
+              payload.sourceSite = existing.data().sourceSite;
+            }
+            return ref.set(payload, { merge: false });
           });
         })
         .then(function () {
@@ -850,7 +1241,21 @@
         authListenerBound = true;
         ensureFirebase()
           .then(function (fb) {
+            /* Consume a redirect sign-in result (spec §B4 fallback);
+               errors here are surfaced by the auth listener below. */
+            try {
+              if (fb.auth().getRedirectResult) fb.auth().getRedirectResult().catch(function () {});
+            } catch (e) {}
             fb.auth().onAuthStateChanged(function (user) {
+              /* Spec §B4: a signed-in user who does not prove Google
+                 is treated as NOT signed in for reviews (and signed
+                 out of the reviews session) — never shown the form. */
+              if (user && !isGoogleUser(user)) {
+                try {
+                  fb.auth().signOut();
+                } catch (e) {}
+                user = null;
+              }
               var wasUid = authState.user && authState.user.uid;
               authState.user = user;
               authState.ready = true;

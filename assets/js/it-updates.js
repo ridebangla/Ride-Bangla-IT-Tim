@@ -6,12 +6,12 @@
  * portfolio loader in index.html: live data first, section hidden
  * when there is nothing valid to show.
  *
- * Firebase config: the values below are the PUBLIC web-app values from
- * Firebase Console > Project settings > Your apps (safe to ship in
- * client-side code by design). Fill in the four PASTE_FROM_FIREBASE_CONSOLE
- * placeholders before publishing; until then the section stays hidden
- * and the rest of the page is unaffected. authDomain / projectId are
- * already filled from the verified project (ride-bangla-app).
+ * Firebase config: the PUBLIC web-app values of the shared project
+ * (ride-bangla-app) — the same values assets/js/reviews.js and the
+ * contact-page lead persistence already ship (safe to ship in
+ * client-side code by design; access control lives in the Firestore
+ * rules, not here). With the config filled, the section loads live
+ * updates instead of staying hidden.
  *
  * Deliberately NO hardcoded sample updates: with no live data the
  * section hides instead of showing invented content.
@@ -20,12 +20,12 @@
   "use strict";
 
   var FIREBASE_CONFIG = {
-    apiKey: "PASTE_FROM_FIREBASE_CONSOLE",
+    apiKey: "AIzaSyAZvlJJcJUvM7RJt771De5PyLNT_SjEGfQ",
     authDomain: "ride-bangla-app.firebaseapp.com",
     projectId: "ride-bangla-app",
-    storageBucket: "PASTE_FROM_FIREBASE_CONSOLE",
-    messagingSenderId: "PASTE_FROM_FIREBASE_CONSOLE",
-    appId: "PASTE_FROM_FIREBASE_CONSOLE"
+    storageBucket: "ride-bangla-app.firebasestorage.app",
+    messagingSenderId: "363230284581",
+    appId: "1:363230284581:web:a42e57a134410a4eae68cc"
   };
 
   var SDK_VERSION = "10.14.1";
@@ -117,7 +117,10 @@
      { title, slug, excerpt, body, category,
        media_type: 'text'|'image'|'video'|'mixed',
        image_url, video_url, published, published_at, created_at,
-       title_bn, body_bn, target: 'it_team' } */
+       title_bn, body_bn, target: 'it_team' }
+     Admin-screen alias shape also accepted (normalize() falls back):
+     update_type for media_type, image_uri for image_url,
+     video_uri for video_url, status == 'published' for published. */
   function normalize(id, raw) {
     var title = str(raw.title).trim() || str(raw.title_bn).trim();
     if (!title) return null;
@@ -130,10 +133,10 @@
       body: str(raw.body).trim(),
       bodyBn: str(raw.body_bn).trim(),
       category: str(raw.category).trim(),
-      mediaType: str(raw.media_type).trim(),
-      imageUrl: safeHttpsUrl(raw.image_url),
-      videoUrl: safeHttpsUrl(raw.video_url),
-      publishedAt: timeValue(raw.published_at) || timeValue(raw.created_at)
+      mediaType: str(raw.media_type).trim() || str(raw.update_type).trim(),
+      imageUrl: safeHttpsUrl(raw.image_url) || safeHttpsUrl(raw.image_uri),
+      videoUrl: safeHttpsUrl(raw.video_url) || safeHttpsUrl(raw.video_uri),
+      publishedAt: timeValue(raw.published_at) || timeValue(raw.created_at) || timeValue(raw.createdAt) || timeValue(raw.updatedAt)
     };
   }
 
@@ -264,7 +267,17 @@
           .get()
           .then(handle)
           .catch(function () {
-            hide();
+            /* Rules also allow reads of docs saved with the status
+               shape (status == 'published') instead of the boolean
+               shape; try that shape before giving up. */
+            db.collection("it_team_updates")
+              .where("status", "==", "published")
+              .limit(50)
+              .get()
+              .then(handle)
+              .catch(function () {
+                hide();
+              });
           });
       });
   }
