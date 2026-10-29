@@ -65,6 +65,13 @@
  *     NEVER gains one through this client path (Admin-SDK backfill
  *     only, spec §B8). A signed-in user can edit their own review
  *     only while it is still pending.
+ *   DELETE: a signed-in user can delete their OWN review (the document
+ *     id IS the uid, so the delete targets exactly the own doc) from
+ *     their own card or from the form zone, behind a confirmation
+ *     step — an accidental tap cannot delete. Delete is available at
+ *     any status (pending or published); published reviews cannot be
+ *     edited, so delete is their only path. The live rules already
+ *     allow a signed-in user to delete their own review.
  *     RULES GAP (spec §B7, OWNER ACTION): until the owner deploys the
  *     spec's rules diff (sourceSite in hasOnly + enum check), writes
  *     carrying sourceSite are REJECTED by the current deployed rules
@@ -163,6 +170,9 @@
       editReview: "Edit your review",
       reviewPublished: "Your review is published. Published reviews can't be edited.",
       reviewPending: "Your review is waiting for approval — you can still edit it below.",
+      deleteReview: "Delete",
+      deleteConfirm: "Delete this review?",
+      cancel: "Cancel",
       submitFail: "Could not submit your review. Please try again.",
       star: "star",
       stars: "stars",
@@ -206,6 +216,9 @@
       editReview: "আপনার রিভিউ সম্পাদনা করুন",
       reviewPublished: "আপনার রিভিউ প্রকাশিত হয়েছে। প্রকাশিত রিভিউ সম্পাদনা করা যায় না।",
       reviewPending: "আপনার রিভিউ অনুমোদনের অপেক্ষায় আছে — নিচে এখনো সম্পাদনা করতে পারবেন।",
+      deleteReview: "মুছে ফেলুন",
+      deleteConfirm: "এই রিভিউটি মুছে ফেলবেন?",
+      cancel: "বাতিল করুন",
       submitFail: "আপনার রিভিউ জমা দেওয়া যায়নি। আবার চেষ্টা করুন।",
       star: "স্টার",
       stars: "স্টার",
@@ -610,6 +623,12 @@
     var date = fmtDate(r.created_ms);
     if (date) meta.appendChild(el("span", "rb-review-date", date));
     if (meta.childNodes.length) card.appendChild(meta);
+    /* Own-review delete: shown ONLY when the signed-in user's uid
+       matches this review's uid (the doc id IS the uid), at any
+       status — including published cards, which cannot be edited. */
+    if (isOwnReview(r)) {
+      card.appendChild(makeDeleteControl());
+    }
     return card;
   }
 
@@ -1004,6 +1023,84 @@
 
   var authState = { user: null, ready: false, ownStatus: null, ownRating: 0, ownComment: "" };
 
+  /* Own-review delete (shared by the card and the form zone).
+     isOwnReview gates on the signed-in uid matching the review's
+     stored uid; deleteOwnReview re-checks the signed-in user at
+     call time and deletes ONLY doc(user.uid) — the document id IS
+     the uid, so no other user's doc can be targeted. The rules
+     allow a signed-in user to delete their own review at any
+     status. On failure the Delete button is restored (no invented
+     status copy — see report's owner-input flag) and the error is
+     logged like every other reviews failure in this file. */
+  function isOwnReview(r) {
+    return !!(
+      authState &&
+      authState.user &&
+      authState.user.uid &&
+      r &&
+      r.uid &&
+      r.uid === authState.user.uid
+    );
+  }
+
+  function deleteOwnReview() {
+    var user = authState.user;
+    if (!user || !user.uid) return Promise.reject(new Error("not-signed-in"));
+    return ensureFirebase()
+      .then(function (fb) {
+        return fb.firestore().collection(COLLECTION).doc(user.uid).delete();
+      })
+      .then(function () {
+        authState.ownStatus = null;
+        authState.ownRating = 0;
+        authState.ownComment = "";
+        state.reviews = state.reviews.filter(function (r) {
+          return r.uid !== user.uid;
+        });
+        setStatus("");
+        renderAll();
+        renderWriteZone();
+      });
+  }
+
+  /* Delete button with a confirmation step: first tap swaps the
+     button for "Delete this review?" + Delete / Cancel; only the
+     confirm Delete runs the delete. Cancel restores the button. */
+  function makeDeleteControl() {
+    var wrap = el("div", "rb-review-delete-wrap");
+    var btn = el("button", "rb-review-delete", t().deleteReview);
+    btn.type = "button";
+    function showButton() {
+      wrap.innerHTML = "";
+      btn.disabled = false;
+      wrap.appendChild(btn);
+    }
+    btn.addEventListener("click", function () {
+      wrap.innerHTML = "";
+      var q = el("span", "rb-review-delete-q", t().deleteConfirm);
+      var yes = el("button", "btn sm red", t().deleteReview);
+      yes.type = "button";
+      var no = el("button", "btn sm out", t().cancel);
+      no.type = "button";
+      no.addEventListener("click", showButton);
+      yes.addEventListener("click", function () {
+        yes.disabled = true;
+        no.disabled = true;
+        deleteOwnReview().catch(function (err) {
+          try {
+            console.error("[rb-reviews] delete failed:", (err && err.message) || err);
+          } catch (e) {}
+          showButton();
+        });
+      });
+      wrap.appendChild(q);
+      wrap.appendChild(yes);
+      wrap.appendChild(no);
+    });
+    showButton();
+    return wrap;
+  }
+
   function friendlyError(err) {
     var code = (err && err.code) || "";
     var msg = (err && err.message) || "";
@@ -1113,6 +1210,9 @@
 
     if (authState.ownStatus === "approved") {
       box.appendChild(el("p", "rb-form-note", t().reviewPublished));
+      /* Published reviews cannot be edited, so delete is their only
+         path — offered here as well as on the published card. */
+      box.appendChild(makeDeleteControl());
       formZone.appendChild(box);
       return;
     }
@@ -1214,6 +1314,10 @@
         });
     });
     box.appendChild(submit);
+    /* Pending (or otherwise not-yet-published) own reviews never
+       appear in the public card list, so the form zone is their
+       delete path. Appended only — the edit flow above is untouched. */
+    box.appendChild(makeDeleteControl());
     formZone.appendChild(box);
   }
 
@@ -1264,6 +1368,10 @@
               } else {
                 renderWriteZone();
               }
+              /* Cards re-render on auth change so the signed-in
+                 user's own card gains (or, on sign-out, loses) its
+                 Delete button without a page reload. */
+              renderList();
             });
           })
           .catch(function () {
