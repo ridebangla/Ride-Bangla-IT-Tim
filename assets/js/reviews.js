@@ -6,8 +6,9 @@
  * sites (Studio, Tools, AI, Main, IT). This file adapts that system to
  * this site's static stack and theme; the data contract is the spec's:
  *
- *   READ (public): approved reviews only, NO sourceSite filter (every
- *     site shows ALL sources) — where("status","==","approved")
+ *   READ (public, per-site rule 2026-10-29): approved reviews with
+ *     sourceSite == "it" ONLY for cards — where("status","==","approved")
+ *     AND where("sourceSite","==","it")
  *     orderBy("created_at","desc"), 24 per page + Load more, read here
  *     via the Firestore REST API (the rules allow public reads:
  *     `allow read: if true`). The ordered query needs a composite
@@ -335,16 +336,24 @@
     };
   }
 
-  function runQuery(ordered, limit, offset) {
+  /* Per-site rule 2026-10-29: card queries pass siteFilter ('it') and
+     the query becomes status AND sourceSite; aggregate queries pass no
+     filter and keep the full pool. Card returns are ALSO client-filtered
+     in fetchFirstPage/fetchNextPage, so a card can never show another
+     site's review even if the server filter were bypassed. */
+  function runQuery(ordered, limit, offset, siteFilter) {
+    var statusFilter = {
+      fieldFilter: {
+        field: { fieldPath: "status" },
+        op: "EQUAL",
+        value: { stringValue: "approved" }
+      }
+    };
     var q = {
       from: [{ collectionId: COLLECTION }],
-      where: {
-        fieldFilter: {
-          field: { fieldPath: "status" },
-          op: "EQUAL",
-          value: { stringValue: "approved" }
-        }
-      },
+      where: siteFilter
+        ? { compositeFilter: { op: "AND", filters: [statusFilter, { fieldFilter: { field: { fieldPath: "sourceSite" }, op: "EQUAL", value: { stringValue: siteFilter } } }] } }
+        : statusFilter,
       limit: limit
     };
     if (ordered) {
@@ -375,16 +384,16 @@
      fetch returning fewer docs (or none) is what clears it — there is
      no silent cap and no invented total. */
   function fetchFirstPage() {
-    return runQuery(true, PAGE_SIZE, 0)
+    return runQuery(true, PAGE_SIZE, 0, SITE)
       .then(function (rows) {
-        var items = parseRows(rows);
+        var items = parseRows(rows).filter(function (r) { return r.sourceSite === SITE; });
         return { items: items, mode: "ordered", hasMore: items.length === PAGE_SIZE };
       })
       .catch(function () {
         // Mirror the main site: if the composite query fails (e.g. the
         // index is still building), retry unordered and sort client-side.
-        return runQuery(false, PAGE_SIZE, 0).then(function (rows) {
-          var items = parseRows(rows);
+        return runQuery(false, PAGE_SIZE, 0, SITE).then(function (rows) {
+          var items = parseRows(rows).filter(function (r) { return r.sourceSite === SITE; });
           items.sort(function (a, b) {
             return b.created_ms - a.created_ms;
           });
@@ -399,8 +408,8 @@
   function fetchNextPage() {
     if (state.mode === "fallback") {
       var want = state.reviews.length + PAGE_SIZE;
-      return runQuery(false, want, 0).then(function (rows) {
-        var items = parseRows(rows);
+      return runQuery(false, want, 0, SITE).then(function (rows) {
+        var items = parseRows(rows).filter(function (r) { return r.sourceSite === SITE; });
         items.sort(function (a, b) {
           return b.created_ms - a.created_ms;
         });
@@ -408,8 +417,8 @@
         return { items: page, hasMore: items.length === want && page.length > 0 };
       });
     }
-    return runQuery(true, PAGE_SIZE, state.reviews.length).then(function (rows) {
-      var items = parseRows(rows);
+    return runQuery(true, PAGE_SIZE, state.reviews.length, SITE).then(function (rows) {
+      var items = parseRows(rows).filter(function (r) { return r.sourceSite === SITE; });
       return { items: items, hasMore: items.length === PAGE_SIZE };
     });
   }
@@ -738,13 +747,17 @@
       return;
     }
     var data = aggregates.data;
-    SITE_ORDER.forEach(function (site) {
+    // Per-site rule 2026-10-29: this block shows ONLY this site's row
+    // and the main site's aggregate row (stars + count, no cards, no
+    // text, no names). Other sites, legacy and overall rows are NOT
+    // rendered here. The main row counts ONLY sourceSite == 'main'
+    // docs; until the backfill lands it honestly shows 'No reviews
+    // yet' — pool totals are never presented as Main's.
+    ["it", "main"].forEach(function (site) {
       block.appendChild(
         siteRatingRow(site, SITE_SHORT_NAMES[site], data.perSite[site], site === SITE, "")
       );
     });
-    block.appendChild(siteRatingRow("legacy", t().legacyReviews, data.legacy, false, "rb-site-rating-legacy"));
-    block.appendChild(siteRatingRow("all", t().allWebsites, data.total, false, "rb-site-rating-all"));
     if (aggregates.capped) {
       block.appendChild(el("p", "rb-site-ratings-note", t().aggregateCapped));
     }
