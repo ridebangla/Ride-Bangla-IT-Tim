@@ -151,7 +151,7 @@
       tryAgain: "Try again",
       loadMore: "Load more",
       basedOnLatest: function (n) { return "Based on the latest " + n + " reviews shown."; },
-      siteRatingsHeading: "Ratings across Ride Bangla websites",
+      siteRatingsHeading: "IT Team ratings",
       thisWebsite: "This website",
       noReviewsYet: "No reviews yet",
       legacyReviews: "Reviews with source not recorded",
@@ -204,7 +204,7 @@
       tryAgain: "আবার চেষ্টা করুন",
       loadMore: "আরও লোড করুন",
       basedOnLatest: function (n) { return "দেখানো সর্বশেষ " + n + "টি রিভিউর ভিত্তিতে।"; },
-      siteRatingsHeading: "Ride Bangla ওয়েবসাইটগুলোর রেটিং",
+      siteRatingsHeading: "IT Team রেটিং",
       thisWebsite: "এই ওয়েবসাইট",
       noReviewsYet: "এখনো কোনো রিভিউ নেই",
       legacyReviews: "উৎস রেকর্ড করা হয়নি এমন রিভিউ",
@@ -767,13 +767,11 @@
       return;
     }
     var data = aggregates.data;
-    // Per-site rule 2026-10-29: this block shows ONLY this site's row
-    // and the main site's aggregate row (stars + count, no cards, no
-    // text, no names). Other sites, legacy and overall rows are NOT
-    // rendered here. The main row counts ONLY sourceSite == 'main'
-    // docs; until the backfill lands it honestly shows 'No reviews
-    // yet' — pool totals are never presented as Main's.
-    ["it", "main"].forEach(function (site) {
+    // Strict per-site rule 2026-10-31: this block shows ONLY this
+    // site's row (stars + count, no cards, no text, no names).
+    // No other site's row, no legacy row and no overall row is
+    // rendered here.
+    ["it"].forEach(function (site) {
       block.appendChild(
         siteRatingRow(site, SITE_SHORT_NAMES[site], data.perSite[site], site === SITE, "")
       );
