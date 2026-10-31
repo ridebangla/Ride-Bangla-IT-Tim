@@ -29,10 +29,11 @@
  *     NOT computed from the loaded page: a dedicated aggregate read
  *     (fetchAggregatePool) re-reads the FULL approved pool from
  *     website_reviews with the same approved-only filter as the
- *     cards, then groups by sourceSite. Rows in fixed order: IT
- *     first (marked "This website"), then Main, AI, Studio, Tools,
- *     then the legacy row (docs with no/invalid sourceSite — NEVER
- *     split by site), then the "All websites" total. A site with
+ *     cards, then groups by sourceSite. Rows RENDERED here (per-site
+ *     rule 2026-10-29): IT first (marked "This website"), then Main
+ *     ONLY. The aggregate read still groups AI, Studio, Tools and
+ *     legacy docs, but those rows are NOT rendered here — see
+ *     renderAggregates. A site with
  *     zero attributable reviews shows "No reviews yet" — no fake
  *     average, no stars presented as a rating. AGGREGATE CAP: the
  *     aggregate read covers at most AGGREGATE_CAP (500) approved
@@ -73,10 +74,15 @@
  *     any status (pending or published); published reviews cannot be
  *     edited, so delete is their only path. The live rules already
  *     allow a signed-in user to delete their own review.
- *     RULES GAP (spec §B7, OWNER ACTION): until the owner deploys the
- *     spec's rules diff (sourceSite in hasOnly + enum check), writes
- *     carrying sourceSite are REJECTED by the current deployed rules
- *     — a pre-deploy submit failure is that gap, not a code bug.
+ *     RULES STATUS 2026-10-30 (OWNER ACTION, end-of-program deploy):
+ *     the 2026-10-30 21:42 live fix covered ADMIN updates including
+ *     sourceSite. Whether the live CLIENT-CREATE rule already
+ *     contains the §B7 diff (sourceSite in hasOnly + enum check +
+ *     google.com provider) could NOT be verified from this repo —
+ *     it holds no rules copy — so a live submit failure must still
+ *     be read as a possible rules gap, not automatically a code bug,
+ *     until the owner confirms/deploys that client-create block.
+ *     No code here works around a missing rule by omitting sourceSite.
  *
  * Firebase config: the PUBLIC web-app values of the shared project
  * (ride-bangla-app) — embedded directly (spec §B5: never depend on
@@ -175,6 +181,12 @@
       deleteConfirm: "Delete this review?",
       cancel: "Cancel",
       submitFail: "Could not submit your review. Please try again.",
+      validationRating: "Please select a star rating before posting.",
+      validationComment: "Please write at least 2 characters about your experience.",
+      validationName: "Your Google account has no display name, so a review cannot be posted from it.",
+      deleteFail: "Could not delete your review. Please try again.",
+      submitUnavailable: "Review submission is currently unavailable. Please try again later.",
+      crossSitePublished: "Your published review belongs to another Ride Bangla website, so it is not shown here.",
       star: "star",
       stars: "stars",
       prev: "Previous reviews",
@@ -221,6 +233,12 @@
       deleteConfirm: "এই রিভিউটি মুছে ফেলবেন?",
       cancel: "বাতিল করুন",
       submitFail: "আপনার রিভিউ জমা দেওয়া যায়নি। আবার চেষ্টা করুন।",
+      validationRating: "পোস্ট করার আগে একটি স্টার রেটিং নির্বাচন করুন।",
+      validationComment: "আপনার অভিজ্ঞতা সম্পর্কে কমপক্ষে ২ অক্ষর লিখুন।",
+      validationName: "আপনার Google অ্যাকাউন্টে কোনো ডিসপ্লে নাম নেই, তাই এটি থেকে রিভিউ পোস্ট করা যাবে না।",
+      deleteFail: "আপনার রিভিউ মুছে ফেলা যায়নি। আবার চেষ্টা করুন।",
+      submitUnavailable: "রিভিউ জমা দেওয়া বর্তমানে সম্ভব হচ্ছে না। পরে আবার চেষ্টা করুন।",
+      crossSitePublished: "আপনার প্রকাশিত রিভিউটি অন্য একটি Ride Bangla ওয়েবসাইটের, তাই এখানে দেখানো হচ্ছে না।",
       star: "স্টার",
       stars: "স্টার",
       prev: "আগের রিভিউ",
@@ -988,8 +1006,9 @@
      opens the review form (same approach as the Tools site) — readers
      never pay the SDK cost. The write is the main website's
      submitReview() shape PLUS the spec's sourceSite field (§B1); until
-     the owner's final rules deploy (§B7) that extra key is rejected
-     by the current hasOnly list — see the header comment. */
+     the owner's final rules deploy (§B7) that extra key may be
+     rejected by the live hasOnly list — see the header comment
+     for the 2026-10-30 rules status. */
 
   var sdkPromise = null;
   function loadScript(src) {
@@ -1034,7 +1053,7 @@
     return sdkPromise;
   }
 
-  var authState = { user: null, ready: false, ownStatus: null, ownRating: 0, ownComment: "" };
+  var authState = { user: null, ready: false, ownStatus: null, ownRating: 0, ownComment: "", ownSourceSite: null };
 
   /* Own-review delete (shared by the card and the form zone).
      isOwnReview gates on the signed-in uid matching the review's
@@ -1042,9 +1061,10 @@
      call time and deletes ONLY doc(user.uid) — the document id IS
      the uid, so no other user's doc can be targeted. The rules
      allow a signed-in user to delete their own review at any
-     status. On failure the Delete button is restored (no invented
-     status copy — see report's owner-input flag) and the error is
-     logged like every other reviews failure in this file. */
+     status. On failure the Delete button is restored, the
+     t().deleteFail status is shown (wording proposed for owner
+     approval — see the programme report), and the error is logged
+     like every other reviews failure in this file. */
   function isOwnReview(r) {
     return !!(
       authState &&
@@ -1067,6 +1087,7 @@
         authState.ownStatus = null;
         authState.ownRating = 0;
         authState.ownComment = "";
+        authState.ownSourceSite = null;
         state.reviews = state.reviews.filter(function (r) {
           return r.uid !== user.uid;
         });
@@ -1103,6 +1124,7 @@
           try {
             console.error("[rb-reviews] delete failed:", (err && err.message) || err);
           } catch (e) {}
+          setStatus(t().deleteFail);
           showButton();
         });
       });
@@ -1121,6 +1143,7 @@
       console.error("[rb-reviews]", code || "(no code)", msg);
     } catch (e) {}
     if (code === "auth/popup-closed-by-user" || code === "auth/cancelled-popup-request") return t().signInFail;
+    if (code === "permission-denied") return t().submitUnavailable;
     return t().submitFail;
   }
 
@@ -1190,14 +1213,19 @@
           authState.ownStatus = typeof d.status === "string" ? d.status : null;
           authState.ownRating = typeof d.rating === "number" ? d.rating : 0;
           authState.ownComment = typeof d.comment === "string" ? d.comment : "";
+          authState.ownSourceSite = validSourceSite(d.sourceSite) ? d.sourceSite : null;
         } else {
           authState.ownStatus = null;
           authState.ownRating = 0;
           authState.ownComment = "";
+          authState.ownSourceSite = null;
         }
       })
       .catch(function () {
         authState.ownStatus = null;
+        authState.ownRating = 0;
+        authState.ownComment = "";
+        authState.ownSourceSite = null;
       });
   }
 
@@ -1223,6 +1251,9 @@
 
     if (authState.ownStatus === "approved") {
       box.appendChild(el("p", "rb-form-note", t().reviewPublished));
+      if (authState.ownSourceSite && authState.ownSourceSite !== SITE) {
+        box.appendChild(el("p", "rb-form-note", t().crossSitePublished));
+      }
       /* Published reviews cannot be edited, so delete is their only
          path — offered here as well as on the published card. */
       box.appendChild(makeDeleteControl());
@@ -1266,8 +1297,16 @@
     submit.type = "button";
     submit.addEventListener("click", function () {
       var comment = area.value.trim();
-      if (rating < 1 || rating > 5 || comment.length < 2) {
-        setStatus(t().submitFail);
+      if (rating < 1 || rating > 5) {
+        setStatus(t().validationRating);
+        return;
+      }
+      if (comment.length < 2 || comment.length > 600) {
+        setStatus(t().validationComment);
+        return;
+      }
+      if (!(user.displayName || "").trim()) {
+        setStatus(t().validationName);
         return;
       }
       /* Spec §B4: never submit without a proven Google identity. */
@@ -1283,6 +1322,9 @@
           var ref = db.collection(COLLECTION).doc(user.uid);
           return ref.get().then(function (existing) {
             if (existing.exists && existing.data().status === "approved") {
+              authState.ownSourceSite = validSourceSite(existing.data().sourceSite)
+                ? existing.data().sourceSite
+                : null;
               throw new Error("already-approved");
             }
             var FieldValue = fb.firestore.FieldValue;
@@ -1305,14 +1347,20 @@
                here, not guessed. */
             if (!existing.exists) {
               payload.sourceSite = SITE;
+              authState.ownSourceSite = SITE;
             } else if (existing.data() && validSourceSite(existing.data().sourceSite)) {
               payload.sourceSite = existing.data().sourceSite;
+              authState.ownSourceSite = existing.data().sourceSite;
+            } else {
+              authState.ownSourceSite = null;
             }
             return ref.set(payload, { merge: false });
           });
         })
         .then(function () {
           authState.ownStatus = "pending";
+          authState.ownRating = rating;
+          authState.ownComment = comment;
           setStatus(t().thankYou);
           renderForm();
         })
@@ -1327,10 +1375,14 @@
         });
     });
     box.appendChild(submit);
-    /* Pending (or otherwise not-yet-published) own reviews never
-       appear in the public card list, so the form zone is their
-       delete path. Appended only — the edit flow above is untouched. */
-    box.appendChild(makeDeleteControl());
+    /* Pending own reviews never appear in the public card list, so
+       the form zone is their delete path — but ONLY when a doc is
+       known to exist (ownStatus !== null). Showing Delete before any
+       review exists invites deleting nothing and confuses the user;
+       the edit flow above is otherwise untouched. */
+    if (authState.ownStatus !== null) {
+      box.appendChild(makeDeleteControl());
+    }
     formZone.appendChild(box);
   }
 
@@ -1358,10 +1410,11 @@
         authListenerBound = true;
         ensureFirebase()
           .then(function (fb) {
-            /* Consume a redirect sign-in result (spec §B4 fallback);
-               errors here are surfaced by the auth listener below. */
+            /* Consume a redirect sign-in result (spec §B4 fallback).
+               A redirect error must surface here: the auth listener
+               alone shows no status for a null user. */
             try {
-              if (fb.auth().getRedirectResult) fb.auth().getRedirectResult().catch(function () {});
+              if (fb.auth().getRedirectResult) fb.auth().getRedirectResult().catch(function () { setStatus(t().signInFail); });
             } catch (e) {}
             fb.auth().onAuthStateChanged(function (user) {
               /* Spec §B4: a signed-in user who does not prove Google
@@ -1372,6 +1425,7 @@
                   fb.auth().signOut();
                 } catch (e) {}
                 user = null;
+                setStatus(t().signInFail);
               }
               var wasUid = authState.user && authState.user.uid;
               authState.user = user;
@@ -1390,6 +1444,7 @@
           .catch(function () {
             authListenerBound = false;
             authState.ready = true;
+            setStatus(t().signInFail);
             renderWriteZone();
           });
       }
