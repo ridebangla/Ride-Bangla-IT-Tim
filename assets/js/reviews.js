@@ -177,6 +177,7 @@
       editReview: "Edit your review",
       reviewPublished: "Your review is published. Published reviews can't be edited.",
       reviewPending: "Your review is waiting for approval — you can still edit it below.",
+      reviewRejected: "Your review was not approved. Rejected reviews can't be edited — you can delete it and submit a fresh review.",
       deleteReview: "Delete",
       deleteConfirm: "Delete this review?",
       cancel: "Cancel",
@@ -229,6 +230,7 @@
       editReview: "আপনার রিভিউ সম্পাদনা করুন",
       reviewPublished: "আপনার রিভিউ প্রকাশিত হয়েছে। প্রকাশিত রিভিউ সম্পাদনা করা যায় না।",
       reviewPending: "আপনার রিভিউ অনুমোদনের অপেক্ষায় আছে — নিচে এখনো সম্পাদনা করতে পারবেন।",
+      reviewRejected: "আপনার রিভিউ অনুমোদিত হয়নি। প্রত্যাখ্যাত রিভিউ সম্পাদনা করা যায় না — এটি মুছে ফেলে নতুন রিভিউ জমা দিতে পারবেন।",
       deleteReview: "মুছে ফেলুন",
       deleteConfirm: "এই রিভিউটি মুছে ফেলবেন?",
       cancel: "বাতিল করুন",
@@ -1260,6 +1262,15 @@
       formZone.appendChild(box);
       return;
     }
+    if (authState.ownStatus === "rejected") {
+      box.appendChild(el("p", "rb-form-note", t().reviewRejected));
+      /* Rejected reviews cannot be edited back to pending (rules owner-
+         update leg requires the stored status to be "pending"), so delete
+         is their only path — same shape as the approved branch above. */
+      box.appendChild(makeDeleteControl());
+      formZone.appendChild(box);
+      return;
+    }
     if (authState.ownStatus === "pending") {
       box.appendChild(el("p", "rb-form-note", t().reviewPending));
     }
@@ -1321,6 +1332,9 @@
           var db = fb.firestore();
           var ref = db.collection(COLLECTION).doc(user.uid);
           return ref.get().then(function (existing) {
+            if (existing.exists && existing.data().status === "rejected") {
+              throw new Error("already-rejected");
+            }
             if (existing.exists && existing.data().status === "approved") {
               authState.ownSourceSite = validSourceSite(existing.data().sourceSite)
                 ? existing.data().sourceSite
@@ -1368,6 +1382,11 @@
           submit.disabled = false;
           if (err && err.message === "already-approved") {
             authState.ownStatus = "approved";
+            renderForm();
+            return;
+          }
+          if (err && err.message === "already-rejected") {
+            authState.ownStatus = "rejected";
             renderForm();
             return;
           }
