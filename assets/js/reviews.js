@@ -654,9 +654,18 @@
     if (meta.childNodes.length) card.appendChild(meta);
     /* Own-review delete: shown ONLY when the signed-in user's uid
        matches this review's uid (the doc id IS the uid), at any
-       status — including published cards, which cannot be edited. */
+       status — including published cards, which can now also be edited
+       (back to pending re-approval) as well as deleted. */
     if (isOwnReview(r)) {
       card.appendChild(makeDeleteControl());
+    }
+    /* Own-review edit (review-edit program): shown ONLY on the signed-in
+       user's own card (same isOwnReview gate as Delete — uid match).
+       Tapping it opens the form zone, which prefills from the user's own
+       document (loadOwnReview), and scrolls to it. The save itself is
+       gated server-side: the rules leg requires auth uid == stored uid. */
+    if (isOwnReview(r)) {
+      card.appendChild(makeEditControl());
     }
     return card;
   }
@@ -1100,6 +1109,23 @@
   /* Delete button with a confirmation step: first tap swaps the
      button for "Delete this review?" + Delete / Cancel; only the
      confirm Delete runs the delete. Cancel restores the button. */
+  /* Own-review edit control: renders the prefilled form and scrolls
+     to it. The form prefills from authState (loadOwnReview) — never from
+     the card — so the edited values always come from the signed-in
+     user's own doc. NOTE FOR HEAD: class "rb-review-edit" has no
+     stylesheet rule yet — add one (or reuse the delete-button style)
+     before push. */
+  function makeEditControl() {
+    var btn = el("button", "rb-review-edit", t().editReview);
+    btn.type = "button";
+    btn.setAttribute("aria-label", t().editReview);
+    btn.addEventListener("click", function () {
+      renderForm();
+      formZone.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+    return btn;
+  }
+
   function makeDeleteControl() {
     var wrap = el("div", "rb-review-delete-wrap");
     var btn = el("button", "rb-review-delete", t().deleteReview);
@@ -1249,17 +1275,20 @@
     head.appendChild(out);
     box.appendChild(head);
 
-    if (authState.ownStatus === "approved") {
+    if (authState.ownStatus === "approved" && authState.ownSourceSite && authState.ownSourceSite !== SITE) {
       box.appendChild(el("p", "rb-form-note", t().reviewPublished));
-      if (authState.ownSourceSite && authState.ownSourceSite !== SITE) {
-        box.appendChild(el("p", "rb-form-note", t().crossSitePublished));
-      }
-      /* Published reviews cannot be edited, so delete is their only
-         path — offered here as well as on the published card. */
+      box.appendChild(el("p", "rb-form-note", t().crossSitePublished));
+      /* Cross-site published reviews still cannot be edited here (the
+         review belongs to another site) — delete stays their only path
+         on this site, as before. */
       box.appendChild(makeDeleteControl());
       formZone.appendChild(box);
       return;
     }
+    /* EDIT (review-edit program): an approved review belonging to THIS
+       site (or a legacy doc with no sourceSite) now falls through to the
+       prefilled form below instead of the note+delete-only branch. After
+       save, ownStatus becomes "pending" and the pending note shows. */
     if (authState.ownStatus === "rejected") {
       box.appendChild(el("p", "rb-form-note", t().reviewRejected));
       /* Rejected reviews cannot be edited back to pending (rules owner-
@@ -1333,12 +1362,9 @@
             if (existing.exists && existing.data().status === "rejected") {
               throw new Error("already-rejected");
             }
-            if (existing.exists && existing.data().status === "approved") {
-              authState.ownSourceSite = validSourceSite(existing.data().sourceSite)
-                ? existing.data().sourceSite
-                : null;
-              throw new Error("already-approved");
-            }
+            /* EDIT: an approved review is now editable (partial update
+               below resets it to pending re-approval). The sourceSite
+               shape below is unchanged (never gained or changed here). */
             var FieldValue = fb.firestore.FieldValue;
             var payload = {
               uid: user.uid,
@@ -1366,6 +1392,20 @@
             } else {
               authState.ownSourceSite = null;
             }
+            /* EDIT: edits are partial updates (only the keys the amended
+               rules leg allows) so name/uid/created_at/source/sourceSite
+               stay exactly as stored — in particular the stored name is
+               never overwritten with a possibly-changed Google display
+               name. Creates use the full payload as before. */
+            if (existing.exists) {
+              return ref.update({
+                rating: Math.round(rating),
+                comment: comment,
+                photo_url: user.photoURL || null,
+                status: "pending",
+                updated_at: FieldValue.serverTimestamp()
+              });
+            }
             return ref.set(payload, { merge: false });
           });
         })
@@ -1378,11 +1418,6 @@
         })
         .catch(function (err) {
           submit.disabled = false;
-          if (err && err.message === "already-approved") {
-            authState.ownStatus = "approved";
-            renderForm();
-            return;
-          }
           if (err && err.message === "already-rejected") {
             authState.ownStatus = "rejected";
             renderForm();
