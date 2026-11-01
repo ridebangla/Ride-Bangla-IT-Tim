@@ -56,8 +56,9 @@
  *     SDK; popup first, signInWithRedirect fallback on popup-blocked /
  *     popup-closed-by-user; google.com provider check before any
  *     submit); the document id IS the user's uid (one account = one
- *     review across ALL five sites), saved with status "pending" for
- *     admin moderation, source "google", sourceSite "it" (this site's
+ *     review across ALL five sites), saved with status "approved"
+ *     (auto-live — no admin-approval step), source "google",
+ *     sourceSite "it" (this site's
  *     constant — never user input, never a URL param), exactly the
  *     shape the spec's rules diff requires (keys uid/name/photo_url/
  *     rating/comment/status/source/sourceSite/created_at/updated_at;
@@ -66,7 +67,7 @@
  *     an edit preserves the stored value and a legacy doc without one
  *     NEVER gains one through this client path (Admin-SDK backfill
  *     only, spec §B8). A signed-in user can edit their own review
- *     only while it is still pending.
+ *     at any time (approved stays live, pending stays pending).
  *   DELETE: a signed-in user can delete their OWN review (the document
  *     id IS the uid, so the delete targets exactly the own doc) from
  *     their own card or from the form zone, behind a confirmation
@@ -1374,7 +1375,7 @@
               photo_url: user.photoURL || null,
               rating: Math.round(rating),
               comment: comment,
-              status: "pending",
+              status: "approved",
               source: "google",
               created_at: existing.exists ? existing.data().created_at : FieldValue.serverTimestamp(),
               updated_at: FieldValue.serverTimestamp()
@@ -1411,13 +1412,14 @@
           });
         })
         .then(function () {
-          /* Immediate-live: keep the pre-edit status (approved stays
+          /* Auto-live: keep the pre-edit status (approved stays
              approved, pending stays pending; a create was null, so it
-             becomes pending). The thank-you text claims approval is
-             pending, so it is shown only when the saved review really
-             is pending — an approved edit shows no approval-waiting
-             message (the refreshed list shows the new values live). */
-          authState.ownStatus = authState.ownStatus || "pending";
+             becomes approved — the new review is live at once). The
+             thank-you text claims approval is pending, so it is shown
+             only when the saved review really is pending — an approved
+             edit or a create shows no approval-waiting message (the
+             refreshed list shows the new values live). */
+          authState.ownStatus = authState.ownStatus || "approved";
           authState.ownRating = rating;
           authState.ownComment = comment;
           if (authState.ownStatus === "approved") {
