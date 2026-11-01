@@ -655,7 +655,7 @@
     /* Own-review delete: shown ONLY when the signed-in user's uid
        matches this review's uid (the doc id IS the uid), at any
        status — including published cards, which can now also be edited
-       (back to pending re-approval) as well as deleted. */
+       (staying published under immediate-live) as well as deleted. */
     if (isOwnReview(r)) {
       card.appendChild(makeDeleteControl());
     }
@@ -1287,12 +1287,14 @@
     }
     /* EDIT (review-edit program): an approved review belonging to THIS
        site (or a legacy doc with no sourceSite) now falls through to the
-       prefilled form below instead of the note+delete-only branch. After
-       save, ownStatus becomes "pending" and the pending note shows. */
+       prefilled form below instead of the note+delete-only branch.
+       Immediate-live: after save, ownStatus keeps its pre-edit value
+       (approved stays approved, pending stays pending) and the pending
+       note shows only for pending reviews. */
     if (authState.ownStatus === "rejected") {
       box.appendChild(el("p", "rb-form-note", t().reviewRejected));
-      /* Rejected reviews cannot be edited back to pending (rules owner-
-         update leg requires the stored status to be "pending"), so delete
+      /* Rejected reviews cannot be edited back (rules owner-update leg
+         allows old status pending or approved only), so delete
          is their only path — same shape as the approved branch above. */
       box.appendChild(makeDeleteControl());
       formZone.appendChild(box);
@@ -1363,7 +1365,7 @@
               throw new Error("already-rejected");
             }
             /* EDIT: an approved review is now editable (partial update
-               below resets it to pending re-approval). The sourceSite
+               below never changes status (immediate-live)). The sourceSite
                shape below is unchanged (never gained or changed here). */
             var FieldValue = fb.firestore.FieldValue;
             var payload = {
@@ -1402,7 +1404,6 @@
                 rating: Math.round(rating),
                 comment: comment,
                 photo_url: user.photoURL || null,
-                status: "pending",
                 updated_at: FieldValue.serverTimestamp()
               });
             }
@@ -1410,10 +1411,20 @@
           });
         })
         .then(function () {
-          authState.ownStatus = "pending";
+          /* Immediate-live: keep the pre-edit status (approved stays
+             approved, pending stays pending; a create was null, so it
+             becomes pending). The thank-you text claims approval is
+             pending, so it is shown only when the saved review really
+             is pending — an approved edit shows no approval-waiting
+             message (the refreshed list shows the new values live). */
+          authState.ownStatus = authState.ownStatus || "pending";
           authState.ownRating = rating;
           authState.ownComment = comment;
-          setStatus(t().thankYou);
+          if (authState.ownStatus === "approved") {
+            setStatus("");
+          } else {
+            setStatus(t().thankYou);
+          }
           renderForm();
           /* EDIT: re-fetch the public list so an edited approved
              review drops from it at once instead of lingering until
