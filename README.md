@@ -20,11 +20,8 @@
 
 </div>
 
-<div align="center">
-  <img src="docs/screenshots/live-home-desktop.png" alt="Ride Bangla IT Team — live homepage, desktop (laptop viewport)" width="720"/>
-  <br/>
-  <sub>The live homepage — desktop screenshot (laptop viewport, 1280×800), captured 2026-10-23 from <a href="https://it.ridebangla.bd">it.ridebangla.bd</a>.</sub>
-</div>
+<!-- MEDIA: hero-video-laptop — OWED, NOT IN THIS PACKAGE -->
+<!-- Laptop-screen video of the live IT site (desktop viewport, landscape): homepage hero → services → portfolio. NOT YET CAPTURED — awaiting the parent browser task. No phone video is used as a substitute. No laptop-screen GIF exists anywhere in the repo either (the only site-demo GIF, docs/demo/demo.gif, is a portrait phone recording and is never used), so no GIF fallback is available in this package — the hero video, or a genuine laptop GIF, is still owed. -->
 
 ---
 
@@ -32,13 +29,13 @@
 
 **Ride Bangla IT Team** is the in-house technology team of **Ride Bangla Limited**. The team builds the company's own apps, websites, design and digital marketing — and offers the same quality of service to outside clients.
 
-This repository contains the team's official public website: a fast, fully static site (no build step) presenting its services, leadership, portfolio and contact channels. The site opens in **English by default** and switches to **বাংলা** from the on-page language toggle. Ride Bangla's own **AI Agent help widget** is present on every page, so a visitor can ask a question anywhere on the site.
+This repository contains the team's official public website: a fast, fully static site (no build step) presenting its services, leadership, portfolio and contact channels. The site opens in **English by default** and switches to **বাংলা** from the on-page language toggle. Ride Bangla's own **AI Agent help widget** is embedded on all 13 content pages (the 404 page carries no widget).
 
 | At a glance | |
 |---|---|
-| Team members | 6 |
-| IT services | 9 (8 own service pages + the AI Customer Service Agent) |
-| Pages | 13 static pages |
+| Team members | 6 (homepage stat) |
+| IT services | 9 (8 own service pages + the AI Customer Service Agent — see the flag box below) |
+| Pages | 13 static content pages (plus a 404 page) |
 | Languages | English (default) · বাংলা toggle |
 | Location | Faridpur, Bangladesh |
 
@@ -46,7 +43,7 @@ This repository contains the team's official public website: a fast, fully stati
 
 ## Services
 
-Complete IT solutions for your business — every service below has its own page on the live site.
+Complete IT solutions for your business — every service below has its own page on the live site. All services listed here are IT-sector services.
 
 ### 🌐 Web Application
 
@@ -101,6 +98,8 @@ Reliable technical support whenever you need help.
 An AI agent for your business that handles customer messages and comments across WhatsApp, Facebook, Instagram, X and your website — takes orders and works 24/7. Offered through the Ride Bangla AI Agent platform.
 
 ➡️ [ai.ridebangla.bd](https://ai.ridebangla.bd)
+
+> **⚠️ FLAGGED — service-naming gap on the homepage (not filled in, not hidden):** the homepage stat says **9 IT services**, and the homepage services section does link **9 destinations** (the 8 pages above + the AI platform, as chips). But the homepage services showcase *image's own alt text* names only **6** items — **UI/UX, Website Development, Digital Marketing, Logo Design, Background Removal, IT Support** — and does not spell out the other 3 in that text. The wording also differs from the chips: the alt text says “Website Development” where the chip says “Web Application”, and “Logo Design” / “Background Removal” where the chip says “Graphic Design”. This README does **not** invent names for the 3 unnamed items, does **not** import names from the Main site, and does **not** assert that Logo Design / Background Removal are (or are not) parts of Graphic Design — that mapping is for the site owner to confirm. The gap is recorded here until the homepage text itself names all 9 the same way.
 
 ---
 
@@ -173,28 +172,46 @@ The homepage portfolio is rendered from [`data/portfolio.json`](data/portfolio.j
 
 Work videos: *Live Coding & App Preview · App Login UI Development · Pizza Mood — Food App UI · Face ID Login UI · Mastul Perfumes — Promo Video.*
 
+Note: these 5 videos are portfolio work videos (screen recordings of builds and UI work). They are **not** a demo video of the IT website itself, and none of them is substituted for the owed laptop-screen site demo above.
+
 ---
 
 ## The Team
 
-Alongside the Director, the homepage presents the team's specialist roles: **IT Support Engineer** (smooth tech support), **UI/UX Designer** (user-friendly design), **Full Stack Developer** (robust web solutions), **Web Developer** (responsive web) and **Database Administrator** (secure data systems).
+Alongside the Director, the homepage presents the team's specialist roles: **IT Support Engineer** (smooth tech support), **UI/UX Designer** (user-friendly design), **Full Stack Developer** (robust web solutions), **Web Developer** (responsive web) and **Database Administrator** (secure data systems). Role cards lay out 5 across on desktop, 3 across on tablet, 2 across on phones.
 
 ---
 
-## Reviews
+## Reviews — IT-site reviews only, including your own-review edit and delete
 
-The homepage carries a **"What Our Customers Say"** section. It reads approved reviews from the shared Firestore collection `website_reviews` — the same review pool as the main Ride Bangla website — via [`assets/js/reviews.js`](assets/js/reviews.js). There is no fake or seeded data: an empty pool renders an honest empty state, and a failed fetch renders a distinct "temporarily unavailable" state.
+The homepage carries a **"What Our Customers Say"** section. It reads from the Firestore collection `website_reviews` via [`assets/js/reviews.js`](assets/js/reviews.js) (`reviews.js?v=7` at this HEAD) — but what a visitor sees here is **this site's reviews only**: cards are filtered to `sourceSite == "it"`, and the ratings block renders only the IT row (stars + count, no other site's row, no overall row). There is no fake or seeded data: an empty pool renders an honest empty state, and a failed fetch renders a distinct "temporarily unavailable" state. No live review count or rating figure is snapshotted in this README — the live pool changes, and a static figure would go stale.
+
+<div align="center">
+  <img src="docs/screenshots/fresh-home-reviews.png" alt="IT Team home — reviews section, fresh capture 2026-11-01: 'IT Team ratings' showing only the IT row ('This website / No reviews yet') and the honest empty state 'No customer reviews are published yet'" width="720"/>
+  <br/><em>Reviews section as captured 2026-11-01 — the live pool's empty state on that date (cropped from home-PDF page 5 to the content region only). The pool changes, so this image shows the state on the capture date, not a permanent figure.</em>
+</div>
+
+**New reviews publish immediately** — a new submission is saved approved and goes live at once; there is no admin-approval waiting step.
+
+**You can edit and delete your own review:**
+
+- The review document id **is** the author's uid, so edit and delete target exactly the author's own document.
+- **Edit** — your own IT-site review (approved or pending) can be edited from its card, through the prefilled form. An edit never changes status: approved stays approved, pending stays pending (immediate-live). **Exact labels, copied from `assets/js/reviews.js` (never reworded):** English — **“Edit your review”**; Bengali — **“আপনার রিভিউ সম্পাদনা করুন”**.
+- **Delete** — available at **any status**, on the review card **and** in the form zone. Delete is **confirmation-gated (two-step)**: the first tap swaps the button for the confirmation question plus Delete / Cancel; only the confirm Delete runs the delete, and Cancel restores the button. On failure the Delete button is restored.
+- **Exact delete labels, copied from `assets/js/reviews.js` (never reworded):** English — Delete button **“Delete”**, confirmation **“Delete this review?”**, Cancel **“Cancel”**; Bengali — Delete button **“মুছে ফেলুন”**, confirmation **“এই রিভিউটি মুছে ফেলবেন?”**, Cancel **“বাতিল করুন”**.
+- **Delete-only cases (no edit):** a **rejected** review cannot be edited back — delete is its only path, then a fresh review can be submitted. A **cross-site** published review (belonging to another site) likewise cannot be edited here — delete stays its only path on this site.
+- **No cascade claimed:** delete removes only the review document; this README does not claim any cleanup of likes or comments, which are not part of this site's review UI at this HEAD.
 
 ---
 
 ## Features
 
 - **Bilingual EN | বাংলা** — English by default; the toggle rewrites the page in place and remembers the choice (`localStorage`).
-- **AI Agent on every page** — Ride Bangla's own help agent (floating widget sitewide; an inline help box on the Contact page).
+- **AI Agent on the site** — Ride Bangla's own help agent (widget script verified on all 13 content pages; the 404 page carries no widget).
 - **Data-driven portfolio** — designs and videos load from `data/portfolio.json`, with in-page fallback data.
 - **WhatsApp-first contact** — the contact form composes a WhatsApp message to the IT Team, with an email fallback to `info@ridebangla.bd`.
-- **Shared reviews** — approved customer reviews from the same Firestore pool as the main website, with an honest empty/unavailable state when no review data can be shown.
-- **Full icon set** — favicon, apple-touch icon and maskable PWA icons; `site.webmanifest` included.
+- **IT-site reviews** — approved reviews for this site only, with an honest empty/unavailable state when no review data can be shown, plus own-review edit and delete.
+- **PWA-ready** — favicon, apple-touch icon and maskable PWA icons; `site.webmanifest` included; an app-shell service worker is registered on the homepage.
 - **Responsive** — navigation, hero, cards and portfolio adapt to phone, tablet and desktop.
 
 ---
@@ -202,42 +219,51 @@ The homepage carries a **"What Our Customers Say"** section. It reads approved r
 ## Screenshots Gallery
 
 <div align="center">
-  <img src="docs/screenshots/live-home-desktop.png" alt="Ride Bangla IT Team — live homepage, desktop" width="820"/>
-  <br/>
-  <sub>Live homepage — desktop (1280×800), captured 2026-10-23 from it.ridebangla.bd.</sub>
-  <br/><br/>
-  <img src="docs/screenshots/live-home-phone.png" alt="Ride Bangla IT Team — live homepage, phone" width="360"/>
-  <br/>
-  <sub>Live homepage — phone (390×844), captured 2026-10-23 from it.ridebangla.bd.</sub>
-  <br/><br/>
-  <img src="docs/screenshots/live-services-desktop.png" alt="Ride Bangla IT Team — live services page, desktop" width="820"/>
-  <br/>
-  <sub>Live services page (<code>services.html</code>) — desktop, captured 2026-10-23.</sub>
-  <br/><br/>
-  <img src="docs/screenshots/live-leadership-desktop.png" alt="Ride Bangla IT Team — live leadership page, desktop" width="820"/>
-  <br/>
-  <sub>Live leadership page (<code>leadership.html</code>) — desktop, captured 2026-10-23.</sub>
+  <img src="docs/screenshots/fresh-home-top.png" alt="IT Team home (top) — fresh capture, 2026-11-01: hero with the IT emblem, tagline 'Your Dream Digital Solution', stat chips '6 Team members / 9 IT services', and the start of 'Our IT Services'" width="720"/>
+  <br/><em>IT Team home (top) — fresh capture, 2026-11-01, cropped to a landscape band (hero through the “Our IT Services” heading) from the portrait print render; a band, not a native viewport screenshot.</em>
 </div>
 
-> All screenshots in this gallery are fresh captures of the live site at it.ridebangla.bd, taken 2026-10-23 (public pages only).
+<div align="center">
+  <img src="docs/screenshots/fresh-home-services.png" alt="IT Team home — services section, fresh capture 2026-11-01: services showcase and all 9 service chips (Web Application, Mobile App, UI/UX Design, Graphic Design, Digital Marketing, Hosting & Domain, Email Solution, IT Support, AI Customer Service Agent)" width="720"/>
+  <br/><em>IT Team home — services section, fresh capture 2026-11-01 (cropped from home-PDF page 2 to the content region only; no content altered within the crop).</em>
+</div>
+
+<div align="center">
+  <img src="docs/screenshots/fresh-leadership.png" alt="IT Team leadership page — IT Team Director card band, fresh capture 2026-11-01: Tabassum Nisha, IT Team Director, with bio and project buttons" width="720"/>
+  <br/><em>Leadership page — IT Team Director card band, fresh capture 2026-11-01 (cropped from the portrait print render to the card band only; no content altered within the crop).</em>
+</div>
+
+<div align="center">
+  <img src="docs/screenshots/fresh-about.png" alt="IT Team about page — 'Who We Are' band, fresh capture 2026-11-01: intro paragraph and three points (Innovation · Creativity · Success; Small Steps, Big Dreams; Planning, design, development and support in one place)" width="720"/>
+  <br/><em>About page — “Who We Are” band, fresh capture 2026-11-01 (cropped from the portrait print render to the heading-and-intro band only; no content altered within the crop).</em>
+</div>
+
+<div align="center">
+  <img src="docs/screenshots/fresh-contact.png" alt="IT Team contact page — heading and contact details card band, fresh capture 2026-11-01: WhatsApp +880 1825-234644, Email info@ridebangla.bd, Website, Location Faridpur 7803, Facebook, social buttons" width="720"/>
+  <br/><em>Contact page — heading and contact details card band, fresh capture 2026-11-01 (cropped from the portrait print render to the heading-and-card band only; no content altered within the crop).</em>
+</div>
+
+> The screenshots above are all fresh captures of the live site at it.ridebangla.bd (public pages, captured 2026-11-01, laptop-viewport browser session printed to PDF). The home-top, leadership, about and contact images are landscape bands cropped to their content regions only — no content altered within any crop — and are captioned as bands, not native viewport screenshots. The services image is the homepage services SECTION (index.html#services), not the separate services page. The repo's pre-Phase-C desktop screenshots (`docs/screenshots/live-*-desktop.png`, captioned 2026-10-23) are deliberately **not** reused, because fresh captures are mandatory for this repo and those predate the Phase C footer-logo and role-card changes. No phone screenshot and no phone video is used anywhere in this README: the repo's phone demo GIF (`docs/demo/demo.gif`) is deliberately **not** embedded — it is a portrait phone recording, and the owner standard admits laptop/computer-screen video only.
 
 ---
 
-## Tech Stack
+## Built With — কি কি দিয়ে তৈরি হয়েছে
 
-| Layer | Technology |
-|---|---|
-| Markup | HTML5 (13 static pages) |
-| Styling | CSS3 (inline per page, responsive) |
-| Behaviour | Vanilla JavaScript (language system, portfolio, forms) |
-| Data | JSON (`data/portfolio.json`) |
-| Reviews | Firestore REST API — shared `website_reviews` pool (`assets/js/reviews.js`) |
-| Dynamic layers | "Latest Updates" feed (`assets/js/it-updates.js`) and admin photo overrides (`assets/js/site-photos.js`) — code-ready, inert until the site's own Firebase web config is added |
-| Help system | Ride Bangla AI Agent widget |
-| Hosting | Vercel (static, `vercel.json` headers) |
-| Repository | GitHub |
+No framework, no `npm install`, no build command — the repo deploys as-is. Everything below is verified from the live repo files; nothing is claimed that the repo does not contain.
 
-No framework, no `npm install`, no build command — the repo deploys as-is.
+| Layer | Technology | Notes |
+|---|---|---|
+| Markup | HTML5 | 13 static content pages + a 404 page |
+| Styling | CSS3 | Inline per page, responsive (role cards 5 → 3 → 2 across breakpoints) |
+| Behaviour | Vanilla JavaScript | Language system, portfolio render, forms, reviews |
+| Data | JSON | `data/portfolio.json` — 7 designs + 5 videos, bilingual titles |
+| Reviews | Firestore | `website_reviews` collection, IT-site filter (`sourceSite == "it"`), via `assets/js/reviews.js` |
+| Dynamic layers | Firebase (code-ready, inert) | "Latest Updates" feed (`assets/js/it-updates.js`) and admin photo overrides (`assets/js/site-photos.js`) — placeholder config only, inert until the site's own Firebase web config is added |
+| Help system | Ride Bangla AI Agent widget | Embedded on all 13 content pages |
+| PWA | Web manifest + service worker | `site.webmanifest`, `sw.js` app-shell worker (registered on the homepage) |
+| Hosting | Vercel (static) | `vercel.json` security headers only — no build config |
+| Repository | GitHub | This repo, branch `main` |
+| Discovery | SEO basics | `robots.txt`, `sitemap.xml`, JSON-LD organization data on every content page |
 
 > **Version note:** Firebase **10.14.1** is the only pinned library version in this repo — the `SDK_VERSION` constant in [`assets/js/reviews.js`](assets/js/reviews.js), [`assets/js/it-updates.js`](assets/js/it-updates.js) and [`assets/js/site-photos.js`](assets/js/site-photos.js) (lazy-loaded Firebase compat SDK). This repo has no `package.json` or lockfile and pins no other versions, so HTML5, CSS3, JavaScript, JSON and Vercel carry no version number above rather than an invented one.
 
@@ -249,7 +275,7 @@ No framework, no `npm install`, no build command — the repo deploys as-is.
 | [About](https://it.ridebangla.bd/about.html) | The team, the company, the certificate |
 | [Leadership](https://it.ridebangla.bd/leadership.html) | The four leaders of Ride Bangla |
 | [Services](https://it.ridebangla.bd/services.html) | All IT services in one place |
-| [Contact](https://it.ridebangla.bd/contact.html) | WhatsApp-first contact form, email fallback, AI help box |
+| [Contact](https://it.ridebangla.bd/contact.html) | WhatsApp-first contact form, email fallback |
 | 8 service pages | One page per service (see [Services](#services)) |
 
 ---
@@ -258,7 +284,7 @@ No framework, no `npm install`, no build command — the repo deploys as-is.
 
 - `vercel.json` serves HSTS (preload), a Content-Security-Policy, `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy` and `Permissions-Policy` on every route.
 - `.well-known/security.txt` is published for vulnerability reports.
-- No secrets or API keys are stored in this repository.
+- No secrets or live API keys are stored in this repository (the two dynamic-layer scripts carry placeholder Firebase config only).
 - Report a vulnerability privately — see [SECURITY.md](SECURITY.md) (support@ridebangla.bd). Please do not open a public issue for a security problem.
 
 ---
@@ -288,7 +314,11 @@ This site is one part of Ride Bangla Limited. Discover the rest:
 - **WhatsApp (IT Team contact page):** +880 1825-234644
 - **Location:** Faridpur, Bangladesh
 
-Follow Ride Bangla:
+The IT Team's own channel (the link the live site itself uses):
+
+- **Facebook (IT Team):** [facebook.com/ridebanglait0](https://facebook.com/ridebanglait0)
+
+Follow Ride Bangla (company channels, as carried in this project's README):
 
 [![Facebook](https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white)](https://facebook.com/ridebangla)
 [![X](https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/ridebangla)
