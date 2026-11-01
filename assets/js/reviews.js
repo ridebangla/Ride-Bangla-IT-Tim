@@ -1415,6 +1415,10 @@
           authState.ownComment = comment;
           setStatus(t().thankYou);
           renderForm();
+          /* EDIT: re-fetch the public list so an edited approved
+             review drops from it at once instead of lingering until
+             a page reload (the list is one-time loaded). */
+          loadReviews();
         })
         .catch(function (err) {
           submit.disabled = false;
